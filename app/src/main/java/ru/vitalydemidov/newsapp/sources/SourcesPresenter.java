@@ -14,12 +14,16 @@ public class SourcesPresenter implements SourcesContract.Presenter {
 
     public SourcesPresenter(@NonNull SourcesContract.View sourcesView) {
         mSourcesView = checkNotNull(sourcesView);
-
         mSourcesView.setPresenter(this);
     }
 
     @Override
     public void start() {
+        loadSources();
+    }
+
+    @Override
+    public void loadSources() {
 
     }
 }

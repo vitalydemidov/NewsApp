@@ -15,6 +15,8 @@ public interface SourcesContract {
 
     interface Presenter extends BasePresenter {
 
+        void loadSources();
+
     }
 
 }
