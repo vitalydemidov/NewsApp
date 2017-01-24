@@ -35,6 +35,6 @@ public class SourcesActivity extends AppCompatActivity {
         }
 
         // Create Presenter
-        SourcesPresenter sourcesPresenter = new SourcesPresenter();
+        SourcesPresenter sourcesPresenter = new SourcesPresenter(sourcesFragment);
     }
 }
