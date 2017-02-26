@@ -1,13 +1,16 @@
 package ru.vitalydemidov.newsapp.data.source;
 
+import java.util.List;
+
+import io.reactivex.Observable;
+import ru.vitalydemidov.newsapp.data.Source;
+
 /**
  * Created by vitalydemidov on 25/01/2017.
  */
 
 public interface SourcesDataSource {
 
-
-    void getSources();
-
+    Observable<List<Source>> getSources();
 
 }

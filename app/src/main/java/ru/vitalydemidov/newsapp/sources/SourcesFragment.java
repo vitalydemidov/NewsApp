@@ -9,8 +9,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
+import java.util.List;
 
 import ru.vitalydemidov.newsapp.R;
+import ru.vitalydemidov.newsapp.data.Source;
 
 import static ru.vitalydemidov.newsapp.util.CommonUtils.checkNotNull;
 
@@ -57,7 +61,14 @@ public class SourcesFragment extends Fragment implements SourcesContract.View {
     @Override
     public void onResume() {
         super.onResume();
-        mSourcesPresenter.start();
+        mSourcesPresenter.subscribe();
+    }
+
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mSourcesPresenter.unsubscribe();
     }
 
 
@@ -70,6 +81,24 @@ public class SourcesFragment extends Fragment implements SourcesContract.View {
         RecyclerView sourcesRecyclerView = (RecyclerView) rootView.findViewById(R.id.sources_recycler_view);
         sourcesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         sourcesRecyclerView.setAdapter(mSourcesAdapter);
+    }
+
+
+    @Override
+    public void showSources(List<Source> sources) {
+        mSourcesAdapter.setData(sources);
+    }
+
+
+    @Override
+    public void showLoadingSourcesError() {
+        Toast.makeText(getContext(), "Error when sources loading", Toast.LENGTH_LONG).show();
+    }
+
+
+    @Override
+    public void showLoadingProgress() {
+
     }
 
 }

@@ -6,6 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import ru.vitalydemidov.newsapp.R;
+import ru.vitalydemidov.newsapp.data.source.SourcesRepository;
+import ru.vitalydemidov.newsapp.data.source.local.SourcesLocalDataSource;
+import ru.vitalydemidov.newsapp.data.source.remote.SourcesRemoteDataSource;
 import ru.vitalydemidov.newsapp.util.ActivityUtils;
 
 /**
@@ -35,6 +38,10 @@ public class SourcesActivity extends AppCompatActivity {
         }
 
         // Create Presenter
-        SourcesPresenter sourcesPresenter = new SourcesPresenter(sourcesFragment);
+        SourcesPresenter sourcesPresenter =
+                new SourcesPresenter(SourcesRepository.getInstance(
+                        SourcesLocalDataSource.getInstance(),
+                        SourcesRemoteDataSource.getInstance()), sourcesFragment);
     }
+
 }

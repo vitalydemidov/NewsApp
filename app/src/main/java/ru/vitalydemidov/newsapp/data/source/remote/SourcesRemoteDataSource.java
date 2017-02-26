@@ -1,5 +1,9 @@
 package ru.vitalydemidov.newsapp.data.source.remote;
 
+import java.util.List;
+
+import io.reactivex.Observable;
+import ru.vitalydemidov.newsapp.data.Source;
 import ru.vitalydemidov.newsapp.data.source.SourcesDataSource;
 
 /**
@@ -13,19 +17,16 @@ public class SourcesRemoteDataSource implements SourcesDataSource {
 
 
     public static SourcesRemoteDataSource getInstance() {
-        if (sInstance == null) {
-            sInstance = new SourcesRemoteDataSource();
-        }
-        return sInstance;
+        return sInstance != null ? sInstance : new SourcesRemoteDataSource();
     }
 
-    private SourcesRemoteDataSource() {
 
-    }
+    private SourcesRemoteDataSource() {}
 
 
     @Override
-    public void getSources() {
-
+    public Observable<List<Source>> getSources() {
+        return null;
     }
+
 }

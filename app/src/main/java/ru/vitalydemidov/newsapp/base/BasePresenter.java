@@ -6,6 +6,8 @@ package ru.vitalydemidov.newsapp.base;
 
 public interface BasePresenter {
 
-    void start();
+    void subscribe();
+
+    void unsubscribe();
 
 }

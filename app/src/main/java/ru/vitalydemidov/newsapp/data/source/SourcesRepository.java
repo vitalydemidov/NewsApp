@@ -2,6 +2,11 @@ package ru.vitalydemidov.newsapp.data.source;
 
 import android.support.annotation.NonNull;
 
+import java.util.List;
+
+import io.reactivex.Observable;
+import ru.vitalydemidov.newsapp.data.Source;
+
 import static ru.vitalydemidov.newsapp.util.CommonUtils.checkNotNull;
 
 /**
@@ -26,8 +31,8 @@ public class SourcesRepository implements SourcesDataSource {
     }
 
 
-    private SourcesRepository getInstance(@NonNull SourcesDataSource sourcesRemoteDataSource,
-                                          @NonNull SourcesDataSource sourcesLocalDataSource) {
+    public static SourcesRepository getInstance(@NonNull SourcesDataSource sourcesRemoteDataSource,
+                                                @NonNull SourcesDataSource sourcesLocalDataSource) {
         if (sInstance == null) {
             sInstance = new SourcesRepository(sourcesRemoteDataSource, sourcesLocalDataSource);
         }
@@ -36,7 +41,7 @@ public class SourcesRepository implements SourcesDataSource {
 
 
     @Override
-    public void getSources() {
-
+    public Observable<List<Source>> getSources() {
+        return null;
     }
 }

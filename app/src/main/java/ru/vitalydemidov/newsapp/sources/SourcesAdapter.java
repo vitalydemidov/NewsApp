@@ -17,6 +17,12 @@ public class SourcesAdapter extends RecyclerView.Adapter {
     private List<Source> mSources;
 
 
+    public void setData(List<Source> sources) {
+        mSources = sources;
+        notifyDataSetChanged();
+    }
+
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return null;
