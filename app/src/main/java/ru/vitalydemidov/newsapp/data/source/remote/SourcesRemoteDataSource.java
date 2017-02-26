@@ -12,14 +12,15 @@ import ru.vitalydemidov.newsapp.data.source.SourcesDataSource;
 
 public class SourcesRemoteDataSource implements SourcesDataSource {
 
-
     private static SourcesRemoteDataSource sInstance;
 
 
     public static SourcesRemoteDataSource getInstance() {
-        return sInstance != null ? sInstance : new SourcesRemoteDataSource();
+        if (sInstance == null) {
+            sInstance = new SourcesRemoteDataSource();
+        }
+        return sInstance;
     }
-
 
     private SourcesRemoteDataSource() {}
 

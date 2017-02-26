@@ -16,7 +16,10 @@ public class SourcesLocalDataSource implements SourcesDataSource {
 
 
     public static SourcesLocalDataSource getInstance() {
-        return sInstance != null ? sInstance : new SourcesLocalDataSource();
+        if (sInstance == null) {
+            sInstance = new SourcesLocalDataSource();
+        }
+        return sInstance;
     }
 
 
