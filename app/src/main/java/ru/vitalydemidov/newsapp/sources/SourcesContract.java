@@ -16,9 +16,9 @@ public interface SourcesContract {
 
         void showSources(List<Source> sources);
 
-        void showLoadingSourcesError();
+        void showLoadingError();
 
-        void showLoadingProgress();
+        void showLoadingProgress(boolean showProgress);
 
     }
 

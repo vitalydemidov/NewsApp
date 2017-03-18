@@ -2,7 +2,9 @@ package ru.vitalydemidov.newsapp.sources;
 
 import android.support.annotation.NonNull;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
 import ru.vitalydemidov.newsapp.data.source.SourcesRepository;
 
 import static ru.vitalydemidov.newsapp.util.CommonUtils.checkNotNull;
@@ -44,10 +46,12 @@ public class SourcesPresenter implements SourcesContract.Presenter {
     public void loadSources() {
         mCompositeDisposable.add(
                 mSourcesRepository.getSources()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         mSourcesView::showSources,
-                        throwable -> mSourcesView.showLoadingSourcesError(),
-                        mSourcesView::showLoadingProgress
+                        throwable -> mSourcesView.showLoadingError(),
+                        () -> mSourcesView.showLoadingProgress(false)
                 )
         );
     }

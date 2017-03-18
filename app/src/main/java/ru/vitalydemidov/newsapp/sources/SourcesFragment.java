@@ -91,13 +91,13 @@ public class SourcesFragment extends Fragment implements SourcesContract.View {
 
 
     @Override
-    public void showLoadingSourcesError() {
+    public void showLoadingError() {
         Toast.makeText(getContext(), "Error when sources loading", Toast.LENGTH_LONG).show();
     }
 
 
     @Override
-    public void showLoadingProgress() {
+    public void showLoadingProgress(boolean showProgress) {
 
     }
 
