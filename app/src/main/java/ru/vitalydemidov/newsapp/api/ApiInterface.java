@@ -2,7 +2,7 @@ package ru.vitalydemidov.newsapp.api;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
-import ru.vitalydemidov.newsapp.data.Result;
+import ru.vitalydemidov.newsapp.data.SourceResponse;
 
 /**
  * Created by vitalydemidov on 19/03/2017.
@@ -11,6 +11,6 @@ import ru.vitalydemidov.newsapp.data.Result;
 public interface ApiInterface {
 
     @GET("sources")
-    Observable<Result> sources();
+    Observable<SourceResponse> sources();
 
 }

@@ -3,8 +3,6 @@ package ru.vitalydemidov.newsapp.data.source.remote;
 import java.util.List;
 
 import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 import ru.vitalydemidov.newsapp.api.ApiClient;
 import ru.vitalydemidov.newsapp.data.Source;
 import ru.vitalydemidov.newsapp.data.source.SourcesDataSource;
@@ -25,17 +23,14 @@ public class SourcesRemoteDataSource implements SourcesDataSource {
         return sInstance;
     }
 
+
     private SourcesRemoteDataSource() {}
 
 
     @Override
     public Observable<List<Source>> getSources() {
         return ApiClient.provideApiClient().sources()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .flatMap(
-                        result -> Observable.just(result.sources)
-                );
+                .map(sourceResponse -> sourceResponse.sources);
     }
 
 }
