@@ -2,6 +2,7 @@ package ru.vitalydemidov.newsapp.sources;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.UiThread;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -15,6 +16,7 @@ import ru.vitalydemidov.newsapp.util.ActivityUtils;
  * Created by vitalydemidov on 23/01/2017.
  */
 
+@UiThread
 public class SourcesActivity extends AppCompatActivity {
 
     private SourcesPresenter mSourcesPresenter;

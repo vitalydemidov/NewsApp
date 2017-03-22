@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">News App</string>
+
+    <!-- Sources -->
+    <string name="sources_loading_error">Error when sources loading</string>
+
 </resources>

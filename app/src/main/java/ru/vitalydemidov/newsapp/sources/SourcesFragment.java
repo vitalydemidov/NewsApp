@@ -3,6 +3,7 @@ package ru.vitalydemidov.newsapp.sources;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.UiThread;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -22,6 +23,7 @@ import static ru.vitalydemidov.newsapp.util.CommonUtils.checkNotNull;
  * Created by vitalydemidov on 23/01/2017.
  */
 
+@UiThread
 public class SourcesFragment extends Fragment implements SourcesContract.View {
 
     @NonNull
@@ -92,7 +94,7 @@ public class SourcesFragment extends Fragment implements SourcesContract.View {
 
     @Override
     public void showLoadingError() {
-        Toast.makeText(getContext(), "Error when sources loading", Toast.LENGTH_LONG).show();
+        Toast.makeText(getContext(), R.string.sources_loading_error, Toast.LENGTH_LONG).show();
     }
 
 

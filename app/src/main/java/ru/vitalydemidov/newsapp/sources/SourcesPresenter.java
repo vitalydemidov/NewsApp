@@ -13,7 +13,7 @@ import static ru.vitalydemidov.newsapp.util.CommonUtils.checkNotNull;
  * Created by vitalydemidov on 23/01/2017.
  */
 
-public class SourcesPresenter implements SourcesContract.Presenter {
+class SourcesPresenter implements SourcesContract.Presenter {
 
     @NonNull
     private final SourcesContract.View mSourcesView;
