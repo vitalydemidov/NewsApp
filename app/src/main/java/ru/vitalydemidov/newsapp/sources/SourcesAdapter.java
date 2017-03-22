@@ -37,7 +37,7 @@ public class SourcesAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return mSources.size();
+        return mSources != null ? mSources.size() : 0;
     }
 
 }

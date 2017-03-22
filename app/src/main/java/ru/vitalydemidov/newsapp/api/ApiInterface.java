@@ -1,10 +1,8 @@
 package ru.vitalydemidov.newsapp.api;
 
-import java.util.List;
-
-import retrofit2.Call;
+import io.reactivex.Observable;
 import retrofit2.http.GET;
-import ru.vitalydemidov.newsapp.data.Source;
+import ru.vitalydemidov.newsapp.data.Result;
 
 /**
  * Created by vitalydemidov on 19/03/2017.
@@ -13,6 +11,6 @@ import ru.vitalydemidov.newsapp.data.Source;
 public interface ApiInterface {
 
     @GET("sources")
-    Call<List<Source>> sources();
+    Observable<Result> sources();
 
 }

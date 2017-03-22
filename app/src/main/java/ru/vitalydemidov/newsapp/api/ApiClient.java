@@ -3,6 +3,7 @@ package ru.vitalydemidov.newsapp.api;
 import android.support.annotation.NonNull;
 
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import ru.vitalydemidov.newsapp.util.CommonUtils;
 
@@ -36,8 +37,18 @@ public class ApiClient {
     }
 
 
-    private static ApiClient getApiClient() {
+    public static ApiClient getApiClient() {
         return CommonUtils.checkNotNull(sApiClient, "Init ApiClient before use it!");
+    }
+
+
+    public static ApiInterface provideApiClient() {
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl(API_BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create());
+
+        return builder.build().create(ApiInterface.class);
     }
 
 

@@ -39,9 +39,8 @@ public class SourcesActivity extends AppCompatActivity {
 
         // Create Presenter
         SourcesPresenter sourcesPresenter =
-                new SourcesPresenter(SourcesRepository.getInstance(
-                        SourcesLocalDataSource.getInstance(),
-                        SourcesRemoteDataSource.getInstance()), sourcesFragment);
+                new SourcesPresenter(SourcesRepository.getInstance(SourcesRemoteDataSource.getInstance(),
+                        SourcesLocalDataSource.getInstance()), sourcesFragment);
     }
 
 }

@@ -17,10 +17,10 @@ public class SourcesRepository implements SourcesDataSource {
 
     private static SourcesRepository sInstance;
 
-
+    @NonNull
     private final SourcesDataSource mSourcesRemoteDataSource;
 
-
+    @NonNull
     private final SourcesDataSource mSourcesLocalDataSource;
 
 
@@ -42,6 +42,6 @@ public class SourcesRepository implements SourcesDataSource {
 
     @Override
     public Observable<List<Source>> getSources() {
-        return null;
+        return mSourcesRemoteDataSource.getSources();
     }
 }
