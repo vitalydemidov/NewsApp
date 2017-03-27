@@ -14,7 +14,8 @@ import static ru.vitalydemidov.newsapp.util.CommonUtils.checkNotNull;
 public class ActivityUtils {
 
     public static void addFragmentToActivity(@NonNull FragmentManager fragmentManager,
-                                             @NonNull Fragment fragment, @IdRes int frameId) {
+                                             @NonNull Fragment fragment,
+                                             @IdRes int frameId) {
         checkNotNull(fragmentManager);
         checkNotNull(fragment);
         fragmentManager.beginTransaction()

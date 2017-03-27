@@ -1,6 +1,23 @@
 <resources>
     <string name="app_name">News App</string>
 
+    <!-- NavigationView -->
+    <string name="navigation_view_header_label">News App with MVP</string>
+
+    <string name="navigation_view_group_category_label">Category</string>
+    <string name="navigation_view_group_language_label">Language</string>
+    <string name="navigation_view_group_country_label">Country</string>
+
+    <string name="navigation_view_category_all">All</string>
+    <string name="navigation_view_category_business">Business</string>
+    <string name="navigation_view_category_entertainment">Entertainment</string>
+    <string name="navigation_view_category_gaming">Gaming</string>
+    <string name="navigation_view_category_general">General</string>
+    <string name="navigation_view_category_music">Music</string>
+    <string name="navigation_view_category_science_and_nature">Science and nature</string>
+    <string name="navigation_view_category_sport">Sport</string>
+    <string name="navigation_view_category_technology">Technology</string>
+
     <!-- Sources -->
     <string name="sources_loading_error">Error when sources loading</string>
 
