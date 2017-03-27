@@ -18,6 +18,19 @@
     <string name="navigation_view_category_sport">Sport</string>
     <string name="navigation_view_category_technology">Technology</string>
 
+    <string name="navigation_view_language_all">All</string>
+    <string name="navigation_view_language_en">English</string>
+    <string name="navigation_view_language_de">German</string>
+    <string name="navigation_view_language_fr">French</string>
+
+    <string name="navigation_view_country_all">All</string>
+    <string name="navigation_view_country_au">Australia</string>
+    <string name="navigation_view_country_de">Germany</string>
+    <string name="navigation_view_country_gb">Grate Britain</string>
+    <string name="navigation_view_country_in">India</string>
+    <string name="navigation_view_country_it">Italy</string>
+    <string name="navigation_view_country_us">United States</string>
+
     <!-- Sources -->
     <string name="sources_loading_error">Error when sources loading</string>
 

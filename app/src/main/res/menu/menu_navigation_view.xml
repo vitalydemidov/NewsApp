@@ -33,4 +33,47 @@
         </menu>
     </item>
 
+    <item android:title="@string/navigation_view_group_language_label">
+        <menu>
+            <item
+                android:id="@+id/navigation_view_language_all"
+                android:title="@string/navigation_view_language_all"/>
+            <item
+                android:id="@+id/navigation_view_language_en"
+                android:title="@string/navigation_view_language_en"/>
+            <item
+                android:id="@+id/navigation_view_language_de"
+                android:title="@string/navigation_view_language_de"/>
+            <item
+                android:id="@+id/navigation_view_language_fr"
+                android:title="@string/navigation_view_language_fr"/>
+        </menu>
+    </item>
+
+    <item android:title="@string/navigation_view_group_country_label">
+        <menu>
+            <item
+                android:id="@+id/navigation_view_country_all"
+                android:title="@string/navigation_view_country_all"/>
+            <item
+                android:id="@+id/navigation_view_country_au"
+                android:title="@string/navigation_view_country_au"/>
+            <item
+                android:id="@+id/navigation_view_country_de"
+                android:title="@string/navigation_view_country_de"/>
+            <item
+                android:id="@+id/navigation_view_country_gb"
+                android:title="@string/navigation_view_country_gb"/>
+            <item
+                android:id="@+id/navigation_view_country_in"
+                android:title="@string/navigation_view_country_in"/>
+            <item
+                android:id="@+id/navigation_view_country_it"
+                android:title="@string/navigation_view_country_it"/>
+            <item
+                android:id="@+id/navigation_view_country_us"
+                android:title="@string/navigation_view_country_us"/>
+        </menu>
+    </item>
+
 </menu>
