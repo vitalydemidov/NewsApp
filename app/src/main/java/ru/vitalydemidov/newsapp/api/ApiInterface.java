@@ -2,6 +2,7 @@ package ru.vitalydemidov.newsapp.api;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
+import retrofit2.http.Query;
 import ru.vitalydemidov.newsapp.data.SourceResponse;
 
 /**
@@ -11,6 +12,8 @@ import ru.vitalydemidov.newsapp.data.SourceResponse;
 public interface ApiInterface {
 
     @GET("sources")
-    Observable<SourceResponse> sources();
+    Observable<SourceResponse> sources(@Query("category") String category,
+                                       @Query("language") String language,
+                                       @Query("country") String country);
 
 }

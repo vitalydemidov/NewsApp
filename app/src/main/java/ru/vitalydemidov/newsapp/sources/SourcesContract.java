@@ -1,5 +1,7 @@
 package ru.vitalydemidov.newsapp.sources;
 
+import android.support.annotation.Nullable;
+
 import java.util.List;
 
 import ru.vitalydemidov.newsapp.base.BasePresenter;
@@ -24,7 +26,9 @@ interface SourcesContract {
 
     interface Presenter extends BasePresenter {
 
-        void loadSources();
+        void loadSources(@Nullable String category,
+                         @Nullable String language,
+                         @Nullable String country);
 
     }
 

@@ -1,6 +1,7 @@
 package ru.vitalydemidov.newsapp.data.source;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import java.util.List;
 
@@ -41,7 +42,10 @@ public class SourcesRepository implements SourcesDataSource {
 
 
     @Override
-    public Observable<List<Source>> getSources() {
-        return mSourcesRemoteDataSource.getSources();
+    public Observable<List<Source>> getSources(@Nullable String category,
+                                               @Nullable String language,
+                                               @Nullable String country) {
+        return mSourcesRemoteDataSource.getSources(category, language, country);
     }
+
 }

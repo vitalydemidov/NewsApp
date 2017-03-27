@@ -1,6 +1,7 @@
 package ru.vitalydemidov.newsapp.sources;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -34,7 +35,7 @@ class SourcesPresenter implements SourcesContract.Presenter {
 
     @Override
     public void subscribe() {
-        loadSources();
+        loadSources(null, null, null);  // FIXME: 28/03/2017 pass saved filters
     }
 
     @Override
@@ -43,9 +44,11 @@ class SourcesPresenter implements SourcesContract.Presenter {
     }
 
     @Override
-    public void loadSources() {
+    public void loadSources(@Nullable String category,
+                            @Nullable String language,
+                            @Nullable String country) {
         mCompositeDisposable.add(
-                mSourcesRepository.getSources()
+                mSourcesRepository.getSources(category, language, country)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(

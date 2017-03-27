@@ -1,5 +1,7 @@
 package ru.vitalydemidov.newsapp.data.source.local;
 
+import android.support.annotation.Nullable;
+
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -27,7 +29,9 @@ public class SourcesLocalDataSource implements SourcesDataSource {
 
 
     @Override
-    public Observable<List<Source>> getSources() {
+    public Observable<List<Source>> getSources(@Nullable String category,
+                                               @Nullable String language,
+                                               @Nullable String country) {
         return null;
     }
 }

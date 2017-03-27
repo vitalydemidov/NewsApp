@@ -1,5 +1,7 @@
 package ru.vitalydemidov.newsapp.data.source;
 
+import android.support.annotation.Nullable;
+
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -11,6 +13,8 @@ import ru.vitalydemidov.newsapp.data.Source;
 
 public interface SourcesDataSource {
 
-    Observable<List<Source>> getSources();
+    Observable<List<Source>> getSources(@Nullable String category,
+                                        @Nullable String language,
+                                        @Nullable String country);
 
 }

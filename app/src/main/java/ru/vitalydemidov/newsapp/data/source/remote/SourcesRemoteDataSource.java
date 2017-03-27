@@ -1,5 +1,7 @@
 package ru.vitalydemidov.newsapp.data.source.remote;
 
+import android.support.annotation.Nullable;
+
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -28,9 +30,10 @@ public class SourcesRemoteDataSource implements SourcesDataSource {
 
 
     @Override
-    public Observable<List<Source>> getSources() {
-        return ApiClient.provideApiClient().sources()
+    public Observable<List<Source>> getSources(@Nullable String category,
+                                               @Nullable String language,
+                                               @Nullable String country) {
+        return ApiClient.provideApiClient().sources(category, language, country)
                 .map(sourceResponse -> sourceResponse.sources);
     }
-
 }
