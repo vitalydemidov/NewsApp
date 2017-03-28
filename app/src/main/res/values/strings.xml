@@ -2,7 +2,9 @@
     <string name="app_name">News App</string>
     <string name="activity_sources_label">Sources</string>
 
-    <!-- NavigationView -->
+    <!-- NavigationDrawer and NavigationView -->
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="navigation_view_header_label">News App with MVP</string>
 
     <string name="navigation_view_group_category_label">Category</string>
