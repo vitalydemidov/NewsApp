@@ -19,11 +19,26 @@ class SourcesPresenter implements SourcesContract.Presenter {
     @NonNull
     private final SourcesContract.View mSourcesView;
 
+
     @NonNull
     private final SourcesRepository mSourcesRepository;
 
+
     @NonNull
     private final CompositeDisposable mCompositeDisposable;
+
+
+    @NonNull
+    private SourcesFilterCategory mCurrentFilterCategory = SourcesFilterCategory.CATEGORY_ALL;
+
+
+    @NonNull
+    private SourcesFilterLanguage mCurrentFilterLanguage = SourcesFilterLanguage.LANGUAGE_ALL;
+
+
+    @NonNull
+    private SourcesFilterCountry mCurrentFilterCountry = SourcesFilterCountry.COUNTRY_ALL;
+
 
     public SourcesPresenter(@NonNull SourcesRepository sourcesRepository,
                             @NonNull SourcesContract.View sourcesView) {
@@ -33,15 +48,20 @@ class SourcesPresenter implements SourcesContract.Presenter {
         mCompositeDisposable = new CompositeDisposable();
     }
 
+
     @Override
     public void subscribe() {
-        loadSources(null, null, null);  // FIXME: 28/03/2017 pass saved filters
+        loadSources(mCurrentFilterCategory.getTitle(),
+                    mCurrentFilterLanguage.getTitle(),
+                    mCurrentFilterCountry.getTitle());
     }
+
 
     @Override
     public void unsubscribe() {
         mCompositeDisposable.clear();
     }
+
 
     @Override
     public void loadSources(@Nullable String category,
@@ -52,10 +72,14 @@ class SourcesPresenter implements SourcesContract.Presenter {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
+                        // onNext
                         mSourcesView::showSources,
+                        // onError
                         throwable -> mSourcesView.showLoadingError(),
+                        // onComplete
                         () -> mSourcesView.showLoadingProgress(false)
                 )
         );
     }
+
 }

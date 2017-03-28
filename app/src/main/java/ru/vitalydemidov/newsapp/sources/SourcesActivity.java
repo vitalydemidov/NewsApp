@@ -158,9 +158,8 @@ public class SourcesActivity extends AppCompatActivity {
                     }
 
                     mSourcesPresenter.loadSources(filterCategory.getTitle(),
-                            filterLanguage.getTitle(),
-                            filterCountry.getTitle()
-                    );
+                                                  filterLanguage.getTitle(),
+                                                  filterCountry.getTitle());
 
                     mDrawerLayout.closeDrawer(GravityCompat.START);
                     return true;
