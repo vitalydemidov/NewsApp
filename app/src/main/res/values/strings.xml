@@ -17,6 +17,7 @@
     <string name="navigation_view_category_gaming">Gaming</string>
     <string name="navigation_view_category_general">General</string>
     <string name="navigation_view_category_music">Music</string>
+    <string name="navigation_view_category_politics">Politics</string>
     <string name="navigation_view_category_science_and_nature">Science and nature</string>
     <string name="navigation_view_category_sport">Sport</string>
     <string name="navigation_view_category_technology">Technology</string>
@@ -29,7 +30,7 @@
     <string name="navigation_view_country_all">All</string>
     <string name="navigation_view_country_au">Australia</string>
     <string name="navigation_view_country_de">Germany</string>
-    <string name="navigation_view_country_gb">Grate Britain</string>
+    <string name="navigation_view_country_gb">Great Britain</string>
     <string name="navigation_view_country_in">India</string>
     <string name="navigation_view_country_it">Italy</string>
     <string name="navigation_view_country_us">United States</string>
