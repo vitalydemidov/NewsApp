@@ -25,6 +25,10 @@ import ru.vitalydemidov.newsapp.util.ActivityUtils;
 public class SourcesActivity extends AppCompatActivity {
 
     @NonNull
+    private Toolbar mToolbar;
+
+
+    @NonNull
     private DrawerLayout mDrawerLayout;
 
 
@@ -37,10 +41,8 @@ public class SourcesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sources_activity);
 
-        // Set up Toolbar
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        setupNavigationDrawer(toolbar);
+        setupToolbar();
+        setupNavigationDrawer(mToolbar);
         setupNavigationView();
 
         // Set up Fragment (View)
@@ -68,6 +70,12 @@ public class SourcesActivity extends AppCompatActivity {
     }
 
 
+    private void setupToolbar() {
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+    }
+
+
     private void setupNavigationDrawer(@NonNull Toolbar toolbar) {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout,
@@ -84,39 +92,50 @@ public class SourcesActivity extends AppCompatActivity {
                     SourcesFilterCategory filterCategory = SourcesFilterCategory.CATEGORY_ALL;
                     SourcesFilterLanguage filterLanguage = SourcesFilterLanguage.LANGUAGE_ALL;
                     SourcesFilterCountry filterCountry = SourcesFilterCountry.COUNTRY_ALL;
+                    int titleRes = R.string.navigation_view_category_all;
 
                     switch (menuItem.getItemId()) {
 
                         // categories
                         case R.id.navigation_view_category_all:
                             filterCategory = SourcesFilterCategory.CATEGORY_ALL;
+                            titleRes = R.string.activity_sources_label;
                             break;
                         case R.id.navigation_view_category_business:
                             filterCategory = SourcesFilterCategory.CATEGORY_BUSINESS;
+                            titleRes = R.string.navigation_view_category_business;
                             break;
                         case R.id.navigation_view_category_entertainment:
                             filterCategory = SourcesFilterCategory.CATEGORY_ENTERTAINMENT;
+                            titleRes = R.string.navigation_view_category_entertainment;
                             break;
                         case R.id.navigation_view_category_gaming:
                             filterCategory = SourcesFilterCategory.CATEGORY_GAMING;
+                            titleRes = R.string.navigation_view_category_gaming;
                             break;
                         case R.id.navigation_view_category_general:
                             filterCategory = SourcesFilterCategory.CATEGORY_GENERAL;
+                            titleRes = R.string.navigation_view_category_general;
                             break;
                         case R.id.navigation_view_category_music:
                             filterCategory = SourcesFilterCategory.CATEGORY_MUSIC;
+                            titleRes = R.string.navigation_view_category_music;
                             break;
                         case R.id.navigation_view_category_politics:
                             filterCategory = SourcesFilterCategory.CATEGORY_POLITICS;
+                            titleRes = R.string.navigation_view_category_politics;
                             break;
                         case R.id.navigation_view_category_science_and_nature:
                             filterCategory = SourcesFilterCategory.CATEGORY_SCIENCE_AND_NATURE;
+                            titleRes = R.string.navigation_view_category_science_and_nature;
                             break;
                         case R.id.navigation_view_category_sport:
                             filterCategory = SourcesFilterCategory.CATEGORY_SPORT;
+                            titleRes = R.string.navigation_view_category_sport;
                             break;
                         case R.id.navigation_view_category_technology:
                             filterCategory = SourcesFilterCategory.CATEGORY_TECHNOLOGY;
+                            titleRes = R.string.navigation_view_category_technology;
                             break;
 
                         // languages
@@ -156,6 +175,8 @@ public class SourcesActivity extends AppCompatActivity {
                             filterCountry = SourcesFilterCountry.COUNTRY_UNITED_STATES;
                             break;
                     }
+
+                    mToolbar.setTitle(titleRes);
 
                     mSourcesPresenter.loadSources(filterCategory.getTitle(),
                                                   filterLanguage.getTitle(),
