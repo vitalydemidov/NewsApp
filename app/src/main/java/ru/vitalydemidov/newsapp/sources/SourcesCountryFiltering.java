@@ -6,19 +6,25 @@ import android.support.annotation.Nullable;
  * Created by vitalydemidov on 28/03/2017.
  */
 
-enum SourcesFilterLanguage {
+enum SourcesCountryFiltering {
 
-    LANGUAGE_ALL(null),
-    LANGUAGE_ENGLISH("en"),
-    LANGUAGE_GERMAN("de"),
-    LANGUAGE_FRENCH("fr");
+    COUNTRY_ALL(null),
+    COUNTRY_AUSTRALIA("au"),
+    COUNTRY_GERMANY("de"),
+    COUNTRY_GREAT_BRITAIN("gb"),
+    COUNTRY_INDIA("in"),
+    COUNTRY_ITALY("it"),
+    COUNTRY_UNITED_STATES("us");
+
 
     @Nullable
     private String mTitle;
 
-    SourcesFilterLanguage(@Nullable String title) {
+
+    SourcesCountryFiltering(@Nullable String title) {
         mTitle = title;
     }
+
 
     @Nullable
     public String getTitle() {

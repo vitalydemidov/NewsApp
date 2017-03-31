@@ -61,6 +61,12 @@ public class SourcesFragment extends Fragment implements SourcesContract.View {
     }
 
     @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mSourcesPresenter.restoreState(savedInstanceState);
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         mSourcesPresenter.subscribe();
@@ -71,6 +77,13 @@ public class SourcesFragment extends Fragment implements SourcesContract.View {
     public void onPause() {
         super.onPause();
         mSourcesPresenter.unsubscribe();
+    }
+
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        mSourcesPresenter.saveState(outState);
     }
 
 

@@ -6,7 +6,7 @@ import android.support.annotation.Nullable;
  * Created by vitalydemidov on 28/03/2017.
  */
 
-enum SourcesFilterCategory {
+enum SourcesCategoryFiltering {
 
     CATEGORY_ALL(null),
     CATEGORY_BUSINESS("business"),
@@ -19,15 +19,19 @@ enum SourcesFilterCategory {
     CATEGORY_SPORT("sport"),
     CATEGORY_TECHNOLOGY("technology");
 
+
     @Nullable
     private String mTitle;
 
-    SourcesFilterCategory(@Nullable String title) {
+
+    SourcesCategoryFiltering(@Nullable String title) {
         mTitle = title;
     }
+
 
     @Nullable
     public String getTitle() {
         return mTitle;
     }
+
 }

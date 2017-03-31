@@ -89,98 +89,99 @@ public class SourcesActivity extends AppCompatActivity {
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(
                 menuItem -> {
-                    SourcesFilterCategory filterCategory = SourcesFilterCategory.CATEGORY_ALL;
-                    SourcesFilterLanguage filterLanguage = SourcesFilterLanguage.LANGUAGE_ALL;
-                    SourcesFilterCountry filterCountry = SourcesFilterCountry.COUNTRY_ALL;
+                    SourcesCategoryFiltering category = SourcesCategoryFiltering.CATEGORY_ALL;
+                    SourcesLanguageFiltering language = SourcesLanguageFiltering.LANGUAGE_ALL;
+                    SourcesCountryFiltering country = SourcesCountryFiltering.COUNTRY_ALL;
                     int titleRes = R.string.navigation_view_category_all;
 
                     switch (menuItem.getItemId()) {
 
                         // categories
                         case R.id.navigation_view_category_all:
-                            filterCategory = SourcesFilterCategory.CATEGORY_ALL;
+                            category = SourcesCategoryFiltering.CATEGORY_ALL;
                             titleRes = R.string.activity_sources_label;
                             break;
                         case R.id.navigation_view_category_business:
-                            filterCategory = SourcesFilterCategory.CATEGORY_BUSINESS;
+                            category = SourcesCategoryFiltering.CATEGORY_BUSINESS;
                             titleRes = R.string.navigation_view_category_business;
                             break;
                         case R.id.navigation_view_category_entertainment:
-                            filterCategory = SourcesFilterCategory.CATEGORY_ENTERTAINMENT;
+                            category = SourcesCategoryFiltering.CATEGORY_ENTERTAINMENT;
                             titleRes = R.string.navigation_view_category_entertainment;
                             break;
                         case R.id.navigation_view_category_gaming:
-                            filterCategory = SourcesFilterCategory.CATEGORY_GAMING;
+                            category = SourcesCategoryFiltering.CATEGORY_GAMING;
                             titleRes = R.string.navigation_view_category_gaming;
                             break;
                         case R.id.navigation_view_category_general:
-                            filterCategory = SourcesFilterCategory.CATEGORY_GENERAL;
+                            category = SourcesCategoryFiltering.CATEGORY_GENERAL;
                             titleRes = R.string.navigation_view_category_general;
                             break;
                         case R.id.navigation_view_category_music:
-                            filterCategory = SourcesFilterCategory.CATEGORY_MUSIC;
+                            category = SourcesCategoryFiltering.CATEGORY_MUSIC;
                             titleRes = R.string.navigation_view_category_music;
                             break;
                         case R.id.navigation_view_category_politics:
-                            filterCategory = SourcesFilterCategory.CATEGORY_POLITICS;
+                            category = SourcesCategoryFiltering.CATEGORY_POLITICS;
                             titleRes = R.string.navigation_view_category_politics;
                             break;
                         case R.id.navigation_view_category_science_and_nature:
-                            filterCategory = SourcesFilterCategory.CATEGORY_SCIENCE_AND_NATURE;
+                            category = SourcesCategoryFiltering.CATEGORY_SCIENCE_AND_NATURE;
                             titleRes = R.string.navigation_view_category_science_and_nature;
                             break;
                         case R.id.navigation_view_category_sport:
-                            filterCategory = SourcesFilterCategory.CATEGORY_SPORT;
+                            category = SourcesCategoryFiltering.CATEGORY_SPORT;
                             titleRes = R.string.navigation_view_category_sport;
                             break;
                         case R.id.navigation_view_category_technology:
-                            filterCategory = SourcesFilterCategory.CATEGORY_TECHNOLOGY;
+                            category = SourcesCategoryFiltering.CATEGORY_TECHNOLOGY;
                             titleRes = R.string.navigation_view_category_technology;
                             break;
 
                         // languages
                         case R.id.navigation_view_language_all:
-                            filterLanguage = SourcesFilterLanguage.LANGUAGE_ALL;
+                            language = SourcesLanguageFiltering.LANGUAGE_ALL;
                             break;
                         case R.id.navigation_view_language_en:
-                            filterLanguage = SourcesFilterLanguage.LANGUAGE_ENGLISH;
+                            language = SourcesLanguageFiltering.LANGUAGE_ENGLISH;
                             break;
                         case R.id.navigation_view_language_de:
-                            filterLanguage = SourcesFilterLanguage.LANGUAGE_GERMAN;
+                            language = SourcesLanguageFiltering.LANGUAGE_GERMAN;
                             break;
                         case R.id.navigation_view_language_fr:
-                            filterLanguage = SourcesFilterLanguage.LANGUAGE_FRENCH;
+                            language = SourcesLanguageFiltering.LANGUAGE_FRENCH;
                             break;
 
                         // countries
                         case R.id.navigation_view_country_all:
-                            filterCountry = SourcesFilterCountry.COUNTRY_ALL;
+                            country = SourcesCountryFiltering.COUNTRY_ALL;
                             break;
                         case R.id.navigation_view_country_au:
-                            filterCountry = SourcesFilterCountry.COUNTRY_AUSTRALIA;
+                            country = SourcesCountryFiltering.COUNTRY_AUSTRALIA;
                             break;
                         case R.id.navigation_view_country_de:
-                            filterCountry = SourcesFilterCountry.COUNTRY_GERMANY;
+                            country = SourcesCountryFiltering.COUNTRY_GERMANY;
                             break;
                         case R.id.navigation_view_country_gb:
-                            filterCountry = SourcesFilterCountry.COUNTRY_GREAT_BRITAIN;
+                            country = SourcesCountryFiltering.COUNTRY_GREAT_BRITAIN;
                             break;
                         case R.id.navigation_view_country_in:
-                            filterCountry = SourcesFilterCountry.COUNTRY_INDIA;
+                            country = SourcesCountryFiltering.COUNTRY_INDIA;
                             break;
                         case R.id.navigation_view_country_it:
-                            filterCountry = SourcesFilterCountry.COUNTRY_ITALY;
+                            country = SourcesCountryFiltering.COUNTRY_ITALY;
                             break;
                         case R.id.navigation_view_country_us:
-                            filterCountry = SourcesFilterCountry.COUNTRY_UNITED_STATES;
+                            country = SourcesCountryFiltering.COUNTRY_UNITED_STATES;
                             break;
                     }
 
                     mToolbar.setTitle(titleRes);
 
-                    mSourcesPresenter.loadSources(filterCategory.getTitle(),
-                                                  filterLanguage.getTitle(),
-                                                  filterCountry.getTitle());
+                    mSourcesPresenter.setCategoryFiltering(category);
+                    mSourcesPresenter.setLanguageFiltering(language);
+                    mSourcesPresenter.setCountryFiltering(country);
+                    mSourcesPresenter.loadSources();
 
                     mDrawerLayout.closeDrawer(GravityCompat.START);
                     return true;
