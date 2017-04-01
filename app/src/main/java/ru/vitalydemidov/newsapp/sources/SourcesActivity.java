@@ -92,50 +92,39 @@ public class SourcesActivity extends AppCompatActivity {
                     SourcesCategoryFiltering category = SourcesCategoryFiltering.CATEGORY_ALL;
                     SourcesLanguageFiltering language = SourcesLanguageFiltering.LANGUAGE_ALL;
                     SourcesCountryFiltering country = SourcesCountryFiltering.COUNTRY_ALL;
-                    int titleRes = R.string.navigation_view_category_all;
 
                     switch (menuItem.getItemId()) {
 
                         // categories
                         case R.id.navigation_view_category_all:
                             category = SourcesCategoryFiltering.CATEGORY_ALL;
-                            titleRes = R.string.activity_sources_label;
                             break;
                         case R.id.navigation_view_category_business:
                             category = SourcesCategoryFiltering.CATEGORY_BUSINESS;
-                            titleRes = R.string.navigation_view_category_business;
                             break;
                         case R.id.navigation_view_category_entertainment:
                             category = SourcesCategoryFiltering.CATEGORY_ENTERTAINMENT;
-                            titleRes = R.string.navigation_view_category_entertainment;
                             break;
                         case R.id.navigation_view_category_gaming:
                             category = SourcesCategoryFiltering.CATEGORY_GAMING;
-                            titleRes = R.string.navigation_view_category_gaming;
                             break;
                         case R.id.navigation_view_category_general:
                             category = SourcesCategoryFiltering.CATEGORY_GENERAL;
-                            titleRes = R.string.navigation_view_category_general;
                             break;
                         case R.id.navigation_view_category_music:
                             category = SourcesCategoryFiltering.CATEGORY_MUSIC;
-                            titleRes = R.string.navigation_view_category_music;
                             break;
                         case R.id.navigation_view_category_politics:
                             category = SourcesCategoryFiltering.CATEGORY_POLITICS;
-                            titleRes = R.string.navigation_view_category_politics;
                             break;
                         case R.id.navigation_view_category_science_and_nature:
                             category = SourcesCategoryFiltering.CATEGORY_SCIENCE_AND_NATURE;
-                            titleRes = R.string.navigation_view_category_science_and_nature;
                             break;
                         case R.id.navigation_view_category_sport:
                             category = SourcesCategoryFiltering.CATEGORY_SPORT;
-                            titleRes = R.string.navigation_view_category_sport;
                             break;
                         case R.id.navigation_view_category_technology:
                             category = SourcesCategoryFiltering.CATEGORY_TECHNOLOGY;
-                            titleRes = R.string.navigation_view_category_technology;
                             break;
 
                         // languages
@@ -175,8 +164,6 @@ public class SourcesActivity extends AppCompatActivity {
                             country = SourcesCountryFiltering.COUNTRY_UNITED_STATES;
                             break;
                     }
-
-                    mToolbar.setTitle(titleRes);
 
                     mSourcesPresenter.setCategoryFiltering(category);
                     mSourcesPresenter.setLanguageFiltering(language);

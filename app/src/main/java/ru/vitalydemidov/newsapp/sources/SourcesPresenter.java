@@ -142,10 +142,10 @@ class SourcesPresenter implements SourcesContract.Presenter {
     public void restoreState(@Nullable Bundle savedState) {
         if (savedState != null) {
             SourcesCategoryFiltering category = (SourcesCategoryFiltering) savedState.getSerializable(CATEGORY_FILTERING_STATE);
-            SourcesLanguageFiltering language = (SourcesLanguageFiltering) savedState.getSerializable(LANGUAGE_FILTERING_STATE);
-            SourcesCountryFiltering country = (SourcesCountryFiltering) savedState.getSerializable(COUNTRY_FILTERING_STATE);
             mCurrentCategoryFiltering = category != null ? category : SourcesCategoryFiltering.CATEGORY_ALL;
+            SourcesLanguageFiltering language = (SourcesLanguageFiltering) savedState.getSerializable(LANGUAGE_FILTERING_STATE);
             mCurrentLanguageFiltering = language != null ? language : SourcesLanguageFiltering.LANGUAGE_ALL;
+            SourcesCountryFiltering country = (SourcesCountryFiltering) savedState.getSerializable(COUNTRY_FILTERING_STATE);
             mCurrentCountryFiltering = country != null ? country : SourcesCountryFiltering.COUNTRY_ALL;
         }
     }
