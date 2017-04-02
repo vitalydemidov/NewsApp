@@ -39,6 +39,11 @@ public class Source {
     private List<String> mSortBysAvailable;
 
 
+    public String getId() {
+        return mId;
+    }
+
+
     public String getName() {
         return mName;
     }

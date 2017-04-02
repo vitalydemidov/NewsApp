@@ -20,12 +20,6 @@ interface SourcesContract {
 
         void showSources(List<Source> sources);
 
-
-        void showLoadingError();
-
-
-        void showLoadingProgress(boolean showProgress);
-
     }
 
 
@@ -33,32 +27,24 @@ interface SourcesContract {
 
         void loadSources();
 
+        void saveState(@Nullable Bundle outState);
+
+        void restoreState(@Nullable Bundle savedState);
 
         void setCategoryFiltering(@NonNull SourcesCategoryFiltering category);
 
-
         void setLanguageFiltering(@NonNull SourcesLanguageFiltering language);
 
-
         void setCountryFiltering(@NonNull SourcesCountryFiltering country);
-
 
         @NonNull
         SourcesCategoryFiltering getCategoryFiltering();
 
-
         @NonNull
         SourcesLanguageFiltering getLanguageFiltering();
 
-
         @NonNull
         SourcesCountryFiltering getCountryFiltering();
-
-
-        void saveState(@Nullable Bundle outState);
-
-
-        void restoreState(@Nullable Bundle savedState);
 
     }
 

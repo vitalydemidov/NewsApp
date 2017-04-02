@@ -10,4 +10,8 @@ public interface BaseView<T> {
 
     void setPresenter(@NonNull T presenter);
 
+    void showLoadingError();
+
+    void showLoadingProgress(boolean showProgress);
+
 }

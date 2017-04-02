@@ -23,6 +23,12 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".articles.ArticlesActivity"
+            android:label="@string/activity_articles_label"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".sources.SourcesActivity"/>
+
     </application>
 
 </manifest>

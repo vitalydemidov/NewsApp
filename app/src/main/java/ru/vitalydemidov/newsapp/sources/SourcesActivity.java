@@ -50,13 +50,13 @@ public class SourcesActivity extends AppCompatActivity {
                 (SourcesFragment) getSupportFragmentManager().findFragmentById(R.id.content_frame);
         if (sourcesFragment == null) {
             sourcesFragment = SourcesFragment.newInstance();
-            ActivityUtils.addFragmentToActivity(
-                    getSupportFragmentManager(), sourcesFragment, R.id.content_frame);
+            ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),
+                    sourcesFragment, R.id.content_frame);
         }
 
         // Create Presenter
-        mSourcesPresenter = new SourcesPresenter(SourcesRepository.getInstance(SourcesRemoteDataSource.getInstance(),
-                SourcesLocalDataSource.getInstance()), sourcesFragment);
+        mSourcesPresenter = new SourcesPresenter(sourcesFragment,
+                SourcesRepository.getInstance(SourcesRemoteDataSource.getInstance(), SourcesLocalDataSource.getInstance()));
     }
 
 

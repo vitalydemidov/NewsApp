@@ -1,5 +1,6 @@
 package ru.vitalydemidov.newsapp.sources;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 import java.util.List;
 
 import ru.vitalydemidov.newsapp.R;
+import ru.vitalydemidov.newsapp.articles.ArticlesActivity;
 import ru.vitalydemidov.newsapp.data.Source;
 
 import static ru.vitalydemidov.newsapp.util.CommonUtils.checkNotNull;
@@ -24,7 +26,10 @@ import static ru.vitalydemidov.newsapp.util.CommonUtils.checkNotNull;
  */
 
 @UiThread
-public class SourcesFragment extends Fragment implements SourcesContract.View {
+public class SourcesFragment extends Fragment implements SourcesContract.View, SourcesAdapter.OnSourceSelectedListener {
+
+    private static final String EXTRA_SOURCE_ID = "ru.vitalydemidov.newsapp.extra_source_id";
+
 
     @NonNull
     private SourcesContract.Presenter mSourcesPresenter;
@@ -48,7 +53,7 @@ public class SourcesFragment extends Fragment implements SourcesContract.View {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mSourcesAdapter = new SourcesAdapter();
+        initSourcesAdapter();
     }
 
 
@@ -99,9 +104,15 @@ public class SourcesFragment extends Fragment implements SourcesContract.View {
     }
 
 
+    private void initSourcesAdapter() {
+        mSourcesAdapter = new SourcesAdapter();
+        mSourcesAdapter.setSourceSelectedListener(this);
+    }
+
+
     @Override
     public void showSources(List<Source> sources) {
-        mSourcesAdapter.setData(sources);
+        mSourcesAdapter.setSources(sources);
     }
 
 
@@ -115,5 +126,16 @@ public class SourcesFragment extends Fragment implements SourcesContract.View {
     public void showLoadingProgress(boolean showProgress) {
 
     }
+
+    //region SourcesAdapter.OnSourceSelectedListener interface implementation
+    @Override
+    public void onSourceSelected(@NonNull Source source) {
+        Toast.makeText(getContext(), source.getName() + " selected.", Toast.LENGTH_SHORT).show();
+
+        Intent intent = new Intent(getContext(), ArticlesActivity.class);
+        intent.putExtra(EXTRA_SOURCE_ID, source.getId());
+        startActivity(intent);
+    }
+    //endregion SourcesAdapter.OnSourceSelectedListener interface implementation
 
 }

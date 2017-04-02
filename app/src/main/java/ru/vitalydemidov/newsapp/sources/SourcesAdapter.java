@@ -1,6 +1,7 @@
 package ru.vitalydemidov.newsapp.sources;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.annotation.UiThread;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -24,16 +25,25 @@ class SourcesAdapter extends RecyclerView.Adapter<SourcesAdapter.SourceViewHolde
     private List<Source> mSources;
 
 
-    public void setData(List<Source> sources) {
+    @Nullable
+    private OnSourceSelectedListener mListener;
+
+
+    public void setSources(List<Source> sources) {
         mSources = sources;
         notifyDataSetChanged();
     }
 
 
+    public void setSourceSelectedListener(@NonNull OnSourceSelectedListener listener) {
+        mListener = listener;
+    }
+
+
     @Override
     public SourceViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        return new SourceViewHolder(inflater.inflate(R.layout.sources_item_list, parent, false));
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.sources_item_list, parent, false);
+        return new SourceViewHolder(itemView);
     }
 
 
@@ -41,6 +51,12 @@ class SourcesAdapter extends RecyclerView.Adapter<SourcesAdapter.SourceViewHolde
     public void onBindViewHolder(SourceViewHolder holder, int position) {
         Source source = mSources.get(position);
         holder.name.setText(source.getName());
+
+        holder.itemView.setOnClickListener(view -> {
+            if (mListener != null) {
+                mListener.onSourceSelected(source);
+            }
+        });
     }
 
 
@@ -59,6 +75,11 @@ class SourcesAdapter extends RecyclerView.Adapter<SourcesAdapter.SourceViewHolde
             name = (TextView) itemView.findViewById(R.id.source_item_list_name);
         }
 
+    }
+
+
+    interface OnSourceSelectedListener {
+        void onSourceSelected(@NonNull Source source);
     }
 
 }

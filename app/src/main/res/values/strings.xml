@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">News App</string>
     <string name="activity_sources_label">Sources</string>
+    <string name="activity_articles_label">Articles</string>
 
     <!-- NavigationDrawer and NavigationView -->
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -37,5 +38,8 @@
 
     <!-- Sources -->
     <string name="sources_loading_error">Error when sources loading</string>
+
+    <!-- Articles -->
+    <string name="articles_loading_error">Error when articles loading</string>
 
 </resources>

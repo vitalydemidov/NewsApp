@@ -17,9 +17,9 @@ import static ru.vitalydemidov.newsapp.util.CommonUtils.checkNotNull;
 
 class SourcesPresenter implements SourcesContract.Presenter {
 
-    private static final String CATEGORY_FILTERING_STATE = SourcesFragment.class.getSimpleName() + "CATEGORY_FILTERING_STATE";
-    private static final String LANGUAGE_FILTERING_STATE = SourcesFragment.class.getSimpleName() + "LANGUAGE_FILTERING_STATE";
-    private static final String COUNTRY_FILTERING_STATE = SourcesFragment.class.getSimpleName() + "COUNTRY_FILTERING_STATE";
+    private static final String CATEGORY_FILTERING_STATE = SourcesFragment.class.getSimpleName() + ".CATEGORY_FILTERING_STATE";
+    private static final String LANGUAGE_FILTERING_STATE = SourcesFragment.class.getSimpleName() + ".LANGUAGE_FILTERING_STATE";
+    private static final String COUNTRY_FILTERING_STATE = SourcesFragment.class.getSimpleName() + ".COUNTRY_FILTERING_STATE";
 
 
     @NonNull
@@ -46,11 +46,11 @@ class SourcesPresenter implements SourcesContract.Presenter {
     private SourcesCountryFiltering mCurrentCountryFiltering = SourcesCountryFiltering.COUNTRY_ALL;
 
 
-    public SourcesPresenter(@NonNull SourcesRepository sourcesRepository,
-                            @NonNull SourcesContract.View sourcesView) {
-        mSourcesRepository = checkNotNull(sourcesRepository);
+    public SourcesPresenter(@NonNull SourcesContract.View sourcesView,
+                            @NonNull SourcesRepository sourcesRepository) {
         mSourcesView = checkNotNull(sourcesView);
         mSourcesView.setPresenter(this);
+        mSourcesRepository = checkNotNull(sourcesRepository);
         mCompositeDisposable = new CompositeDisposable();
     }
 
