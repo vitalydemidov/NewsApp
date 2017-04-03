@@ -43,7 +43,7 @@ public class SourcesActivity extends AppCompatActivity {
 
         setupToolbar();
         setupNavigationDrawer(mToolbar);
-        setupNavigationView();
+        setupNavigationView(savedInstanceState);
 
         // Set up Fragment (View)
         SourcesFragment sourcesFragment =
@@ -85,8 +85,11 @@ public class SourcesActivity extends AppCompatActivity {
     }
 
 
-    private void setupNavigationView() {
+    private void setupNavigationView(@Nullable Bundle savedInstanceState) {
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
+        if (savedInstanceState == null) {
+            navigationView.setCheckedItem(R.id.navigation_view_category_all);
+        }
         navigationView.setNavigationItemSelectedListener(
                 menuItem -> {
                     SourcesCategoryFiltering category = SourcesCategoryFiltering.CATEGORY_ALL;
