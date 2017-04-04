@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.facebook.drawee.view.SimpleDraweeView;
+
 import java.util.List;
 
 import ru.vitalydemidov.newsapp.R;
@@ -39,6 +41,7 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.Articl
     @Override
     public void onBindViewHolder(ArticleViewHolder holder, int position) {
         Article article = mArticles.get(position);
+        holder.image.setImageURI(article.getUrlToImage());
         holder.title.setText(article.getTitle());
     }
 
@@ -51,10 +54,12 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.Articl
 
     static class ArticleViewHolder extends RecyclerView.ViewHolder {
 
+        SimpleDraweeView image;
         TextView title;
 
         ArticleViewHolder(@NonNull View itemView) {
             super(itemView);
+            image = (SimpleDraweeView) itemView.findViewById(R.id.article_item_list_image);
             title = (TextView) itemView.findViewById(R.id.article_item_list_title);
         }
 

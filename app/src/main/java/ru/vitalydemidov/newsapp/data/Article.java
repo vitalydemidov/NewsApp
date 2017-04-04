@@ -32,6 +32,11 @@ public class Article {
     private String mPublishedAt;
 
 
+    public String getUrlToImage() {
+        return mUrlToImage;
+    }
+
+
     public String getTitle() {
         return mTitle;
     }

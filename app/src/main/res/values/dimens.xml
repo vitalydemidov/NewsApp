@@ -3,7 +3,18 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
+    <!-- Toolbar -->
+    <dimen name="toolbar_elevation">4dp</dimen>
+
     <!-- NavigationView -->
     <dimen name="navigation_view_header_height">160dp</dimen>
+
+    <!-- Articles -->
+    <dimen name="card_view_padding">4dp</dimen>
+    <dimen name="card_view_corner_radius">2dp</dimen>
+    <dimen name="card_view_elevation">5dp</dimen>
+    <dimen name="card_view_content_padding">8dp</dimen>
+    <dimen name="card_view_image_height">200dp</dimen>
+    <dimen name="card_view_title_text_size">16sp</dimen>
 
 </resources>

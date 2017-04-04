@@ -2,6 +2,8 @@ package ru.vitalydemidov.newsapp;
 
 import android.app.Application;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
+
 import ru.vitalydemidov.newsapp.api.ApiClient;
 
 /**
@@ -14,5 +16,6 @@ public class NewsApp extends Application {
     public void onCreate() {
         super.onCreate();
         ApiClient.init();
+        Fresco.initialize(this);
     }
 }
