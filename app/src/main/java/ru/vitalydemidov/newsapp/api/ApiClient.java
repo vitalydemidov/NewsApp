@@ -1,6 +1,6 @@
 package ru.vitalydemidov.newsapp.api;
 
-import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -15,49 +15,37 @@ public class ApiClient {
 
     private static final String API_BASE_URL = "https://newsapi.org/v1/";
 
-    private static volatile ApiClient sApiClient;
 
-    @NonNull
-    private final ApiInterface mApiInterface;
+    @Nullable
+    private static ApiInterface mApiInterface;
 
 
-    private ApiClient() {
-        mApiInterface = createApiClient(ApiInterface.class);
-    }
+    private ApiClient() {}
 
 
     public static void init() {
-        if (sApiClient == null) {
+        if (mApiInterface == null) {
             synchronized (ApiClient.class) {
-                if (sApiClient == null) {
-                    sApiClient = new ApiClient();
+                if (mApiInterface == null) {
+                    mApiInterface = initApiClient();
                 }
             }
         }
     }
 
 
-    public static ApiClient getApiClient() {
-        return CommonUtils.checkNotNull(sApiClient, "Init ApiClient before use it!");
+    public static ApiInterface provideApiClient() {
+        return CommonUtils.checkNotNull(mApiInterface, "Init ApiClient before use it!");
     }
 
 
-    public static ApiInterface provideApiClient() {
+    private static ApiInterface initApiClient() {
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl(API_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create());
 
         return builder.build().create(ApiInterface.class);
-    }
-
-
-    private <T> T createApiClient(@NonNull Class<T> apiClientClass) {
-        Retrofit.Builder builder = new Retrofit.Builder()
-                .baseUrl(API_BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create());
-
-        return builder.build().create(apiClientClass);
     }
 
 }
