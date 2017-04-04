@@ -7,7 +7,7 @@ import android.support.annotation.Nullable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
-import ru.vitalydemidov.newsapp.data.source.SourcesRepository;
+import ru.vitalydemidov.newsapp.data.source.NewsRepository;
 
 import static ru.vitalydemidov.newsapp.util.CommonUtils.checkNotNull;
 
@@ -27,7 +27,7 @@ class SourcesPresenter implements SourcesContract.Presenter {
 
 
     @NonNull
-    private final SourcesRepository mSourcesRepository;
+    private final NewsRepository mNewsRepository;
 
 
     @NonNull
@@ -47,10 +47,10 @@ class SourcesPresenter implements SourcesContract.Presenter {
 
 
     public SourcesPresenter(@NonNull SourcesContract.View sourcesView,
-                            @NonNull SourcesRepository sourcesRepository) {
+                            @NonNull NewsRepository newsRepository) {
         mSourcesView = checkNotNull(sourcesView);
         mSourcesView.setPresenter(this);
-        mSourcesRepository = checkNotNull(sourcesRepository);
+        mNewsRepository = checkNotNull(newsRepository);
         mCompositeDisposable = new CompositeDisposable();
     }
 
@@ -70,7 +70,7 @@ class SourcesPresenter implements SourcesContract.Presenter {
     @Override
     public void loadSources() {
         mCompositeDisposable.add(
-                mSourcesRepository.getSources(
+                mNewsRepository.getSources(
                         mCurrentCategoryFiltering.getTitle(),
                         mCurrentLanguageFiltering.getTitle(),
                         mCurrentCountryFiltering.getTitle()

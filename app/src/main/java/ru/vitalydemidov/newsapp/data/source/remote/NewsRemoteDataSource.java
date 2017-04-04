@@ -9,26 +9,26 @@ import io.reactivex.Observable;
 import ru.vitalydemidov.newsapp.api.ApiClient;
 import ru.vitalydemidov.newsapp.data.Article;
 import ru.vitalydemidov.newsapp.data.Source;
-import ru.vitalydemidov.newsapp.data.source.SourcesDataSource;
+import ru.vitalydemidov.newsapp.data.source.NewsDataSource;
 
 /**
  * Created by vitalydemidov on 25/01/2017.
  */
 
-public class SourcesRemoteDataSource implements SourcesDataSource {
+public class NewsRemoteDataSource implements NewsDataSource {
 
-    private static SourcesRemoteDataSource sInstance;
+    private static NewsRemoteDataSource sInstance;
 
 
-    public static SourcesRemoteDataSource getInstance() {
+    public static NewsRemoteDataSource getInstance() {
         if (sInstance == null) {
-            sInstance = new SourcesRemoteDataSource();
+            sInstance = new NewsRemoteDataSource();
         }
         return sInstance;
     }
 
 
-    private SourcesRemoteDataSource() {}
+    private NewsRemoteDataSource() {}
 
 
     @Override

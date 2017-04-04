@@ -8,26 +8,26 @@ import java.util.List;
 import io.reactivex.Observable;
 import ru.vitalydemidov.newsapp.data.Article;
 import ru.vitalydemidov.newsapp.data.Source;
-import ru.vitalydemidov.newsapp.data.source.SourcesDataSource;
+import ru.vitalydemidov.newsapp.data.source.NewsDataSource;
 
 /**
  * Created by vitalydemidov on 26/02/2017.
  */
 
-public class SourcesLocalDataSource implements SourcesDataSource {
+public class NewsLocalDataSource implements NewsDataSource {
 
-    private static SourcesLocalDataSource sInstance;
+    private static NewsLocalDataSource sInstance;
 
 
-    public static SourcesLocalDataSource getInstance() {
+    public static NewsLocalDataSource getInstance() {
         if (sInstance == null) {
-            sInstance = new SourcesLocalDataSource();
+            sInstance = new NewsLocalDataSource();
         }
         return sInstance;
     }
 
 
-    private SourcesLocalDataSource() {}
+    private NewsLocalDataSource() {}
 
 
     @Override

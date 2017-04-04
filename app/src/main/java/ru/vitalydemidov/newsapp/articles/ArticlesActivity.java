@@ -8,9 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import ru.vitalydemidov.newsapp.R;
-import ru.vitalydemidov.newsapp.data.source.SourcesRepository;
-import ru.vitalydemidov.newsapp.data.source.local.SourcesLocalDataSource;
-import ru.vitalydemidov.newsapp.data.source.remote.SourcesRemoteDataSource;
+import ru.vitalydemidov.newsapp.data.source.NewsRepository;
+import ru.vitalydemidov.newsapp.data.source.local.NewsLocalDataSource;
+import ru.vitalydemidov.newsapp.data.source.remote.NewsRemoteDataSource;
 import ru.vitalydemidov.newsapp.util.ActivityUtils;
 
 /**
@@ -47,7 +47,7 @@ public class ArticlesActivity extends AppCompatActivity {
 
         // Create Presenter
         ArticlesPresenter articlesPresenter = new ArticlesPresenter(mSourceId, articlesFragment,
-                SourcesRepository.getInstance(SourcesRemoteDataSource.getInstance(), SourcesLocalDataSource.getInstance()));
+                NewsRepository.getInstance(NewsRemoteDataSource.getInstance(), NewsLocalDataSource.getInstance()));
     }
 
 

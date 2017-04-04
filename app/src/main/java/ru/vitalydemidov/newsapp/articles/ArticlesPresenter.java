@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
-import ru.vitalydemidov.newsapp.data.source.SourcesRepository;
+import ru.vitalydemidov.newsapp.data.source.NewsRepository;
 import ru.vitalydemidov.newsapp.util.CommonUtils;
 
 /**
@@ -23,7 +23,7 @@ public class ArticlesPresenter implements ArticlesContract.Presenter {
 
 
     @NonNull
-    private final SourcesRepository mSourcesRepository;
+    private final NewsRepository mNewsRepository;
 
 
     @NonNull
@@ -32,11 +32,11 @@ public class ArticlesPresenter implements ArticlesContract.Presenter {
 
     public ArticlesPresenter(@NonNull String sourceId,
                              @NonNull ArticlesContract.View articlesView,
-                             @NonNull SourcesRepository sourcesRepository) {
+                             @NonNull NewsRepository newsRepository) {
         mSourceId = CommonUtils.checkNotNull(sourceId);
         mArticlesView = CommonUtils.checkNotNull(articlesView);
         mArticlesView.setPresenter(this);
-        mSourcesRepository = CommonUtils.checkNotNull(sourcesRepository);
+        mNewsRepository = CommonUtils.checkNotNull(newsRepository);
         mCompositeDisposable = new CompositeDisposable();
     }
 
@@ -55,7 +55,7 @@ public class ArticlesPresenter implements ArticlesContract.Presenter {
 
     public void loadArticles(@NonNull String sourceId) {
         mCompositeDisposable.add(
-            mSourcesRepository.getArticles(sourceId)
+            mNewsRepository.getArticles(sourceId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(

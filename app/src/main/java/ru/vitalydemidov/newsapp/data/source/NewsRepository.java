@@ -15,30 +15,30 @@ import static ru.vitalydemidov.newsapp.util.CommonUtils.checkNotNull;
  * Created by vitalydemidov on 25/01/2017.
  */
 
-public class SourcesRepository implements SourcesDataSource {
+public class NewsRepository implements NewsDataSource {
 
-    private static SourcesRepository sInstance;
-
-
-    @NonNull
-    private final SourcesDataSource mSourcesRemoteDataSource;
+    private static NewsRepository sInstance;
 
 
     @NonNull
-    private final SourcesDataSource mSourcesLocalDataSource;
+    private final NewsDataSource mSourcesRemoteDataSource;
 
 
-    private SourcesRepository(@NonNull SourcesDataSource sourcesRemoteDataSource,
-                              @NonNull SourcesDataSource sourcesLocalDataSource) {
+    @NonNull
+    private final NewsDataSource mSourcesLocalDataSource;
+
+
+    private NewsRepository(@NonNull NewsDataSource sourcesRemoteDataSource,
+                           @NonNull NewsDataSource sourcesLocalDataSource) {
         mSourcesRemoteDataSource = checkNotNull(sourcesRemoteDataSource);
         mSourcesLocalDataSource = checkNotNull(sourcesLocalDataSource);
     }
 
 
-    public static SourcesRepository getInstance(@NonNull SourcesDataSource sourcesRemoteDataSource,
-                                                @NonNull SourcesDataSource sourcesLocalDataSource) {
+    public static NewsRepository getInstance(@NonNull NewsDataSource sourcesRemoteDataSource,
+                                             @NonNull NewsDataSource sourcesLocalDataSource) {
         if (sInstance == null) {
-            sInstance = new SourcesRepository(sourcesRemoteDataSource, sourcesLocalDataSource);
+            sInstance = new NewsRepository(sourcesRemoteDataSource, sourcesLocalDataSource);
         }
         return sInstance;
     }
