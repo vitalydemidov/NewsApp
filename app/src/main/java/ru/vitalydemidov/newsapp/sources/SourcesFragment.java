@@ -29,6 +29,7 @@ import static ru.vitalydemidov.newsapp.util.CommonUtils.checkNotNull;
 public class SourcesFragment extends Fragment implements SourcesContract.View, SourcesAdapter.OnSourceSelectedListener {
 
     private static final String EXTRA_SOURCE_ID = "ru.vitalydemidov.newsapp.extra_source_id";
+    private static final String EXTRA_SOURCE_TITLE = "ru.vitalydemidov.newsapp.extra_source_title";
 
 
     @NonNull
@@ -130,10 +131,9 @@ public class SourcesFragment extends Fragment implements SourcesContract.View, S
     //region SourcesAdapter.OnSourceSelectedListener interface implementation
     @Override
     public void onSourceSelected(@NonNull Source source) {
-        Toast.makeText(getContext(), source.getName() + " selected.", Toast.LENGTH_SHORT).show();
-
         Intent intent = new Intent(getContext(), ArticlesActivity.class);
         intent.putExtra(EXTRA_SOURCE_ID, source.getId());
+        intent.putExtra(EXTRA_SOURCE_TITLE, source.getName());
         startActivity(intent);
     }
     //endregion SourcesAdapter.OnSourceSelectedListener interface implementation

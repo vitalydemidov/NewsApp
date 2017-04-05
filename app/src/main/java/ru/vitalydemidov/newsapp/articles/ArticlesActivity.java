@@ -21,6 +21,7 @@ import ru.vitalydemidov.newsapp.util.ActivityUtils;
 public class ArticlesActivity extends AppCompatActivity {
 
     private static final String EXTRA_SOURCE_ID = "ru.vitalydemidov.newsapp.extra_source_id";
+    private static final String EXTRA_SOURCE_TITLE = "ru.vitalydemidov.newsapp.extra_source_title";
 
 
     @NonNull
@@ -55,6 +56,7 @@ public class ArticlesActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(getIntent().getStringExtra(EXTRA_SOURCE_TITLE));
     }
 
 }

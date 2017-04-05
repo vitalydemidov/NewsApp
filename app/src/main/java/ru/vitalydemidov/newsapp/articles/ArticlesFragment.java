@@ -25,7 +25,7 @@ import ru.vitalydemidov.newsapp.util.CommonUtils;
 @UiThread
 public class ArticlesFragment extends Fragment implements ArticlesContract.View {
 
-    private static final String SOURCE_ID_EXTRA = ArticlesFragment.class.getCanonicalName() + ".SOURCE_ID_EXTRA";
+    private static final String EXTRA_SOURCE_ID = "ru.vitalydemidov.newsapp.extra_source_id";
 
 
     @NonNull
@@ -38,7 +38,7 @@ public class ArticlesFragment extends Fragment implements ArticlesContract.View 
 
     public static ArticlesFragment newInstance(@NonNull String sourceId) {
         Bundle args = new Bundle();
-        args.putString(SOURCE_ID_EXTRA, sourceId);
+        args.putString(EXTRA_SOURCE_ID, sourceId);
         ArticlesFragment fragment = new ArticlesFragment();
         fragment.setArguments(args);
         return fragment;
