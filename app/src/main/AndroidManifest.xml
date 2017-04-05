@@ -15,7 +15,7 @@
         <activity
             android:name=".sources.SourcesActivity"
             android:label="@string/activity_sources_label"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar.TranslucentStatus">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
