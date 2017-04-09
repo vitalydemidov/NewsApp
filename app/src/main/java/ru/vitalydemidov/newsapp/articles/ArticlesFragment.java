@@ -18,10 +18,6 @@ import ru.vitalydemidov.newsapp.R;
 import ru.vitalydemidov.newsapp.data.Article;
 import ru.vitalydemidov.newsapp.util.CommonUtils;
 
-/**
- * Created by vitalydemidov on 02/04/2017.
- */
-
 @UiThread
 public class ArticlesFragment extends Fragment implements ArticlesContract.View {
 
@@ -108,4 +104,5 @@ public class ArticlesFragment extends Fragment implements ArticlesContract.View 
     public void showLoadingProgress(boolean showProgress) {
 
     }
+
 }

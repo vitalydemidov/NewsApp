@@ -5,42 +5,27 @@ import android.support.annotation.Nullable;
 
 import java.util.List;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import io.reactivex.Observable;
 import ru.vitalydemidov.newsapp.data.Article;
 import ru.vitalydemidov.newsapp.data.Source;
 
-import static ru.vitalydemidov.newsapp.util.CommonUtils.checkNotNull;
-
-/**
- * Created by vitalydemidov on 25/01/2017.
- */
-
+@Singleton
 public class NewsRepository implements NewsDataSource {
 
-    private static NewsRepository sInstance;
-
-
-    @NonNull
     private final NewsDataSource mSourcesRemoteDataSource;
 
 
-    @NonNull
     private final NewsDataSource mSourcesLocalDataSource;
 
 
-    private NewsRepository(@NonNull NewsDataSource sourcesRemoteDataSource,
-                           @NonNull NewsDataSource sourcesLocalDataSource) {
-        mSourcesRemoteDataSource = checkNotNull(sourcesRemoteDataSource);
-        mSourcesLocalDataSource = checkNotNull(sourcesLocalDataSource);
-    }
-
-
-    public static NewsRepository getInstance(@NonNull NewsDataSource sourcesRemoteDataSource,
-                                             @NonNull NewsDataSource sourcesLocalDataSource) {
-        if (sInstance == null) {
-            sInstance = new NewsRepository(sourcesRemoteDataSource, sourcesLocalDataSource);
-        }
-        return sInstance;
+    @Inject
+    NewsRepository(@Remote NewsDataSource sourcesRemoteDataSource,
+                   @Local NewsDataSource sourcesLocalDataSource) {
+        mSourcesRemoteDataSource = sourcesRemoteDataSource;
+        mSourcesLocalDataSource = sourcesLocalDataSource;
     }
 
 

@@ -4,16 +4,12 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import javax.inject.Inject;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 import ru.vitalydemidov.newsapp.data.source.NewsRepository;
-
-import static ru.vitalydemidov.newsapp.util.CommonUtils.checkNotNull;
-
-/**
- * Created by vitalydemidov on 23/01/2017.
- */
 
 class SourcesPresenter implements SourcesContract.Presenter {
 
@@ -46,11 +42,12 @@ class SourcesPresenter implements SourcesContract.Presenter {
     private SourcesCountryFiltering mCurrentCountryFiltering = SourcesCountryFiltering.COUNTRY_ALL;
 
 
-    public SourcesPresenter(@NonNull SourcesContract.View sourcesView,
-                            @NonNull NewsRepository newsRepository) {
-        mSourcesView = checkNotNull(sourcesView);
+    @Inject
+    SourcesPresenter(@NonNull SourcesContract.View sourcesView,
+                     @NonNull NewsRepository newsRepository) {
+        mSourcesView = sourcesView;
         mSourcesView.setPresenter(this);
-        mNewsRepository = checkNotNull(newsRepository);
+        mNewsRepository = newsRepository;
         mCompositeDisposable = new CompositeDisposable();
     }
 
