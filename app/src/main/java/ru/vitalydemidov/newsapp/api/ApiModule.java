@@ -4,6 +4,8 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import retrofit2.CallAdapter;
+import retrofit2.Converter;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -16,13 +18,28 @@ public class ApiModule {
 
     @Provides
     @Singleton
-    NewsApi provideNewsApi() {
+    NewsApi provideNewsApi(Converter.Factory converter,
+                           CallAdapter.Factory callAdapter) {
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl(API_BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create());
+                .addConverterFactory(converter)
+                .addCallAdapterFactory(callAdapter);
 
         return builder.build().create(NewsApi.class);
+    }
+
+
+    @Provides
+    @Singleton
+    Converter.Factory provideConverterFactory() {
+        return GsonConverterFactory.create();
+    }
+
+
+    @Provides
+    @Singleton
+    CallAdapter.Factory provideCallAdapterFactory() {
+        return RxJava2CallAdapterFactory.create();
     }
 
 }
