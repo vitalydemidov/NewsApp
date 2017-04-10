@@ -21,7 +21,7 @@ class ArticlesPresenterModule {
 
 
     ArticlesPresenterModule(@NonNull ArticlesContract.View articlesView,
-                                   @NonNull String sourceId) {
+                            @NonNull String sourceId) {
         mArticlesView = articlesView;
         mSourceId = sourceId;
     }

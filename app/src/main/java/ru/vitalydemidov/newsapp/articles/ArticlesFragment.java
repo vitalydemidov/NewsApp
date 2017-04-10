@@ -66,8 +66,8 @@ public class ArticlesFragment extends Fragment implements ArticlesContract.View 
 
     @Override
     public void onPause() {
-        super.onPause();
         mArticlesPresenter.unsubscribe();
+        super.onPause();
     }
 
     private void initViews(@NonNull View rootView) {
