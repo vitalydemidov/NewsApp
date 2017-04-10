@@ -41,7 +41,7 @@ class ArticlesPresenter implements ArticlesContract.Presenter {
 
     @Override
     public void subscribe() {
-        loadArticles(mSourceId);
+        loadArticles();
     }
 
 
@@ -51,18 +51,19 @@ class ArticlesPresenter implements ArticlesContract.Presenter {
     }
 
 
-    public void loadArticles(@NonNull String sourceId) {
+    public void loadArticles() {
+        mArticlesView.showLoadingProgress(true);
+
         mCompositeDisposable.add(
-            mNewsRepository.getArticles(sourceId)
+            mNewsRepository.getArticles(mSourceId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnTerminate(() -> mArticlesView.showLoadingProgress(false))
                 .subscribe(
                         // onNext
                         mArticlesView::showArticles,
                         // onError
-                        throwable -> mArticlesView.showLoadingError(),
-                        // onComplete
-                        () -> mArticlesView.showLoadingProgress(false)
+                        throwable -> mArticlesView.showLoadingError()
                 )
         );
     }

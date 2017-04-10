@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.UiThread;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -30,6 +31,10 @@ public class ArticlesFragment extends Fragment implements ArticlesContract.View 
 
     @NonNull
     private ArticlesAdapter mArticlesAdapter;
+
+
+    @NonNull
+    private SwipeRefreshLayout mArticlesSwipeRefreshLayout;
 
 
     public static ArticlesFragment newInstance(@NonNull String sourceId) {
@@ -71,12 +76,22 @@ public class ArticlesFragment extends Fragment implements ArticlesContract.View 
     }
 
     private void initViews(@NonNull View rootView) {
+        initArticlesSwipeRefreshLayout(rootView);
         initArticlesRecyclerView(rootView);
     }
 
 
+    private void initArticlesSwipeRefreshLayout(@NonNull View rootView) {
+        mArticlesSwipeRefreshLayout =
+                (SwipeRefreshLayout) rootView.findViewById(R.id.articles_swipe_refresh_layout);
+        mArticlesSwipeRefreshLayout.setOnRefreshListener(() -> mArticlesPresenter.loadArticles());
+        mArticlesSwipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
+    }
+
+
     private void initArticlesRecyclerView(@NonNull View rootView) {
-        RecyclerView articlesRecyclerView = (RecyclerView) rootView.findViewById(R.id.articles_recycler_view);
+        RecyclerView articlesRecyclerView =
+                (RecyclerView) rootView.findViewById(R.id.articles_recycler_view);
         articlesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         articlesRecyclerView.setAdapter(mArticlesAdapter);
     }
@@ -102,7 +117,7 @@ public class ArticlesFragment extends Fragment implements ArticlesContract.View 
 
     @Override
     public void showLoadingProgress(boolean showProgress) {
-
+        mArticlesSwipeRefreshLayout.setRefreshing(showProgress);
     }
 
 }

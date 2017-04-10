@@ -1,7 +1,5 @@
 package ru.vitalydemidov.newsapp.articles;
 
-import android.support.annotation.NonNull;
-
 import java.util.List;
 
 import ru.vitalydemidov.newsapp.base.BasePresenter;
@@ -19,7 +17,7 @@ interface ArticlesContract {
 
     interface Presenter extends BasePresenter {
 
-        void loadArticles(@NonNull String sourceId);
+        void loadArticles();
 
     }
 

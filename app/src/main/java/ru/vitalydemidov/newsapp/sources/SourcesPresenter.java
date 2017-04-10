@@ -66,6 +66,8 @@ class SourcesPresenter implements SourcesContract.Presenter {
 
     @Override
     public void loadSources() {
+        mSourcesView.showLoadingProgress(true);
+
         mCompositeDisposable.add(
                 mNewsRepository.getSources(
                         mCurrentCategoryFiltering.getTitle(),
@@ -74,13 +76,12 @@ class SourcesPresenter implements SourcesContract.Presenter {
                 )
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnTerminate(() -> mSourcesView.showLoadingProgress(false))
                 .subscribe(
                         // onNext
                         mSourcesView::showSources,
                         // onError
-                        throwable -> mSourcesView.showLoadingError(),
-                        // onComplete
-                        () -> mSourcesView.showLoadingProgress(false)
+                        throwable -> mSourcesView.showLoadingError()
                 )
         );
     }
