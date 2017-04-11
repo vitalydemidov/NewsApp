@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.UiThread;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -38,6 +39,10 @@ public class SourcesFragment extends Fragment implements SourcesContract.View, S
 
     @NonNull
     private SourcesAdapter mSourcesAdapter;
+
+
+    @NonNull
+    private SwipeRefreshLayout mSourcesSwipeRefreshLayout;
 
 
     public static SourcesFragment newInstance() {
@@ -94,7 +99,16 @@ public class SourcesFragment extends Fragment implements SourcesContract.View, S
 
 
     private void initViews(@NonNull View rootView) {
+        initArticlesSwipeRefreshLayout(rootView);
         initSourcesRecyclerView(rootView);
+    }
+
+
+    private void initArticlesSwipeRefreshLayout(@NonNull View rootView) {
+        mSourcesSwipeRefreshLayout =
+                (SwipeRefreshLayout) rootView.findViewById(R.id.sources_swipe_refresh_layout);
+        mSourcesSwipeRefreshLayout.setOnRefreshListener(() -> mSourcesPresenter.loadSources());
+        mSourcesSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
     }
 
 
@@ -125,7 +139,7 @@ public class SourcesFragment extends Fragment implements SourcesContract.View, S
 
     @Override
     public void showLoadingProgress(boolean showProgress) {
-
+        mSourcesSwipeRefreshLayout.setRefreshing(showProgress);
     }
 
     //region SourcesAdapter.OnSourceSelectedListener interface implementation
