@@ -1,5 +1,7 @@
 package ru.vitalydemidov.newsapp.api;
 
+import com.google.gson.Gson;
+
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -18,21 +20,33 @@ public class ApiModule {
 
     @Provides
     @Singleton
-    NewsApi provideNewsApi(Converter.Factory converter,
-                           CallAdapter.Factory callAdapter) {
-        Retrofit.Builder builder = new Retrofit.Builder()
-                .baseUrl(API_BASE_URL)
-                .addConverterFactory(converter)
-                .addCallAdapterFactory(callAdapter);
-
-        return builder.build().create(NewsApi.class);
+    NewsApi provideNewsApi(Retrofit retrofit) {
+        return retrofit.create(NewsApi.class);
     }
 
 
     @Provides
     @Singleton
-    Converter.Factory provideConverterFactory() {
-        return GsonConverterFactory.create();
+    Retrofit provideRetrofit(Converter.Factory converter, CallAdapter.Factory callAdapter) {
+        return new Retrofit.Builder()
+                .baseUrl(API_BASE_URL)
+                .addConverterFactory(converter)
+                .addCallAdapterFactory(callAdapter)
+                .build();
+    }
+
+
+    @Provides
+    @Singleton
+    Converter.Factory provideGsonConverterFactory(Gson gson) {
+        return GsonConverterFactory.create(gson);
+    }
+
+
+    @Provides
+    @Singleton
+    Gson provideGson() {
+        return new Gson();
     }
 
 
