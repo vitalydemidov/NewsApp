@@ -2,17 +2,14 @@ package ru.vitalydemidov.newsapp.articles;
 
 import android.support.annotation.NonNull;
 
+import javax.inject.Inject;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 import ru.vitalydemidov.newsapp.data.source.NewsRepository;
-import ru.vitalydemidov.newsapp.util.CommonUtils;
 
-/**
- * Created by vitalydemidov on 02/04/2017.
- */
-
-public class ArticlesPresenter implements ArticlesContract.Presenter {
+class ArticlesPresenter implements ArticlesContract.Presenter {
 
     @NonNull
     private String mSourceId;
@@ -30,13 +27,14 @@ public class ArticlesPresenter implements ArticlesContract.Presenter {
     private final CompositeDisposable mCompositeDisposable;
 
 
-    public ArticlesPresenter(@NonNull String sourceId,
-                             @NonNull ArticlesContract.View articlesView,
-                             @NonNull NewsRepository newsRepository) {
-        mSourceId = CommonUtils.checkNotNull(sourceId);
-        mArticlesView = CommonUtils.checkNotNull(articlesView);
+    @Inject
+    ArticlesPresenter(@NonNull String sourceId,
+                      @NonNull ArticlesContract.View articlesView,
+                      @NonNull NewsRepository newsRepository) {
+        mSourceId = sourceId;
+        mArticlesView = articlesView;
         mArticlesView.setPresenter(this);
-        mNewsRepository = CommonUtils.checkNotNull(newsRepository);
+        mNewsRepository = newsRepository;
         mCompositeDisposable = new CompositeDisposable();
     }
 

@@ -8,11 +8,7 @@ import ru.vitalydemidov.newsapp.base.BasePresenter;
 import ru.vitalydemidov.newsapp.base.BaseView;
 import ru.vitalydemidov.newsapp.data.Article;
 
-/**
- * Created by vitalydemidov on 02/04/2017.
- */
-
-public interface ArticlesContract {
+interface ArticlesContract {
 
     interface View extends BaseView<Presenter> {
 

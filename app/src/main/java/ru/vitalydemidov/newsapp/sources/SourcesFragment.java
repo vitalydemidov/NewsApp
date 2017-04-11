@@ -81,8 +81,8 @@ public class SourcesFragment extends Fragment implements SourcesContract.View, S
 
     @Override
     public void onPause() {
-        super.onPause();
         mSourcesPresenter.unsubscribe();
+        super.onPause();
     }
 
 

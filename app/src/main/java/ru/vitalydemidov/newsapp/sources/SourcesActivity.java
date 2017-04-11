@@ -11,15 +11,11 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
-import ru.vitalydemidov.newsapp.R;
-import ru.vitalydemidov.newsapp.data.source.NewsRepository;
-import ru.vitalydemidov.newsapp.data.source.local.NewsLocalDataSource;
-import ru.vitalydemidov.newsapp.data.source.remote.NewsRemoteDataSource;
-import ru.vitalydemidov.newsapp.util.ActivityUtils;
+import javax.inject.Inject;
 
-/**
- * Created by vitalydemidov on 23/01/2017.
- */
+import ru.vitalydemidov.newsapp.NewsApp;
+import ru.vitalydemidov.newsapp.R;
+import ru.vitalydemidov.newsapp.util.ActivityUtils;
 
 @UiThread
 public class SourcesActivity extends AppCompatActivity {
@@ -33,7 +29,8 @@ public class SourcesActivity extends AppCompatActivity {
 
 
     @NonNull
-    private SourcesPresenter mSourcesPresenter;
+    @Inject
+    SourcesPresenter mSourcesPresenter;
 
 
     @Override
@@ -55,8 +52,11 @@ public class SourcesActivity extends AppCompatActivity {
         }
 
         // Create Presenter
-        mSourcesPresenter = new SourcesPresenter(sourcesFragment,
-                NewsRepository.getInstance(NewsRemoteDataSource.getInstance(), NewsLocalDataSource.getInstance()));
+        DaggerSourcesComponent.builder()
+                .newsRepositoryComponent(((NewsApp) getApplication()).getNewsRepositoryComponent())
+                .sourcesPresenterModule(new SourcesPresenterModule(sourcesFragment))
+                .build()
+                .inject(this);
     }
 
 

@@ -4,18 +4,25 @@ import android.app.Application;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 
-import ru.vitalydemidov.newsapp.api.ApiClient;
-
-/**
- * Created by vitalydemidov on 20/03/2017.
- */
+import ru.vitalydemidov.newsapp.data.source.DaggerNewsRepositoryComponent;
+import ru.vitalydemidov.newsapp.data.source.NewsRepositoryComponent;
 
 public class NewsApp extends Application {
+
+    private NewsRepositoryComponent mNewsRepositoryComponent;
+
 
     @Override
     public void onCreate() {
         super.onCreate();
-        ApiClient.init();
         Fresco.initialize(this);
+
+        mNewsRepositoryComponent = DaggerNewsRepositoryComponent.create();
     }
+
+
+    public NewsRepositoryComponent getNewsRepositoryComponent() {
+        return mNewsRepositoryComponent;
+    }
+
 }

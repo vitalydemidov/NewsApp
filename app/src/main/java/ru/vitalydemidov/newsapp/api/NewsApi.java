@@ -11,7 +11,7 @@ import ru.vitalydemidov.newsapp.data.SourcesResponse;
  * Created by vitalydemidov on 19/03/2017.
  */
 
-public interface ApiInterface {
+public interface NewsApi {
 
     @GET("sources")
     Observable<SourcesResponse> sources(@Query("category") String category,

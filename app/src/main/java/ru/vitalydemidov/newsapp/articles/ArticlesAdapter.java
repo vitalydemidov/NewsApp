@@ -15,12 +15,8 @@ import java.util.List;
 import ru.vitalydemidov.newsapp.R;
 import ru.vitalydemidov.newsapp.data.Article;
 
-/**
- * Created by vitalydemidov on 02/04/2017.
- */
-
 @UiThread
-public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.ArticleViewHolder> {
+class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.ArticleViewHolder> {
 
     private List<Article> mArticles;
 
