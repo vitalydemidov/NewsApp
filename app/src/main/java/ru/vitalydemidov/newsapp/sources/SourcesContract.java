@@ -10,10 +10,6 @@ import ru.vitalydemidov.newsapp.base.BasePresenter;
 import ru.vitalydemidov.newsapp.base.BaseView;
 import ru.vitalydemidov.newsapp.data.Source;
 
-/**
- * Created by vitalydemidov on 23/01/2017.
- */
-
 interface SourcesContract {
 
     interface View extends BaseView<Presenter> {
@@ -36,15 +32,6 @@ interface SourcesContract {
         void setLanguageFiltering(@NonNull SourcesLanguageFiltering language);
 
         void setCountryFiltering(@NonNull SourcesCountryFiltering country);
-
-        @NonNull
-        SourcesCategoryFiltering getCategoryFiltering();
-
-        @NonNull
-        SourcesLanguageFiltering getLanguageFiltering();
-
-        @NonNull
-        SourcesCountryFiltering getCountryFiltering();
 
     }
 
