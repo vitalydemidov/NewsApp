@@ -33,15 +33,6 @@ interface SourcesContract {
 
         void setCountryFiltering(@NonNull SourcesCountryFiltering country);
 
-        @NonNull
-        SourcesCategoryFiltering getCategoryFiltering();
-
-        @NonNull
-        SourcesLanguageFiltering getLanguageFiltering();
-
-        @NonNull
-        SourcesCountryFiltering getCountryFiltering();
-
     }
 
 }
