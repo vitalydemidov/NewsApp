@@ -1,8 +1,6 @@
 package ru.vitalydemidov.newsapp.sources;
 
-import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import java.util.List;
 
@@ -23,15 +21,11 @@ interface SourcesContract {
 
         void loadSources();
 
-        void saveState(@Nullable Bundle outState);
+        void setCategoryFiltering(SourcesCategoryFiltering category);
 
-        void restoreState(@Nullable Bundle savedState);
+        void setLanguageFiltering(SourcesLanguageFiltering language);
 
-        void setCategoryFiltering(@NonNull SourcesCategoryFiltering category);
-
-        void setLanguageFiltering(@NonNull SourcesLanguageFiltering language);
-
-        void setCountryFiltering(@NonNull SourcesCountryFiltering country);
+        void setCountryFiltering(SourcesCountryFiltering country);
 
         @NonNull
         SourcesCategoryFiltering getCategoryFiltering();

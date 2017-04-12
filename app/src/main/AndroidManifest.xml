@@ -14,18 +14,15 @@
 
         <activity
             android:name=".sources.SourcesActivity"
-            android:label="@string/activity_sources_label"
             android:theme="@style/AppTheme.NoActionBar.TranslucentStatus">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
         <activity
             android:name=".articles.ArticlesActivity"
-            android:label="@string/activity_articles_label"
             android:theme="@style/AppTheme.NoActionBar"
             android:parentActivityName=".sources.SourcesActivity"/>
 

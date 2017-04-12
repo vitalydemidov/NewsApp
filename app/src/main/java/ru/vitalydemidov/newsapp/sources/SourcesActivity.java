@@ -92,9 +92,9 @@ public class SourcesActivity extends AppCompatActivity {
         }
         navigationView.setNavigationItemSelectedListener(
                 menuItem -> {
-                    SourcesCategoryFiltering category = SourcesCategoryFiltering.CATEGORY_ALL;
-                    SourcesLanguageFiltering language = SourcesLanguageFiltering.LANGUAGE_ALL;
-                    SourcesCountryFiltering country = SourcesCountryFiltering.COUNTRY_ALL;
+                    SourcesCategoryFiltering category = null;
+                    SourcesLanguageFiltering language = null;
+                    SourcesCountryFiltering country = null;
 
                     switch (menuItem.getItemId()) {
 

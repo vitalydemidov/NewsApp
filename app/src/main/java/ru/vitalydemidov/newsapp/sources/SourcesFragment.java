@@ -20,17 +20,14 @@ import ru.vitalydemidov.newsapp.R;
 import ru.vitalydemidov.newsapp.articles.ArticlesActivity;
 import ru.vitalydemidov.newsapp.data.Source;
 
-import static ru.vitalydemidov.newsapp.util.CommonUtils.checkNotNull;
-
-/**
- * Created by vitalydemidov on 23/01/2017.
- */
-
 @UiThread
 public class SourcesFragment extends Fragment implements SourcesContract.View, SourcesAdapter.OnSourceSelectedListener {
 
     private static final String EXTRA_SOURCE_ID = "ru.vitalydemidov.newsapp.extra_source_id";
     private static final String EXTRA_SOURCE_TITLE = "ru.vitalydemidov.newsapp.extra_source_title";
+    private static final String CATEGORY_FILTERING_STATE = "ru.vitalydemidov.newsapp.category_filtering_state";
+    private static final String LANGUAGE_FILTERING_STATE = "ru.vitalydemidov.newsapp.language_filtering_stat";
+    private static final String COUNTRY_FILTERING_STATE = "ru.vitalydemidov.newsapp.country_filtering_stat";
 
 
     @NonNull
@@ -52,7 +49,7 @@ public class SourcesFragment extends Fragment implements SourcesContract.View, S
 
     @Override
     public void setPresenter(@NonNull SourcesContract.Presenter presenter) {
-        mSourcesPresenter = checkNotNull(presenter);
+        mSourcesPresenter = presenter;
     }
 
 
@@ -74,7 +71,11 @@ public class SourcesFragment extends Fragment implements SourcesContract.View, S
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mSourcesPresenter.restoreState(savedInstanceState);
+        if (savedInstanceState != null) {
+            mSourcesPresenter.setCategoryFiltering((SourcesCategoryFiltering) savedInstanceState.getSerializable(CATEGORY_FILTERING_STATE));
+            mSourcesPresenter.setLanguageFiltering((SourcesLanguageFiltering) savedInstanceState.getSerializable(LANGUAGE_FILTERING_STATE));
+            mSourcesPresenter.setCountryFiltering((SourcesCountryFiltering) savedInstanceState.getSerializable(COUNTRY_FILTERING_STATE));
+        }
     }
 
     @Override
@@ -94,7 +95,9 @@ public class SourcesFragment extends Fragment implements SourcesContract.View, S
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        mSourcesPresenter.saveState(outState);
+        outState.putSerializable(CATEGORY_FILTERING_STATE, mSourcesPresenter.getCategoryFiltering());
+        outState.putSerializable(LANGUAGE_FILTERING_STATE, mSourcesPresenter.getLanguageFiltering());
+        outState.putSerializable(COUNTRY_FILTERING_STATE, mSourcesPresenter.getCountryFiltering());
     }
 
 

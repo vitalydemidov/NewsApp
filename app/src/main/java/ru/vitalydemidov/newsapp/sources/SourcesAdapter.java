@@ -14,10 +14,6 @@ import java.util.List;
 import ru.vitalydemidov.newsapp.R;
 import ru.vitalydemidov.newsapp.data.Source;
 
-/**
- * Created by vitalydemidov on 25/01/2017.
- */
-
 @UiThread
 class SourcesAdapter extends RecyclerView.Adapter<SourcesAdapter.SourceViewHolder> {
 

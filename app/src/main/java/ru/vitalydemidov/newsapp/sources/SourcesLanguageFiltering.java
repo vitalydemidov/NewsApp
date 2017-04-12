@@ -2,10 +2,6 @@ package ru.vitalydemidov.newsapp.sources;
 
 import android.support.annotation.Nullable;
 
-/**
- * Created by vitalydemidov on 28/03/2017.
- */
-
 enum SourcesLanguageFiltering {
 
     LANGUAGE_ALL(null),

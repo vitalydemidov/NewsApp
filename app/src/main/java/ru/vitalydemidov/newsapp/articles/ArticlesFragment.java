@@ -17,7 +17,6 @@ import java.util.List;
 
 import ru.vitalydemidov.newsapp.R;
 import ru.vitalydemidov.newsapp.data.Article;
-import ru.vitalydemidov.newsapp.util.CommonUtils;
 
 @UiThread
 public class ArticlesFragment extends Fragment implements ArticlesContract.View {
@@ -99,7 +98,7 @@ public class ArticlesFragment extends Fragment implements ArticlesContract.View 
 
     @Override
     public void setPresenter(@NonNull ArticlesContract.Presenter presenter) {
-        mArticlesPresenter = CommonUtils.checkNotNull(presenter);
+        mArticlesPresenter = presenter;
     }
 
 
