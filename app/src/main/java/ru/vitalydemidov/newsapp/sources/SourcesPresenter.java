@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
+import ru.vitalydemidov.newsapp.data.Source;
 import ru.vitalydemidov.newsapp.data.source.NewsRepository;
 
 class SourcesPresenter implements SourcesContract.Presenter {
@@ -79,6 +80,11 @@ class SourcesPresenter implements SourcesContract.Presenter {
         );
     }
 
+
+    @Override
+    public void openArticlesForSource(@NonNull Source selectedSource) {
+        mSourcesView.showArticlesForSourceUi(selectedSource);
+    }
 
     @Override
     public void setCategoryFiltering(SourcesCategoryFiltering category) {

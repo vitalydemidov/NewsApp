@@ -14,12 +14,16 @@ interface SourcesContract {
 
         void showSources(List<Source> sources);
 
+        void showArticlesForSourceUi(@NonNull Source selectedSource);
+
     }
 
 
     interface Presenter extends BasePresenter {
 
         void loadSources();
+
+        void openArticlesForSource(@NonNull Source selectedSource);
 
         void setCategoryFiltering(SourcesCategoryFiltering category);
 

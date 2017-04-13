@@ -21,7 +21,7 @@ import ru.vitalydemidov.newsapp.articles.ArticlesActivity;
 import ru.vitalydemidov.newsapp.data.Source;
 
 @UiThread
-public class SourcesFragment extends Fragment implements SourcesContract.View, SourcesAdapter.OnSourceSelectedListener {
+public class SourcesFragment extends Fragment implements SourcesContract.View {
 
     private static final String EXTRA_SOURCE_ID = "ru.vitalydemidov.newsapp.extra_source_id";
     private static final String EXTRA_SOURCE_TITLE = "ru.vitalydemidov.newsapp.extra_source_title";
@@ -42,14 +42,13 @@ public class SourcesFragment extends Fragment implements SourcesContract.View, S
     private SwipeRefreshLayout mSourcesSwipeRefreshLayout;
 
 
+    @NonNull
+    private SourcesAdapter.SourceItemListener mItemListener =
+            (source -> mSourcesPresenter.openArticlesForSource(source));
+
+
     public static SourcesFragment newInstance() {
         return new SourcesFragment();
-    }
-
-
-    @Override
-    public void setPresenter(@NonNull SourcesContract.Presenter presenter) {
-        mSourcesPresenter = presenter;
     }
 
 
@@ -124,13 +123,14 @@ public class SourcesFragment extends Fragment implements SourcesContract.View, S
 
     private void initSourcesAdapter() {
         mSourcesAdapter = new SourcesAdapter();
-        mSourcesAdapter.setSourceSelectedListener(this);
+        mSourcesAdapter.setSourceItemListener(mItemListener);
     }
 
 
+    //region Contract
     @Override
-    public void showSources(List<Source> sources) {
-        mSourcesAdapter.setSources(sources);
+    public void setPresenter(@NonNull SourcesContract.Presenter presenter) {
+        mSourcesPresenter = presenter;
     }
 
 
@@ -145,14 +145,20 @@ public class SourcesFragment extends Fragment implements SourcesContract.View, S
         mSourcesSwipeRefreshLayout.setRefreshing(showProgress);
     }
 
-    //region SourcesAdapter.OnSourceSelectedListener interface implementation
+
     @Override
-    public void onSourceSelected(@NonNull Source source) {
+    public void showSources(List<Source> sources) {
+        mSourcesAdapter.setSources(sources);
+    }
+
+
+    @Override
+    public void showArticlesForSourceUi(@NonNull Source selectedSource) {
         Intent intent = new Intent(getContext(), ArticlesActivity.class);
-        intent.putExtra(EXTRA_SOURCE_ID, source.getId());
-        intent.putExtra(EXTRA_SOURCE_TITLE, source.getName());
+        intent.putExtra(EXTRA_SOURCE_ID, selectedSource.getId());
+        intent.putExtra(EXTRA_SOURCE_TITLE, selectedSource.getName());
         startActivity(intent);
     }
-    //endregion SourcesAdapter.OnSourceSelectedListener interface implementation
+    //endregion Contract
 
 }

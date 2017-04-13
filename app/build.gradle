@@ -62,7 +62,7 @@ dependencies {
     compile "com.android.support:design:$rootProject.ext.supportLibraryVersion"
 
     // RxJava & RxAndroid
-    compile "io.reactivex.rxjava2:rxjava:$rootProject.ext.rxJava2Version"
+    compile "io.reactivex.rxjava2:rxjava:$rootProject.ext.rxJavaVersion"
     compile "io.reactivex.rxjava2:rxandroid:$rootProject.ext.rxAndroid"
 
     // Retrofit & OkHttp
@@ -71,14 +71,17 @@ dependencies {
     compile "com.squareup.retrofit2:adapter-rxjava2:$rootProject.ext.retrofitVersion"
 
     // Dagger 2
-    compile "com.google.dagger:dagger:$rootProject.ext.dagger2Version"
-    apt "com.google.dagger:dagger-compiler:$rootProject.ext.dagger2Version"
+    compile "com.google.dagger:dagger:$rootProject.ext.daggerVersion"
+    apt "com.google.dagger:dagger-compiler:$rootProject.ext.daggerVersion"
 
     // Fresco
     compile "com.facebook.fresco:fresco:$rootProject.ext.frescoVersion"
 
-    // Testing
+    // Local unit testing
     testCompile "junit:junit:$rootProject.ext.junitVersion"
+    testCompile "org.mockito:mockito-core:$rootProject.ext.mockitoVersion"
+    testCompile "org.hamcrest:hamcrest-all:$rootProject.ext.hamcrestVersion"
+
     androidTestCompile("com.android.support.test.espresso:espresso-core:$rootProject.ext.espressoVersion", {
         exclude group: 'com.android.support', module: 'support-annotations'
     })

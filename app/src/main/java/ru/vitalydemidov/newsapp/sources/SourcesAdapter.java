@@ -22,7 +22,7 @@ class SourcesAdapter extends RecyclerView.Adapter<SourcesAdapter.SourceViewHolde
 
 
     @Nullable
-    private OnSourceSelectedListener mListener;
+    private SourceItemListener mListener;
 
 
     public void setSources(List<Source> sources) {
@@ -31,7 +31,7 @@ class SourcesAdapter extends RecyclerView.Adapter<SourcesAdapter.SourceViewHolde
     }
 
 
-    public void setSourceSelectedListener(@NonNull OnSourceSelectedListener listener) {
+    void setSourceItemListener(@NonNull SourceItemListener listener) {
         mListener = listener;
     }
 
@@ -74,7 +74,7 @@ class SourcesAdapter extends RecyclerView.Adapter<SourcesAdapter.SourceViewHolde
     }
 
 
-    interface OnSourceSelectedListener {
+    interface SourceItemListener {
         void onSourceSelected(@NonNull Source source);
     }
 
