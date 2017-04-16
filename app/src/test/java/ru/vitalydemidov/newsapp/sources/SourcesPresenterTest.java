@@ -27,9 +27,9 @@ import static org.mockito.Mockito.when;
 public class SourcesPresenterTest {
 
     private static final List<Source> SOURCES = Arrays.asList(new Source(), new Source(), new Source());
-    private static final SourcesCategoryFiltering TEST_CATEGORY_FILTERING = SourcesCategoryFiltering.CATEGORY_SPORT;
-    private static final SourcesLanguageFiltering TEST_LANGUAGE_FILTERING = SourcesLanguageFiltering.LANGUAGE_ENGLISH;
-    private static final SourcesCountryFiltering TEST_COUNTRY_FILTERING = SourcesCountryFiltering.COUNTRY_GERMANY;
+    private static final SourcesCategoryFiltering CATEGORY_FILTERING = SourcesCategoryFiltering.CATEGORY_SPORT;
+    private static final SourcesLanguageFiltering LANGUAGE_FILTERING = SourcesLanguageFiltering.LANGUAGE_ENGLISH;
+    private static final SourcesCountryFiltering COUNTRY_FILTERING = SourcesCountryFiltering.COUNTRY_GERMANY;
 
     @Mock
     private SourcesContract.View mSourcesView;
@@ -95,22 +95,22 @@ public class SourcesPresenterTest {
 
     @Test
     public void setCategoryFilteringAndCheck() {
-        mSourcesPresenter.setCategoryFiltering(TEST_CATEGORY_FILTERING);
-        assertThat(mSourcesPresenter.getCategoryFiltering(), equalTo(TEST_CATEGORY_FILTERING));
+        mSourcesPresenter.setCategoryFiltering(CATEGORY_FILTERING);
+        assertThat(mSourcesPresenter.getCategoryFiltering(), equalTo(CATEGORY_FILTERING));
     }
 
 
     @Test
     public void setLanguageFilteringAndCheck() {
-        mSourcesPresenter.setLanguageFiltering(TEST_LANGUAGE_FILTERING);
-        assertThat(mSourcesPresenter.getLanguageFiltering(), equalTo(TEST_LANGUAGE_FILTERING));
+        mSourcesPresenter.setLanguageFiltering(LANGUAGE_FILTERING);
+        assertThat(mSourcesPresenter.getLanguageFiltering(), equalTo(LANGUAGE_FILTERING));
     }
 
 
     @Test
     public void setCountryFilteringAndCheck() {
-        mSourcesPresenter.setCountryFiltering(TEST_COUNTRY_FILTERING);
-        assertThat(mSourcesPresenter.getCountryFiltering(), equalTo(TEST_COUNTRY_FILTERING));
+        mSourcesPresenter.setCountryFiltering(COUNTRY_FILTERING);
+        assertThat(mSourcesPresenter.getCountryFiltering(), equalTo(COUNTRY_FILTERING));
     }
 
 }
