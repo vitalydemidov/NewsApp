@@ -4,8 +4,6 @@ import android.support.annotation.NonNull;
 
 import javax.inject.Inject;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 import ru.vitalydemidov.newsapp.base.BasePresenterImpl;
 import ru.vitalydemidov.newsapp.data.source.NewsRepository;
 import ru.vitalydemidov.newsapp.util.schedulers.BaseSchedulerProvider;
@@ -43,8 +41,8 @@ class ArticlesPresenter extends BasePresenterImpl implements ArticlesContract.Pr
 
         mCompositeDisposable.add(
             mNewsRepository.getArticles(mSourceId)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(mSchedulerProvider.io())
+                .observeOn(mSchedulerProvider.ui())
                 .doOnTerminate(() -> mArticlesView.showLoadingProgress(false))
                 .subscribe(
                         // onNext
