@@ -56,7 +56,7 @@ public class ArticlesPresenterTest {
 
 
     @Test
-    public void loadArticles() {
+    public void loadArticlesFromRepositoryAndLoadIntoView() {
         when(mNewsRepositoryMock.getArticles(anyString()))
                 .thenReturn(Observable.just(ARTICLES));
 
