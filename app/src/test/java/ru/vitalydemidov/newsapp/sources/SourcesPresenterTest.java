@@ -1,6 +1,5 @@
 package ru.vitalydemidov.newsapp.sources;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -15,6 +14,8 @@ import ru.vitalydemidov.newsapp.data.source.NewsRepository;
 import ru.vitalydemidov.newsapp.util.schedulers.BaseSchedulerProvider;
 import ru.vitalydemidov.newsapp.util.schedulers.TrampolineSchedulerProvider;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.same;
 import static org.mockito.Mockito.verify;
@@ -95,21 +96,21 @@ public class SourcesPresenterTest {
     @Test
     public void setCategoryFilteringAndCheck() {
         mSourcesPresenter.setCategoryFiltering(TEST_CATEGORY_FILTERING);
-        Assert.assertEquals(mSourcesPresenter.getCategoryFiltering(), TEST_CATEGORY_FILTERING);
+        assertThat(mSourcesPresenter.getCategoryFiltering(), equalTo(TEST_CATEGORY_FILTERING));
     }
 
 
     @Test
     public void setLanguageFilteringAndCheck() {
         mSourcesPresenter.setLanguageFiltering(TEST_LANGUAGE_FILTERING);
-        Assert.assertEquals(mSourcesPresenter.getLanguageFiltering(), TEST_LANGUAGE_FILTERING);
+        assertThat(mSourcesPresenter.getLanguageFiltering(), equalTo(TEST_LANGUAGE_FILTERING));
     }
 
 
     @Test
     public void setCountryFilteringAndCheck() {
         mSourcesPresenter.setCountryFiltering(TEST_COUNTRY_FILTERING);
-        Assert.assertEquals(mSourcesPresenter.getCountryFiltering(), TEST_COUNTRY_FILTERING);
+        assertThat(mSourcesPresenter.getCountryFiltering(), equalTo(TEST_COUNTRY_FILTERING));
     }
 
 }
