@@ -16,6 +16,7 @@ class ArticlesPresenterModule {
     @NonNull
     private final ArticlesContract.View mArticlesView;
 
+
     @NonNull
     private final String mSourceId;
 

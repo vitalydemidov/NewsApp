@@ -5,49 +5,36 @@ import android.support.annotation.NonNull;
 import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
+import ru.vitalydemidov.newsapp.base.BasePresenterImpl;
 import ru.vitalydemidov.newsapp.data.source.NewsRepository;
+import ru.vitalydemidov.newsapp.util.schedulers.BaseSchedulerProvider;
 
-class ArticlesPresenter implements ArticlesContract.Presenter {
+class ArticlesPresenter extends BasePresenterImpl implements ArticlesContract.Presenter {
 
     @NonNull
-    private String mSourceId;
+    private final String mSourceId;
 
 
     @NonNull
     private final ArticlesContract.View mArticlesView;
 
 
-    @NonNull
-    private final NewsRepository mNewsRepository;
-
-
-    @NonNull
-    private final CompositeDisposable mCompositeDisposable;
-
-
     @Inject
     ArticlesPresenter(@NonNull String sourceId,
                       @NonNull ArticlesContract.View articlesView,
-                      @NonNull NewsRepository newsRepository) {
+                      @NonNull NewsRepository newsRepository,
+                      @NonNull BaseSchedulerProvider schedulerProvider) {
+        super(newsRepository, schedulerProvider);
         mSourceId = sourceId;
         mArticlesView = articlesView;
         mArticlesView.setPresenter(this);
-        mNewsRepository = newsRepository;
-        mCompositeDisposable = new CompositeDisposable();
     }
 
 
     @Override
     public void subscribe() {
         loadArticles();
-    }
-
-
-    @Override
-    public void unsubscribe() {
-        mCompositeDisposable.clear();
     }
 
 

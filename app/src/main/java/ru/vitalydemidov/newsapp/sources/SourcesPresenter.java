@@ -4,27 +4,15 @@ import android.support.annotation.NonNull;
 
 import javax.inject.Inject;
 
-import io.reactivex.disposables.CompositeDisposable;
+import ru.vitalydemidov.newsapp.base.BasePresenterImpl;
 import ru.vitalydemidov.newsapp.data.Source;
 import ru.vitalydemidov.newsapp.data.source.NewsRepository;
 import ru.vitalydemidov.newsapp.util.schedulers.BaseSchedulerProvider;
 
-class SourcesPresenter implements SourcesContract.Presenter {
+class SourcesPresenter extends BasePresenterImpl implements SourcesContract.Presenter {
 
     @NonNull
     private final SourcesContract.View mSourcesView;
-
-
-    @NonNull
-    private final NewsRepository mNewsRepository;
-
-
-    @NonNull
-    private final CompositeDisposable mCompositeDisposable;
-
-
-    @NonNull
-    private final BaseSchedulerProvider mSchedulerProvider;
 
 
     @NonNull
@@ -43,23 +31,15 @@ class SourcesPresenter implements SourcesContract.Presenter {
     SourcesPresenter(@NonNull SourcesContract.View sourcesView,
                      @NonNull NewsRepository newsRepository,
                      @NonNull BaseSchedulerProvider schedulerProvider) {
+        super(newsRepository, schedulerProvider);
         mSourcesView = sourcesView;
         mSourcesView.setPresenter(this);
-        mNewsRepository = newsRepository;
-        mSchedulerProvider = schedulerProvider;
-        mCompositeDisposable = new CompositeDisposable();
     }
 
 
     @Override
     public void subscribe() {
         loadSources();
-    }
-
-
-    @Override
-    public void unsubscribe() {
-        mCompositeDisposable.clear();
     }
 
 
