@@ -79,7 +79,7 @@ class SourcesPresenter extends BasePresenterImpl implements SourcesContract.Pres
 
     @Override
     public void setLanguageFiltering(SourcesLanguageFiltering language) {
-        mCurrentLanguageFiltering = language != null ? language : SourcesLanguageFiltering.LANGUAGE_ALL;;
+        mCurrentLanguageFiltering = language != null ? language : SourcesLanguageFiltering.LANGUAGE_ALL;
     }
 
 

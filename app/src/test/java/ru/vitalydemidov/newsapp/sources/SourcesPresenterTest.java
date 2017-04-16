@@ -1,5 +1,6 @@
 package ru.vitalydemidov.newsapp.sources;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -24,8 +25,10 @@ import static org.mockito.Mockito.when;
  */
 public class SourcesPresenterTest {
 
-    private static final List<Source> SOURCES =
-            Arrays.asList(new Source(), new Source(), new Source());
+    private static final List<Source> SOURCES = Arrays.asList(new Source(), new Source(), new Source());
+    private static final SourcesCategoryFiltering TEST_CATEGORY_FILTERING = SourcesCategoryFiltering.CATEGORY_SPORT;
+    private static final SourcesLanguageFiltering TEST_LANGUAGE_FILTERING = SourcesLanguageFiltering.LANGUAGE_ENGLISH;
+    private static final SourcesCountryFiltering TEST_COUNTRY_FILTERING = SourcesCountryFiltering.COUNTRY_GERMANY;
 
     @Mock
     private SourcesContract.View mSourcesView;
@@ -86,6 +89,27 @@ public class SourcesPresenterTest {
 
         verify(mSourcesView).showLoadingProgress(false);
         verify(mSourcesView).showSources(SOURCES);
+    }
+
+
+    @Test
+    public void setCategoryFilteringAndCheck() {
+        mSourcesPresenter.setCategoryFiltering(TEST_CATEGORY_FILTERING);
+        Assert.assertEquals(mSourcesPresenter.getCategoryFiltering(), TEST_CATEGORY_FILTERING);
+    }
+
+
+    @Test
+    public void setLanguageFilteringAndCheck() {
+        mSourcesPresenter.setLanguageFiltering(TEST_LANGUAGE_FILTERING);
+        Assert.assertEquals(mSourcesPresenter.getLanguageFiltering(), TEST_LANGUAGE_FILTERING);
+    }
+
+
+    @Test
+    public void setCountryFilteringAndCheck() {
+        mSourcesPresenter.setCountryFiltering(TEST_COUNTRY_FILTERING);
+        Assert.assertEquals(mSourcesPresenter.getCountryFiltering(), TEST_COUNTRY_FILTERING);
     }
 
 }
