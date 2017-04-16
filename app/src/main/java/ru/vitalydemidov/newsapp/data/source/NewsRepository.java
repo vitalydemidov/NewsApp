@@ -15,17 +15,17 @@ import ru.vitalydemidov.newsapp.data.Source;
 @Singleton
 public class NewsRepository implements NewsDataSource {
 
-    private final NewsDataSource mSourcesRemoteDataSource;
+    private final NewsDataSource mNewsRemoteDataSource;
 
 
-    private final NewsDataSource mSourcesLocalDataSource;
+    private final NewsDataSource mNewsLocalDataSource;
 
 
     @Inject
-    NewsRepository(@Remote NewsDataSource sourcesRemoteDataSource,
-                   @Local NewsDataSource sourcesLocalDataSource) {
-        mSourcesRemoteDataSource = sourcesRemoteDataSource;
-        mSourcesLocalDataSource = sourcesLocalDataSource;
+    NewsRepository(@Remote NewsDataSource newsRemoteDataSource,
+                   @Local NewsDataSource newsLocalDataSource) {
+        mNewsRemoteDataSource = newsRemoteDataSource;
+        mNewsLocalDataSource = newsLocalDataSource;
     }
 
 
@@ -33,13 +33,13 @@ public class NewsRepository implements NewsDataSource {
     public Observable<List<Source>> getSources(@Nullable String category,
                                                @Nullable String language,
                                                @Nullable String country) {
-        return mSourcesRemoteDataSource.getSources(category, language, country);
+        return mNewsRemoteDataSource.getSources(category, language, country);
     }
 
 
     @Override
     public Observable<List<Article>> getArticles(@NonNull String sourceId) {
-        return mSourcesRemoteDataSource.getArticles(sourceId);
+        return mNewsRemoteDataSource.getArticles(sourceId);
     }
 
 }
