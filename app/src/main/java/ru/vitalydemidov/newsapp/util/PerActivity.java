@@ -6,14 +6,12 @@ import java.lang.annotation.RetentionPolicy;
 
 import javax.inject.Scope;
 
-import ru.vitalydemidov.newsapp.data.source.NewsRepositoryComponent;
+import ru.vitalydemidov.newsapp.AppComponent;
 
 /**
- * Created by vitalydemidov on 09/04/2017.
- *
  * In Dagger 2, an unscoped component cannot depend on a scoped component. Because
- * {@link NewsRepositoryComponent} is a scoped component ({@code @Singleton}, we create a custom
- * scope to be used by all fragment components. Additionally, a component with a specific scope
+ * {@link AppComponent} is a scoped component ({@code @Singleton}, we create a custom
+ * scope to be used by all screen components. Additionally, a component with a specific scope
  * cannot have a sub component with the same scope.
  */
 

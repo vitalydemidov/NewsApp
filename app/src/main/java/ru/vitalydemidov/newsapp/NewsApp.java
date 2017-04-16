@@ -4,25 +4,32 @@ import android.app.Application;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 
-import ru.vitalydemidov.newsapp.data.source.DaggerNewsRepositoryComponent;
-import ru.vitalydemidov.newsapp.data.source.NewsRepositoryComponent;
+import ru.vitalydemidov.newsapp.api.ApiModule;
+import ru.vitalydemidov.newsapp.data.source.NewsRepositoryModule;
 
 public class NewsApp extends Application {
 
-    private NewsRepositoryComponent mNewsRepositoryComponent;
+    private static AppComponent sAppComponent;
 
+
+    public static AppComponent getAppComponent() {
+        return sAppComponent;
+    }
 
     @Override
     public void onCreate() {
         super.onCreate();
         Fresco.initialize(this);
-
-        mNewsRepositoryComponent = DaggerNewsRepositoryComponent.create();
+        sAppComponent = buildAppComponent();
     }
 
 
-    public NewsRepositoryComponent getNewsRepositoryComponent() {
-        return mNewsRepositoryComponent;
+    protected AppComponent buildAppComponent() {
+        return DaggerAppComponent.builder()
+                .appModule(new AppModule(this))
+                .apiModule(new ApiModule())
+                .newsRepositoryModule(new NewsRepositoryModule())
+                .build();
     }
 
 }

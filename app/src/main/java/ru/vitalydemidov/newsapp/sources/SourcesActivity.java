@@ -53,7 +53,7 @@ public class SourcesActivity extends AppCompatActivity {
 
         // Create Presenter
         DaggerSourcesComponent.builder()
-                .newsRepositoryComponent(((NewsApp) getApplication()).getNewsRepositoryComponent())
+                .appComponent(NewsApp.getAppComponent())
                 .sourcesPresenterModule(new SourcesPresenterModule(sourcesFragment))
                 .build()
                 .inject(this);

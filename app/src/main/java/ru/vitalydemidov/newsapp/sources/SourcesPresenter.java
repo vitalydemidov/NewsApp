@@ -4,11 +4,10 @@ import android.support.annotation.NonNull;
 
 import javax.inject.Inject;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.schedulers.Schedulers;
 import ru.vitalydemidov.newsapp.data.Source;
 import ru.vitalydemidov.newsapp.data.source.NewsRepository;
+import ru.vitalydemidov.newsapp.util.schedulers.BaseSchedulerProvider;
 
 class SourcesPresenter implements SourcesContract.Presenter {
 
@@ -25,6 +24,10 @@ class SourcesPresenter implements SourcesContract.Presenter {
 
 
     @NonNull
+    private final BaseSchedulerProvider mSchedulerProvider;
+
+
+    @NonNull
     private SourcesCategoryFiltering mCurrentCategoryFiltering = SourcesCategoryFiltering.CATEGORY_ALL;
 
 
@@ -38,10 +41,12 @@ class SourcesPresenter implements SourcesContract.Presenter {
 
     @Inject
     SourcesPresenter(@NonNull SourcesContract.View sourcesView,
-                     @NonNull NewsRepository newsRepository) {
+                     @NonNull NewsRepository newsRepository,
+                     @NonNull BaseSchedulerProvider schedulerProvider) {
         mSourcesView = sourcesView;
         mSourcesView.setPresenter(this);
         mNewsRepository = newsRepository;
+        mSchedulerProvider = schedulerProvider;
         mCompositeDisposable = new CompositeDisposable();
     }
 
@@ -68,8 +73,8 @@ class SourcesPresenter implements SourcesContract.Presenter {
                         mCurrentLanguageFiltering.getTitle(),
                         mCurrentCountryFiltering.getTitle()
                 )
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(mSchedulerProvider.io())
+                .observeOn(mSchedulerProvider.ui())
                 .doOnTerminate(() -> mSourcesView.showLoadingProgress(false))
                 .subscribe(
                         // onNext

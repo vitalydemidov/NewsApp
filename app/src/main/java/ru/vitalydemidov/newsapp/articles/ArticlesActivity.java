@@ -43,11 +43,10 @@ public class ArticlesActivity extends AppCompatActivity {
 
         // Create Presenter
         DaggerArticlesComponent.builder()
-                .newsRepositoryComponent(((NewsApp) getApplication()).getNewsRepositoryComponent())
+                .appComponent(NewsApp.getAppComponent())
                 .articlesPresenterModule(new ArticlesPresenterModule(articlesFragment, sourceId))
                 .build()
                 .inject(this);
-
     }
 
 
