@@ -2,7 +2,7 @@ package ru.vitalydemidov.newsapp.sources;
 
 import android.support.annotation.Nullable;
 
-enum SourcesCategoryFiltering {
+public enum SourcesCategoryFiltering {
 
     CATEGORY_ALL(null),
     CATEGORY_BUSINESS("business"),

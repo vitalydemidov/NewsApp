@@ -2,7 +2,7 @@ package ru.vitalydemidov.newsapp.sources;
 
 import android.support.annotation.Nullable;
 
-enum SourcesLanguageFiltering {
+public enum SourcesLanguageFiltering {
 
     LANGUAGE_ALL(null),
     LANGUAGE_ENGLISH("en"),

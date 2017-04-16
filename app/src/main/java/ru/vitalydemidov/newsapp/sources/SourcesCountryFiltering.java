@@ -2,7 +2,7 @@ package ru.vitalydemidov.newsapp.sources;
 
 import android.support.annotation.Nullable;
 
-enum SourcesCountryFiltering {
+public enum SourcesCountryFiltering {
 
     COUNTRY_ALL(null),
     COUNTRY_AUSTRALIA("au"),
