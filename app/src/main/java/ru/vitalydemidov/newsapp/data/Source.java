@@ -5,10 +5,6 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by vitalydemidov on 24/01/2017.
- */
-
 public class Source {
 
     @SerializedName("id")

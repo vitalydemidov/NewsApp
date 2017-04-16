@@ -7,10 +7,6 @@ import retrofit2.http.Query;
 import ru.vitalydemidov.newsapp.data.ArticlesResponse;
 import ru.vitalydemidov.newsapp.data.SourcesResponse;
 
-/**
- * Created by vitalydemidov on 19/03/2017.
- */
-
 public interface NewsApi {
 
     @GET("sources")

@@ -2,10 +2,6 @@ package ru.vitalydemidov.newsapp.data;
 
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by vitalydemidov on 02/04/2017.
- */
-
 public class Article {
 
     @SerializedName("author")

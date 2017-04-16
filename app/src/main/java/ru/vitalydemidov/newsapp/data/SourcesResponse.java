@@ -6,10 +6,6 @@ import java.util.List;
 
 import ru.vitalydemidov.newsapp.base.BaseResponse;
 
-/**
- * Created by vitalydemidov on 23/03/2017.
- */
-
 public class SourcesResponse extends BaseResponse {
 
     @SerializedName("sources")

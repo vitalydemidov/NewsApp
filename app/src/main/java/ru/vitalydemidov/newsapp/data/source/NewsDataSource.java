@@ -9,10 +9,6 @@ import io.reactivex.Observable;
 import ru.vitalydemidov.newsapp.data.Article;
 import ru.vitalydemidov.newsapp.data.Source;
 
-/**
- * Created by vitalydemidov on 25/01/2017.
- */
-
 public interface NewsDataSource {
 
     Observable<List<Source>> getSources(@Nullable String category,

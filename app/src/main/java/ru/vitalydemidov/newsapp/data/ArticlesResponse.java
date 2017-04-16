@@ -4,10 +4,6 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-/**
- * Created by vitalydemidov on 03/04/2017.
- */
-
 public class ArticlesResponse {
 
     @SerializedName("source")
