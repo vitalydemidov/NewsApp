@@ -20,7 +20,7 @@ public class NewsRemoteDataSource implements NewsDataSource {
 
 
     @Inject
-    public NewsRemoteDataSource(NewsApi newsApi) {
+    public NewsRemoteDataSource(@NonNull NewsApi newsApi) {
         mNewsApi = newsApi;
     }
 
