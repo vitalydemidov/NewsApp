@@ -141,8 +141,14 @@ public class SourcesFragment extends Fragment implements SourcesContract.View {
 
 
     @Override
-    public void showLoadingProgress(boolean showProgress) {
-        mSourcesSwipeRefreshLayout.setRefreshing(showProgress);
+    public void showLoadingProgress() {
+        mSourcesSwipeRefreshLayout.setRefreshing(true);
+    }
+
+
+    @Override
+    public void hideLoadingProgress() {
+        mSourcesSwipeRefreshLayout.setRefreshing(false);
     }
 
 

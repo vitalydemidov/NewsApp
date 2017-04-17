@@ -62,9 +62,9 @@ public class ArticlesPresenterTest {
 
         mArticlesPresenter.loadArticles();
 
-        verify(mArticlesViewMock).showLoadingProgress(true);
+        verify(mArticlesViewMock).showLoadingProgress();
         verify(mNewsRepositoryMock).getArticles(SOURCE_ID);
-        verify(mArticlesViewMock).showLoadingProgress(false);
+        verify(mArticlesViewMock).hideLoadingProgress();
         verify(mArticlesViewMock).showArticles(ARTICLES);
     }
 

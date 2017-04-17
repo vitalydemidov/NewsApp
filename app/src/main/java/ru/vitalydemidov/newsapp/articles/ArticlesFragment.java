@@ -115,8 +115,14 @@ public class ArticlesFragment extends Fragment implements ArticlesContract.View 
 
 
     @Override
-    public void showLoadingProgress(boolean showProgress) {
-        mArticlesSwipeRefreshLayout.setRefreshing(showProgress);
+    public void showLoadingProgress() {
+        mArticlesSwipeRefreshLayout.setRefreshing(true);
+    }
+
+
+    @Override
+    public void hideLoadingProgress() {
+        mArticlesSwipeRefreshLayout.setRefreshing(false);
     }
 
 }

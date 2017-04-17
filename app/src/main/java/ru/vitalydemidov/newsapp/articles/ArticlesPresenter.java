@@ -37,13 +37,13 @@ class ArticlesPresenter extends BasePresenterImpl implements ArticlesContract.Pr
 
 
     public void loadArticles() {
-        mArticlesView.showLoadingProgress(true);
+        mArticlesView.showLoadingProgress();
 
         mCompositeDisposable.add(
             mNewsRepository.getArticles(mSourceId)
                 .subscribeOn(mSchedulerProvider.io())
                 .observeOn(mSchedulerProvider.ui())
-                .doOnTerminate(() -> mArticlesView.showLoadingProgress(false))
+                .doOnTerminate(mArticlesView::hideLoadingProgress)
                 .subscribe(
                         // onNext
                         mArticlesView::showArticles,

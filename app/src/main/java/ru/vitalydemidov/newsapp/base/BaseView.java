@@ -8,6 +8,8 @@ public interface BaseView<T> {
 
     void showLoadingError();
 
-    void showLoadingProgress(boolean showProgress);
+    void showLoadingProgress();
+
+    void hideLoadingProgress();
 
 }

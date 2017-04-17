@@ -45,7 +45,7 @@ class SourcesPresenter extends BasePresenterImpl implements SourcesContract.Pres
 
     @Override
     public void loadSources() {
-        mSourcesView.showLoadingProgress(true);
+        mSourcesView.showLoadingProgress();
 
         mCompositeDisposable.add(
                 mNewsRepository.getSources(
@@ -55,7 +55,7 @@ class SourcesPresenter extends BasePresenterImpl implements SourcesContract.Pres
                 )
                 .subscribeOn(mSchedulerProvider.io())
                 .observeOn(mSchedulerProvider.ui())
-                .doOnTerminate(() -> mSourcesView.showLoadingProgress(false))
+                .doOnTerminate(mSourcesView::hideLoadingProgress)
                 .subscribe(
                         // onNext
                         mSourcesView::showSources,

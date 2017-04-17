@@ -81,14 +81,14 @@ public class SourcesPresenterTest {
         mSourcesPresenter.setCountryFiltering(SourcesCountryFiltering.COUNTRY_ALL);
         mSourcesPresenter.loadSources();
 
-        verify(mSourcesView).showLoadingProgress(true);
+        verify(mSourcesView).showLoadingProgress();
 
         verify(mNewsRepository).getSources(
                 SourcesCategoryFiltering.CATEGORY_ALL.getTitle(),
                 SourcesLanguageFiltering.LANGUAGE_ALL.getTitle(),
                 SourcesCountryFiltering.COUNTRY_ALL.getTitle());
 
-        verify(mSourcesView).showLoadingProgress(false);
+        verify(mSourcesView).hideLoadingProgress();
         verify(mSourcesView).showSources(SOURCES);
     }
 
