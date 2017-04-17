@@ -82,7 +82,19 @@ dependencies {
     testCompile "org.mockito:mockito-core:$rootProject.ext.mockitoVersion"
     testCompile "org.hamcrest:hamcrest-all:$rootProject.ext.hamcrestVersion"
 
+    // Espresso UI Testing
     androidTestCompile("com.android.support.test.espresso:espresso-core:$rootProject.ext.espressoVersion", {
         exclude group: 'com.android.support', module: 'support-annotations'
+    })
+//    androidTestCompile("com.android.support.test.espresso:espresso-contrib:$rootProject.ext.espressoVersion", {
+//        exclude group: 'com.android.support', module: 'support-annotations'
+//    })
+
+    // Android Testing Support Library's runner and rules
+    androidTestCompile("com.android.support.test:runner:$rootProject.ext.runnerVersion", {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    androidTestCompile("com.android.support.test:rules:$rootProject.ext.rulesVersion", {
+            exclude group: 'com.android.support', module: 'support-annotations'
     })
 }

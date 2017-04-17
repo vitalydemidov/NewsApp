@@ -43,4 +43,6 @@ ext {
     espressoVersion = '2.2.2'
     mockitoVersion = '2.2.0'
     hamcrestVersion = '1.3'
+    runnerVersion = '0.5'
+    rulesVersion = '0.5'
 }
