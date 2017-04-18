@@ -1,18 +1,18 @@
 package ru.vitalydemidov.newsapp.sources;
 
 import android.support.annotation.NonNull;
-
-import javax.inject.Inject;
+import android.support.annotation.Nullable;
 
 import ru.vitalydemidov.newsapp.base.BasePresenterImpl;
 import ru.vitalydemidov.newsapp.data.Source;
 import ru.vitalydemidov.newsapp.data.source.NewsRepository;
 import ru.vitalydemidov.newsapp.util.schedulers.BaseSchedulerProvider;
 
-class SourcesPresenter extends BasePresenterImpl implements SourcesContract.Presenter {
+class SourcesPresenter extends BasePresenterImpl<SourcesContract.View>
+        implements SourcesContract.Presenter {
 
-    @NonNull
-    private final SourcesContract.View mSourcesView;
+    @Nullable
+    private SourcesContract.View mSourcesView;
 
 
     @NonNull
@@ -27,24 +27,31 @@ class SourcesPresenter extends BasePresenterImpl implements SourcesContract.Pres
     private SourcesCountryFiltering mCurrentCountryFiltering = SourcesCountryFiltering.COUNTRY_ALL;
 
 
-    @Inject
-    SourcesPresenter(@NonNull SourcesContract.View sourcesView,
-                     @NonNull NewsRepository newsRepository,
+    SourcesPresenter(@NonNull NewsRepository newsRepository,
                      @NonNull BaseSchedulerProvider schedulerProvider) {
         super(newsRepository, schedulerProvider);
-        mSourcesView = sourcesView;
-        mSourcesView.setPresenter(this);
     }
 
 
     @Override
-    public void subscribe() {
-        loadSources();
+    public void attachView(@NonNull SourcesContract.View sourcesView) {
+        mSourcesView = sourcesView;
+    }
+
+
+    @Override
+    public void detachView() {
+        mSourcesView = null;
+        mCompositeDisposable.clear();
     }
 
 
     @Override
     public void loadSources() {
+        if (mSourcesView == null) {
+            return;
+        }
+
         mSourcesView.showLoadingProgress();
 
         mCompositeDisposable.add(
@@ -68,7 +75,9 @@ class SourcesPresenter extends BasePresenterImpl implements SourcesContract.Pres
 
     @Override
     public void openArticlesForSource(@NonNull Source selectedSource) {
-        mSourcesView.showArticlesForSourceUi(selectedSource);
+        if (mSourcesView != null) {
+            mSourcesView.showArticlesForSourceUi(selectedSource);
+        }
     }
 
     @Override

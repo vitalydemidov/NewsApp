@@ -11,19 +11,22 @@ import javax.inject.Singleton;
 import io.reactivex.Observable;
 import ru.vitalydemidov.newsapp.data.Article;
 import ru.vitalydemidov.newsapp.data.Source;
+import ru.vitalydemidov.newsapp.data.source.local.Local;
+import ru.vitalydemidov.newsapp.data.source.remote.Remote;
 
 @Singleton
 public class NewsRepository implements NewsDataSource {
 
+    @NonNull
     private final NewsDataSource mNewsRemoteDataSource;
 
-
+    @NonNull
     private final NewsDataSource mNewsLocalDataSource;
 
 
     @Inject
-    NewsRepository(@Remote NewsDataSource newsRemoteDataSource,
-                   @Local NewsDataSource newsLocalDataSource) {
+    NewsRepository(@Remote @NonNull NewsDataSource newsRemoteDataSource,
+                   @Local @NonNull NewsDataSource newsLocalDataSource) {
         mNewsRemoteDataSource = newsRemoteDataSource;
         mNewsLocalDataSource = newsLocalDataSource;
     }

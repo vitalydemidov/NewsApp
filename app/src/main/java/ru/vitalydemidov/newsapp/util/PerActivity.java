@@ -1,6 +1,5 @@
 package ru.vitalydemidov.newsapp.util;
 
-import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
@@ -15,7 +14,6 @@ import ru.vitalydemidov.newsapp.AppComponent;
  * cannot have a sub component with the same scope.
  */
 
-@Documented
 @Scope
 @Retention(RetentionPolicy.RUNTIME)
 public @interface PerActivity {

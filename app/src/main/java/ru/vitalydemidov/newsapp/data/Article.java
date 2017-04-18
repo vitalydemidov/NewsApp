@@ -1,8 +1,12 @@
 package ru.vitalydemidov.newsapp.data;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.support.annotation.NonNull;
+
 import com.google.gson.annotations.SerializedName;
 
-public class Article {
+public class Article implements Parcelable {
 
     @SerializedName("author")
     private String mAuthor;
@@ -28,6 +32,11 @@ public class Article {
     private String mPublishedAt;
 
 
+    public Article(@NonNull String title) {
+        mTitle = title;
+    }
+
+
     public String getUrlToImage() {
         return mUrlToImage;
     }
@@ -36,5 +45,47 @@ public class Article {
     public String getTitle() {
         return mTitle;
     }
+
+
+    //region Parcelable
+    public static final Creator<Article> CREATOR = new Creator<Article>() {
+        @Override
+        public Article createFromParcel(@NonNull Parcel in) {
+            return new Article(in);
+        }
+
+        @Override
+        public Article[] newArray(int size) {
+            return new Article[size];
+        }
+    };
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(mAuthor);
+        dest.writeString(mTitle);
+        dest.writeString(mDescription);
+        dest.writeString(mUrl);
+        dest.writeString(mUrlToImage);
+        dest.writeString(mPublishedAt);
+    }
+
+
+    private Article(@NonNull Parcel in) {
+        mAuthor = in.readString();
+        mTitle = in.readString();
+        mDescription = in.readString();
+        mUrl = in.readString();
+        mUrlToImage = in.readString();
+        mPublishedAt = in.readString();
+    }
+    //endregion Parcelable
 
 }

@@ -1,13 +1,12 @@
 package ru.vitalydemidov.newsapp.base;
 
-import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
 
 import io.reactivex.disposables.CompositeDisposable;
 import ru.vitalydemidov.newsapp.data.source.NewsRepository;
 import ru.vitalydemidov.newsapp.util.schedulers.BaseSchedulerProvider;
 
-public abstract class BasePresenterImpl implements BasePresenter {
+public abstract class BasePresenterImpl<V> implements BasePresenter<V> {
 
     @NonNull
     protected final NewsRepository mNewsRepository;
@@ -26,13 +25,6 @@ public abstract class BasePresenterImpl implements BasePresenter {
         mNewsRepository = newsRepository;
         mSchedulerProvider = schedulerProvider;
         mCompositeDisposable = new CompositeDisposable();
-    }
-
-
-    @CallSuper
-    @Override
-    public void unsubscribe() {
-        mCompositeDisposable.clear();
     }
 
 }

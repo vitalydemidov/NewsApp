@@ -8,14 +8,14 @@ import ru.vitalydemidov.newsapp.data.Article;
 
 interface ArticlesContract {
 
-    interface View extends BaseView<Presenter> {
+    interface View extends BaseView {
 
         void showArticles(List<Article> articles);
 
     }
 
 
-    interface Presenter extends BasePresenter {
+    interface Presenter extends BasePresenter<View> {
 
         void loadArticles();
 

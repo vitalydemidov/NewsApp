@@ -1,5 +1,6 @@
 package ru.vitalydemidov.newsapp.sources;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -26,17 +27,22 @@ import static org.mockito.Mockito.when;
  */
 public class SourcesPresenterTest {
 
-    private static final List<Source> SOURCES = Arrays.asList(new Source(), new Source(), new Source());
+    private static final List<Source> SOURCES = Arrays.asList(
+            new Source("mock1"),
+            new Source("mock2"),
+            new Source("mock3")
+    );
+
     private static final SourcesCategoryFiltering CATEGORY_FILTERING = SourcesCategoryFiltering.CATEGORY_SPORT;
     private static final SourcesLanguageFiltering LANGUAGE_FILTERING = SourcesLanguageFiltering.LANGUAGE_ENGLISH;
     private static final SourcesCountryFiltering COUNTRY_FILTERING = SourcesCountryFiltering.COUNTRY_GERMANY;
 
     @Mock
-    private SourcesContract.View mSourcesView;
+    private SourcesContract.View mSourcesViewMock;
 
 
     @Mock
-    private NewsRepository mNewsRepository;
+    private NewsRepository mNewsRepositoryMock;
 
 
     private BaseSchedulerProvider mSchedulerProvider;
@@ -54,26 +60,33 @@ public class SourcesPresenterTest {
         mSchedulerProvider = new TrampolineSchedulerProvider();
 
         // Get a reference to the class under test
-        mSourcesPresenter = new SourcesPresenter(mSourcesView, mNewsRepository, mSchedulerProvider);
+        mSourcesPresenter = new SourcesPresenter(mNewsRepositoryMock, mSchedulerProvider);
+        mSourcesPresenter.attachView(mSourcesViewMock);
+    }
+
+
+    @After
+    public void release() {
+        mSourcesPresenter.detachView();
     }
 
 
     @Test
     public void clickOnSource_ShowsArticlesForSourceUi() {
         // Stubbed source
-        Source selectedSource = new Source();
+        Source selectedSource = SOURCES.get(0);
 
         // When a source was selected
         mSourcesPresenter.openArticlesForSource(selectedSource);
 
         // Then articles for selected source is shown
-        verify(mSourcesView).showArticlesForSourceUi(same(selectedSource));
+        verify(mSourcesViewMock).showArticlesForSourceUi(same(selectedSource));
     }
 
 
     @Test
     public void loadSourcesFromRepositoryAndLoadIntoView() {
-        when(mNewsRepository.getSources(any(), any(), any()))
+        when(mNewsRepositoryMock.getSources(any(), any(), any()))
         .thenReturn(Observable.just(SOURCES));
 
         mSourcesPresenter.setCategoryFiltering(SourcesCategoryFiltering.CATEGORY_ALL);
@@ -81,15 +94,15 @@ public class SourcesPresenterTest {
         mSourcesPresenter.setCountryFiltering(SourcesCountryFiltering.COUNTRY_ALL);
         mSourcesPresenter.loadSources();
 
-        verify(mSourcesView).showLoadingProgress();
+        verify(mSourcesViewMock).showLoadingProgress();
 
-        verify(mNewsRepository).getSources(
+        verify(mNewsRepositoryMock).getSources(
                 SourcesCategoryFiltering.CATEGORY_ALL.getTitle(),
                 SourcesLanguageFiltering.LANGUAGE_ALL.getTitle(),
                 SourcesCountryFiltering.COUNTRY_ALL.getTitle());
 
-        verify(mSourcesView).hideLoadingProgress();
-        verify(mSourcesView).showSources(SOURCES);
+        verify(mSourcesViewMock).hideLoadingProgress();
+        verify(mSourcesViewMock).showSources(SOURCES);
     }
 
 

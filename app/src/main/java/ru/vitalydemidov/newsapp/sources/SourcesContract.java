@@ -10,7 +10,7 @@ import ru.vitalydemidov.newsapp.data.Source;
 
 interface SourcesContract {
 
-    interface View extends BaseView<Presenter> {
+    interface View extends BaseView {
 
         void showSources(List<Source> sources);
 
@@ -19,7 +19,7 @@ interface SourcesContract {
     }
 
 
-    interface Presenter extends BasePresenter {
+    interface Presenter extends BasePresenter<View> {
 
         void loadSources();
 

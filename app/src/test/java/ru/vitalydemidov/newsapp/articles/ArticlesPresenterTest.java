@@ -1,5 +1,6 @@
 package ru.vitalydemidov.newsapp.articles;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -23,8 +24,12 @@ import static org.mockito.Mockito.when;
  */
 public class ArticlesPresenterTest {
 
-    private static final List<Article> ARTICLES = Arrays.asList(new Article(), new Article(), new Article());
-    private static final String SOURCE_ID = "test_source_id";
+    private static final List<Article> ARTICLES = Arrays.asList(
+            new Article("mock1"),
+            new Article("mock2"),
+            new Article("mock3")
+    );
+    private static final String SOURCE_ID = "mockId";
 
 
     @Mock
@@ -50,8 +55,14 @@ public class ArticlesPresenterTest {
         mSchedulerProvider = new TrampolineSchedulerProvider();
 
         // Get a reference to the class under test
-        mArticlesPresenter = new ArticlesPresenter(SOURCE_ID, mArticlesViewMock,
-                mNewsRepositoryMock, mSchedulerProvider);
+        mArticlesPresenter = new ArticlesPresenter(SOURCE_ID, mNewsRepositoryMock, mSchedulerProvider);
+        mArticlesPresenter.attachView(mArticlesViewMock);
+    }
+
+
+    @After
+    public void release() {
+        mArticlesPresenter.detachView();
     }
 
 
