@@ -19,6 +19,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.same;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -103,6 +104,51 @@ public class SourcesPresenterTest {
 
         verify(mSourcesViewMock).hideLoadingProgress();
         verify(mSourcesViewMock).showSources(SOURCES);
+    }
+
+
+    @Test
+    public void loadSourcesFromRepositoryWithError() {
+        when(mNewsRepositoryMock.getSources(any(), any(), any()))
+                .thenReturn(Observable.error(new RuntimeException()));
+
+        mSourcesPresenter.setCategoryFiltering(SourcesCategoryFiltering.CATEGORY_ALL);
+        mSourcesPresenter.setLanguageFiltering(SourcesLanguageFiltering.LANGUAGE_ALL);
+        mSourcesPresenter.setCountryFiltering(SourcesCountryFiltering.COUNTRY_ALL);
+        mSourcesPresenter.loadSources();
+
+        verify(mSourcesViewMock).showLoadingError();
+
+        verify(mNewsRepositoryMock).getSources(
+                SourcesCategoryFiltering.CATEGORY_ALL.getTitle(),
+                SourcesLanguageFiltering.LANGUAGE_ALL.getTitle(),
+                SourcesCountryFiltering.COUNTRY_ALL.getTitle());
+
+        verify(mSourcesViewMock).hideLoadingProgress();
+        verify(mSourcesViewMock).showLoadingError();
+    }
+
+
+    @Test
+    public void loadSourcesFromRepositoryWithErrorBecauseViewIsNull() {
+        when(mNewsRepositoryMock.getSources(any(), any(), any()))
+                .thenReturn(Observable.just(SOURCES));
+
+        mSourcesPresenter.setCategoryFiltering(SourcesCategoryFiltering.CATEGORY_ALL);
+        mSourcesPresenter.setLanguageFiltering(SourcesLanguageFiltering.LANGUAGE_ALL);
+        mSourcesPresenter.setCountryFiltering(SourcesCountryFiltering.COUNTRY_ALL);
+        mSourcesPresenter.detachView();
+        mSourcesPresenter.loadSources();
+
+        verify(mSourcesViewMock, times(0)).showLoadingError();
+
+        verify(mNewsRepositoryMock, times(0)).getSources(
+                SourcesCategoryFiltering.CATEGORY_ALL.getTitle(),
+                SourcesLanguageFiltering.LANGUAGE_ALL.getTitle(),
+                SourcesCountryFiltering.COUNTRY_ALL.getTitle());
+
+        verify(mSourcesViewMock, times(0)).hideLoadingProgress();
+        verify(mSourcesViewMock, times(0)).showLoadingError();
     }
 
 

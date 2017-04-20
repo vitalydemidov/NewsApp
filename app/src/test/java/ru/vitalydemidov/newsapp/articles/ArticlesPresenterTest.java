@@ -16,6 +16,7 @@ import ru.vitalydemidov.newsapp.util.schedulers.BaseSchedulerProvider;
 import ru.vitalydemidov.newsapp.util.schedulers.TrampolineSchedulerProvider;
 
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -77,6 +78,35 @@ public class ArticlesPresenterTest {
         verify(mNewsRepositoryMock).getArticles(SOURCE_ID);
         verify(mArticlesViewMock).hideLoadingProgress();
         verify(mArticlesViewMock).showArticles(ARTICLES);
+    }
+
+
+    @Test
+    public void loadArticlesFromRepositoryWithError() {
+        when(mNewsRepositoryMock.getArticles(anyString()))
+                .thenReturn(Observable.error(new RuntimeException()));
+
+        mArticlesPresenter.loadArticles();
+
+        verify(mArticlesViewMock).showLoadingProgress();
+        verify(mNewsRepositoryMock).getArticles(SOURCE_ID);
+        verify(mArticlesViewMock).hideLoadingProgress();
+        verify(mArticlesViewMock).showLoadingError();
+    }
+
+
+    @Test
+    public void loadArticlesFromRepositoryWithErrorBecauseViewIsNull() {
+        when(mNewsRepositoryMock.getArticles(anyString()))
+                .thenReturn(Observable.just(ARTICLES));
+
+        mArticlesPresenter.detachView();
+        mArticlesPresenter.loadArticles();
+
+        verify(mArticlesViewMock, times(0)).showLoadingProgress();
+        verify(mNewsRepositoryMock, times(0)).getArticles(SOURCE_ID);
+        verify(mArticlesViewMock, times(0)).hideLoadingProgress();
+        verify(mArticlesViewMock, times(0)).showArticles(ARTICLES);
     }
 
 }
