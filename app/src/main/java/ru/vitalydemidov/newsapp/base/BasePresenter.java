@@ -1,9 +1,11 @@
 package ru.vitalydemidov.newsapp.base;
 
-public interface BasePresenter {
+import android.support.annotation.NonNull;
 
-    void subscribe();
+public interface BasePresenter<V> {
 
-    void unsubscribe();
+    void attachView(@NonNull V view);
+
+    void detachView();
 
 }

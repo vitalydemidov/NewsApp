@@ -1,42 +1,49 @@
 package ru.vitalydemidov.newsapp.articles;
 
 import android.support.annotation.NonNull;
-
-import javax.inject.Inject;
+import android.support.annotation.Nullable;
 
 import ru.vitalydemidov.newsapp.base.BasePresenterImpl;
 import ru.vitalydemidov.newsapp.data.source.NewsRepository;
 import ru.vitalydemidov.newsapp.util.schedulers.BaseSchedulerProvider;
 
-class ArticlesPresenter extends BasePresenterImpl implements ArticlesContract.Presenter {
+class ArticlesPresenter extends BasePresenterImpl<ArticlesContract.View>
+        implements ArticlesContract.Presenter {
 
     @NonNull
     private final String mSourceId;
 
 
-    @NonNull
-    private final ArticlesContract.View mArticlesView;
+    @Nullable
+    private ArticlesContract.View mArticlesView;
 
 
-    @Inject
     ArticlesPresenter(@NonNull String sourceId,
-                      @NonNull ArticlesContract.View articlesView,
                       @NonNull NewsRepository newsRepository,
                       @NonNull BaseSchedulerProvider schedulerProvider) {
         super(newsRepository, schedulerProvider);
         mSourceId = sourceId;
-        mArticlesView = articlesView;
-        mArticlesView.setPresenter(this);
     }
 
 
     @Override
-    public void subscribe() {
-        loadArticles();
+    public void attachView(@NonNull ArticlesContract.View view) {
+        mArticlesView = view;
+    }
+
+
+    @Override
+    public void detachView() {
+        mArticlesView = null;
+        mCompositeDisposable.clear();
     }
 
 
     public void loadArticles() {
+        if (mArticlesView == null) {
+            return;
+        }
+
         mArticlesView.showLoadingProgress();
 
         mCompositeDisposable.add(

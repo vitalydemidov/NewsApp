@@ -17,11 +17,13 @@ import ru.vitalydemidov.newsapp.util.schedulers.BaseSchedulerProvider;
  */
 
 @Singleton
-@Component(modules = {
-        AppModule.class,
-        ApiModule.class,
-        NewsRepositoryModule.class
-})
+@Component(
+        modules = {
+            AppModule.class,
+            ApiModule.class,
+            NewsRepositoryModule.class
+        }
+)
 public interface AppComponent {
 
     NewsRepository getNewsRepository();

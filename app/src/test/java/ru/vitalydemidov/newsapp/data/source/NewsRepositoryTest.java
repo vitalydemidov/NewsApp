@@ -27,12 +27,24 @@ import static org.mockito.Mockito.when;
  */
 public class NewsRepositoryTest {
 
-    private static final List<Source> SOURCES = Arrays.asList(new Source(), new Source(), new Source());
     private static final SourcesCategoryFiltering CATEGORY_FILTERING = SourcesCategoryFiltering.CATEGORY_ALL;
     private static final SourcesLanguageFiltering LANGUAGE_FILTERING = SourcesLanguageFiltering.LANGUAGE_ALL;
     private static final SourcesCountryFiltering COUNTRY_FILTERING = SourcesCountryFiltering.COUNTRY_ALL;
-    private static final List<Article> ARTICLES = Arrays.asList(new Article(), new Article(), new Article());
     private static final String SOURCE_ID = "test_source_id";
+
+
+    private static final List<Source> SOURCES = Arrays.asList(
+            new Source("mock1"),
+            new Source("mock2"),
+            new Source("mock3")
+    );
+
+
+    private static final List<Article> ARTICLES = Arrays.asList(
+            new Article("mock1"),
+            new Article("mock2"),
+            new Article("mock3")
+    );
 
 
     private NewsRepository mNewsRepository;

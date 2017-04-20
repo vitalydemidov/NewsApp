@@ -5,7 +5,7 @@ import ru.vitalydemidov.newsapp.AppComponent;
 import ru.vitalydemidov.newsapp.util.PerActivity;
 
 /**
- * This is a Dagger 2 component. It used to pass in all needed dependency to the
+ * This is a Dagger 2 component. It used to pass in all needed dependencies to the
  * {@link SourcesActivity}.
  *
  * Because this component depends on the {@link AppComponent}, which is a singleton,
@@ -13,7 +13,14 @@ import ru.vitalydemidov.newsapp.util.PerActivity;
  */
 
 @PerActivity
-@Component(dependencies = AppComponent.class, modules = SourcesPresenterModule.class)
+@Component(
+        dependencies = {
+                AppComponent.class
+        },
+        modules = {
+                SourcesModule.class
+        }
+)
 interface SourcesComponent {
 
     void inject(SourcesActivity activity);
