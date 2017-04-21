@@ -28,8 +28,9 @@ import ru.vitalydemidov.newsapp.data.Source;
 public class SourcesActivity extends AppCompatActivity implements SourcesContract.View {
 
     private static final String CATEGORY_FILTERING_STATE = "ru.vitalydemidov.newsapp.category_filtering_state";
-    private static final String LANGUAGE_FILTERING_STATE = "ru.vitalydemidov.newsapp.language_filtering_stat";
-    private static final String COUNTRY_FILTERING_STATE = "ru.vitalydemidov.newsapp.country_filtering_stat";
+    private static final String LANGUAGE_FILTERING_STATE = "ru.vitalydemidov.newsapp.language_filtering_state";
+    private static final String COUNTRY_FILTERING_STATE = "ru.vitalydemidov.newsapp.country_filtering_state";
+    private static final String TOOLBAR_TITLE_STATE = "ru.vitalydemidov.newsapp.toolbar_title_state";
 
 
     @Inject
@@ -43,6 +44,9 @@ public class SourcesActivity extends AppCompatActivity implements SourcesContrac
 
     @NonNull
     private Toolbar mToolbar;
+    
+    
+    private String mToolbarTitle;
 
 
     @NonNull
@@ -97,6 +101,7 @@ public class SourcesActivity extends AppCompatActivity implements SourcesContrac
         outState.putSerializable(CATEGORY_FILTERING_STATE, mSourcesPresenter.getCategoryFiltering());
         outState.putSerializable(LANGUAGE_FILTERING_STATE, mSourcesPresenter.getLanguageFiltering());
         outState.putSerializable(COUNTRY_FILTERING_STATE, mSourcesPresenter.getCountryFiltering());
+        outState.putString(TOOLBAR_TITLE_STATE, mToolbarTitle);
     }
 
 
@@ -105,6 +110,8 @@ public class SourcesActivity extends AppCompatActivity implements SourcesContrac
             mSourcesPresenter.setCategoryFiltering((SourcesCategoryFiltering) savedInstanceState.getSerializable(CATEGORY_FILTERING_STATE));
             mSourcesPresenter.setLanguageFiltering((SourcesLanguageFiltering) savedInstanceState.getSerializable(LANGUAGE_FILTERING_STATE));
             mSourcesPresenter.setCountryFiltering((SourcesCountryFiltering) savedInstanceState.getSerializable(COUNTRY_FILTERING_STATE));
+            mToolbarTitle = savedInstanceState.getString(TOOLBAR_TITLE_STATE);
+            mToolbar.setTitle(mToolbarTitle);
         }
     }
 
@@ -144,76 +151,98 @@ public class SourcesActivity extends AppCompatActivity implements SourcesContrac
                     SourcesCategoryFiltering category = null;
                     SourcesLanguageFiltering language = null;
                     SourcesCountryFiltering country = null;
+                    int titleRes = R.string.app_name;
 
                     switch (menuItem.getItemId()) {
 
                         // categories
                         case R.id.navigation_view_category_all:
                             category = SourcesCategoryFiltering.CATEGORY_ALL;
+                            titleRes = R.string.navigation_view_category_all;
                             break;
                         case R.id.navigation_view_category_business:
                             category = SourcesCategoryFiltering.CATEGORY_BUSINESS;
+                            titleRes = R.string.navigation_view_category_business;
                             break;
                         case R.id.navigation_view_category_entertainment:
                             category = SourcesCategoryFiltering.CATEGORY_ENTERTAINMENT;
+                            titleRes = R.string.navigation_view_category_entertainment;
                             break;
                         case R.id.navigation_view_category_gaming:
                             category = SourcesCategoryFiltering.CATEGORY_GAMING;
+                            titleRes = R.string.navigation_view_category_gaming;
                             break;
                         case R.id.navigation_view_category_general:
                             category = SourcesCategoryFiltering.CATEGORY_GENERAL;
+                            titleRes = R.string.navigation_view_category_general;
                             break;
                         case R.id.navigation_view_category_music:
                             category = SourcesCategoryFiltering.CATEGORY_MUSIC;
+                            titleRes = R.string.navigation_view_category_music;
                             break;
                         case R.id.navigation_view_category_politics:
                             category = SourcesCategoryFiltering.CATEGORY_POLITICS;
+                            titleRes = R.string.navigation_view_category_politics;
                             break;
                         case R.id.navigation_view_category_science_and_nature:
                             category = SourcesCategoryFiltering.CATEGORY_SCIENCE_AND_NATURE;
+                            titleRes = R.string.navigation_view_category_science_and_nature;
                             break;
                         case R.id.navigation_view_category_sport:
                             category = SourcesCategoryFiltering.CATEGORY_SPORT;
+                            titleRes = R.string.navigation_view_category_sport;
                             break;
                         case R.id.navigation_view_category_technology:
                             category = SourcesCategoryFiltering.CATEGORY_TECHNOLOGY;
+                            titleRes = R.string.navigation_view_category_technology;
                             break;
 
                         // languages
                         case R.id.navigation_view_language_all:
                             language = SourcesLanguageFiltering.LANGUAGE_ALL;
+                            titleRes = R.string.navigation_view_language_all;
                             break;
                         case R.id.navigation_view_language_en:
                             language = SourcesLanguageFiltering.LANGUAGE_ENGLISH;
+                            titleRes = R.string.navigation_view_language_en;
                             break;
                         case R.id.navigation_view_language_de:
                             language = SourcesLanguageFiltering.LANGUAGE_GERMAN;
+                            titleRes = R.string.navigation_view_language_de;
                             break;
                         case R.id.navigation_view_language_fr:
                             language = SourcesLanguageFiltering.LANGUAGE_FRENCH;
+                            titleRes = R.string.navigation_view_language_fr;
                             break;
 
                         // countries
                         case R.id.navigation_view_country_all:
                             country = SourcesCountryFiltering.COUNTRY_ALL;
+                            titleRes = R.string.navigation_view_country_all;
                             break;
                         case R.id.navigation_view_country_au:
                             country = SourcesCountryFiltering.COUNTRY_AUSTRALIA;
+                            titleRes = R.string.navigation_view_country_au;
                             break;
                         case R.id.navigation_view_country_de:
                             country = SourcesCountryFiltering.COUNTRY_GERMANY;
+                            titleRes = R.string.navigation_view_country_de;
                             break;
                         case R.id.navigation_view_country_gb:
                             country = SourcesCountryFiltering.COUNTRY_GREAT_BRITAIN;
+                            titleRes = R.string.navigation_view_country_gb;
                             break;
                         case R.id.navigation_view_country_in:
                             country = SourcesCountryFiltering.COUNTRY_INDIA;
+                            titleRes = R.string.navigation_view_country_in;
                             break;
                         case R.id.navigation_view_country_it:
                             country = SourcesCountryFiltering.COUNTRY_ITALY;
+                            titleRes = R.string.navigation_view_country_it;
                             break;
                         case R.id.navigation_view_country_us:
                             country = SourcesCountryFiltering.COUNTRY_UNITED_STATES;
+                            titleRes = R.string.navigation_view_country_us;
                             break;
                     }
 
@@ -223,6 +252,8 @@ public class SourcesActivity extends AppCompatActivity implements SourcesContrac
                     mSourcesPresenter.loadSources();
 
                     mDrawerLayout.closeDrawer(GravityCompat.START);
+                    mToolbarTitle = getString(titleRes);
+                    mToolbar.setTitle(mToolbarTitle);
                     return true;
                 }
         );
