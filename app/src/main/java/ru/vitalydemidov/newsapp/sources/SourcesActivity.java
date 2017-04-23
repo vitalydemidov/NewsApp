@@ -59,7 +59,7 @@ public class SourcesActivity extends AppCompatActivity implements SourcesContrac
 
     @NonNull
     private SourcesAdapter.SourceItemListener mItemListener =
-            (source -> mSourcesPresenter.openArticlesForSource(source));
+            source -> mSourcesPresenter.openArticlesForSource(source);
 
 
     @Override
