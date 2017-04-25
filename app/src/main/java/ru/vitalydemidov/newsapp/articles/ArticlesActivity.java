@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.UiThread;
+import android.support.annotation.VisibleForTesting;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -25,7 +26,8 @@ import ru.vitalydemidov.newsapp.data.Source;
 @UiThread
 public class ArticlesActivity extends AppCompatActivity implements ArticlesContract.View {
 
-    private static final String EXTRA_SOURCE = "ru.vitalydemidov.newsapp.extra_source";
+    @VisibleForTesting
+    static final String EXTRA_SOURCE = "ru.vitalydemidov.newsapp.extra_source";
 
 
     @Inject

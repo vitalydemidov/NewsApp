@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -42,7 +43,12 @@ public class Source implements Parcelable {
 
 
     public Source(@NonNull String name) {
+        mId = "";
         mName = name;
+        mDescription = "";
+        mUrl = "";
+        mCategory = "";
+        mSortBysAvailable = new ArrayList<>();
     }
 
 

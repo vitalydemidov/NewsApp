@@ -16,13 +16,13 @@ public class NewsLocalDataSource implements NewsDataSource {
     public Observable<List<Source>> getSources(@Nullable String category,
                                                @Nullable String language,
                                                @Nullable String country) {
-        return null;
+        return Observable.empty();
     }
 
 
     @Override
     public Observable<List<Article>> getArticles(@NonNull String sourceId) {
-        return null;
+        return Observable.empty();
     }
 
 }

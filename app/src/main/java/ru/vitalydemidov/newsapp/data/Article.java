@@ -33,7 +33,12 @@ public class Article implements Parcelable {
 
 
     public Article(@NonNull String title) {
+        mAuthor = "";
         mTitle = title;
+        mDescription = "";
+        mUrl = "";
+        mUrlToImage = "";
+        mPublishedAt = "";
     }
 
 
