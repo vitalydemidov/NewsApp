@@ -27,7 +27,7 @@ import ru.vitalydemidov.newsapp.data.Source;
 public class ArticlesActivity extends AppCompatActivity implements ArticlesContract.View {
 
     @VisibleForTesting
-    static final String EXTRA_SOURCE = "ru.vitalydemidov.newsapp.extra_source";
+    public static final String EXTRA_SOURCE = "ru.vitalydemidov.newsapp.extra_source";
 
 
     @Inject
