@@ -112,7 +112,7 @@ public class SourcesActivity extends AppCompatActivity implements SourcesContrac
             mSourcesPresenter.setCountryFiltering((SourcesCountryFiltering) savedInstanceState.getSerializable(COUNTRY_FILTERING_STATE));
             mToolbarTitle = savedInstanceState.getString(TOOLBAR_TITLE_STATE);
         }
-        getSupportActionBar().setTitle(mToolbarTitle != null ? mToolbarTitle : getString(R.string.navigation_view_category_all));
+        setTitle(mToolbarTitle != null ? mToolbarTitle : getString(R.string.navigation_view_category_all));
     }
 
 
@@ -253,7 +253,7 @@ public class SourcesActivity extends AppCompatActivity implements SourcesContrac
 
                     mDrawerLayout.closeDrawer(GravityCompat.START);
                     mToolbarTitle = getString(titleRes);
-                    getSupportActionBar().setTitle(mToolbarTitle);
+                    setTitle(mToolbarTitle);
                     return true;
                 }
         );
