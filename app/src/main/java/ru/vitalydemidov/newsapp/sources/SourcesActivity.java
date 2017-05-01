@@ -111,8 +111,8 @@ public class SourcesActivity extends AppCompatActivity implements SourcesContrac
             mSourcesPresenter.setLanguageFiltering((SourcesLanguageFiltering) savedInstanceState.getSerializable(LANGUAGE_FILTERING_STATE));
             mSourcesPresenter.setCountryFiltering((SourcesCountryFiltering) savedInstanceState.getSerializable(COUNTRY_FILTERING_STATE));
             mToolbarTitle = savedInstanceState.getString(TOOLBAR_TITLE_STATE);
-            mToolbar.setTitle(mToolbarTitle);
         }
+        getSupportActionBar().setTitle(mToolbarTitle != null ? mToolbarTitle : getString(R.string.navigation_view_category_all));
     }
 
 
@@ -253,7 +253,7 @@ public class SourcesActivity extends AppCompatActivity implements SourcesContrac
 
                     mDrawerLayout.closeDrawer(GravityCompat.START);
                     mToolbarTitle = getString(titleRes);
-                    mToolbar.setTitle(mToolbarTitle);
+                    getSupportActionBar().setTitle(mToolbarTitle);
                     return true;
                 }
         );
