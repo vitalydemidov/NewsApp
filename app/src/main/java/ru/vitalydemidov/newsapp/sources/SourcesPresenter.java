@@ -5,7 +5,7 @@ import android.support.annotation.Nullable;
 
 import ru.vitalydemidov.newsapp.base.BasePresenterImpl;
 import ru.vitalydemidov.newsapp.data.Source;
-import ru.vitalydemidov.newsapp.data.source.NewsRepository;
+import ru.vitalydemidov.newsapp.data.source.NewsDataSource;
 import ru.vitalydemidov.newsapp.util.schedulers.BaseSchedulerProvider;
 
 class SourcesPresenter extends BasePresenterImpl<SourcesContract.View>
@@ -27,7 +27,7 @@ class SourcesPresenter extends BasePresenterImpl<SourcesContract.View>
     private SourcesCountryFiltering mCurrentCountryFiltering = SourcesCountryFiltering.COUNTRY_ALL;
 
 
-    SourcesPresenter(@NonNull NewsRepository newsRepository,
+    SourcesPresenter(@NonNull NewsDataSource newsRepository,
                      @NonNull BaseSchedulerProvider schedulerProvider) {
         super(newsRepository, schedulerProvider);
     }

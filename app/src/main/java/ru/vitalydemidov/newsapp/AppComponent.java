@@ -4,8 +4,9 @@ import javax.inject.Singleton;
 
 import dagger.Component;
 import ru.vitalydemidov.newsapp.api.ApiModule;
-import ru.vitalydemidov.newsapp.data.source.NewsRepository;
+import ru.vitalydemidov.newsapp.data.source.NewsDataSource;
 import ru.vitalydemidov.newsapp.data.source.NewsRepositoryModule;
+import ru.vitalydemidov.newsapp.data.source.Repository;
 import ru.vitalydemidov.newsapp.util.schedulers.BaseSchedulerProvider;
 
 /**
@@ -26,7 +27,8 @@ import ru.vitalydemidov.newsapp.util.schedulers.BaseSchedulerProvider;
 )
 public interface AppComponent {
 
-    NewsRepository getNewsRepository();
+    @Repository
+    NewsDataSource getNewsRepository();
 
     BaseSchedulerProvider getBaseSchedulerProvider();
 

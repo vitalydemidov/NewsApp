@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import ru.vitalydemidov.newsapp.base.BasePresenterImpl;
-import ru.vitalydemidov.newsapp.data.source.NewsRepository;
+import ru.vitalydemidov.newsapp.data.source.NewsDataSource;
 import ru.vitalydemidov.newsapp.util.schedulers.BaseSchedulerProvider;
 
 class ArticlesPresenter extends BasePresenterImpl<ArticlesContract.View>
@@ -19,7 +19,7 @@ class ArticlesPresenter extends BasePresenterImpl<ArticlesContract.View>
 
 
     ArticlesPresenter(@NonNull String sourceId,
-                      @NonNull NewsRepository newsRepository,
+                      @NonNull NewsDataSource newsRepository,
                       @NonNull BaseSchedulerProvider schedulerProvider) {
         super(newsRepository, schedulerProvider);
         mSourceId = sourceId;

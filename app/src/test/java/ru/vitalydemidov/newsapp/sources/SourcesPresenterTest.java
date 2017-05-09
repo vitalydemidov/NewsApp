@@ -11,7 +11,7 @@ import java.util.List;
 
 import io.reactivex.Observable;
 import ru.vitalydemidov.newsapp.data.Source;
-import ru.vitalydemidov.newsapp.data.source.NewsRepository;
+import ru.vitalydemidov.newsapp.data.source.NewsDataSource;
 import ru.vitalydemidov.newsapp.util.schedulers.BaseSchedulerProvider;
 import ru.vitalydemidov.newsapp.util.schedulers.TrampolineSchedulerProvider;
 
@@ -43,7 +43,7 @@ public class SourcesPresenterTest {
 
 
     @Mock
-    private NewsRepository mNewsRepositoryMock;
+    private NewsDataSource mNewsRepositoryMock;
 
 
     private BaseSchedulerProvider mSchedulerProvider;

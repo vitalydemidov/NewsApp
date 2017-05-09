@@ -5,16 +5,10 @@ import android.support.annotation.Nullable;
 
 import java.util.List;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
 import io.reactivex.Observable;
 import ru.vitalydemidov.newsapp.data.Article;
 import ru.vitalydemidov.newsapp.data.Source;
-import ru.vitalydemidov.newsapp.data.source.local.Local;
-import ru.vitalydemidov.newsapp.data.source.remote.Remote;
 
-@Singleton
 public class NewsRepository implements NewsDataSource {
 
     @NonNull
@@ -24,9 +18,9 @@ public class NewsRepository implements NewsDataSource {
     private final NewsDataSource mNewsLocalDataSource;
 
 
-    @Inject
-    NewsRepository(@Remote @NonNull NewsDataSource newsRemoteDataSource,
-                   @Local @NonNull NewsDataSource newsLocalDataSource) {
+
+    NewsRepository(@NonNull NewsDataSource newsRemoteDataSource,
+                   @NonNull NewsDataSource newsLocalDataSource) {
         mNewsRemoteDataSource = newsRemoteDataSource;
         mNewsLocalDataSource = newsLocalDataSource;
     }

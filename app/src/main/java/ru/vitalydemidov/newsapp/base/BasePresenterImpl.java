@@ -3,13 +3,13 @@ package ru.vitalydemidov.newsapp.base;
 import android.support.annotation.NonNull;
 
 import io.reactivex.disposables.CompositeDisposable;
-import ru.vitalydemidov.newsapp.data.source.NewsRepository;
+import ru.vitalydemidov.newsapp.data.source.NewsDataSource;
 import ru.vitalydemidov.newsapp.util.schedulers.BaseSchedulerProvider;
 
 public abstract class BasePresenterImpl<V> implements BasePresenter<V> {
 
     @NonNull
-    protected final NewsRepository mNewsRepository;
+    protected final NewsDataSource mNewsRepository;
 
 
     @NonNull
@@ -20,7 +20,7 @@ public abstract class BasePresenterImpl<V> implements BasePresenter<V> {
     protected final CompositeDisposable mCompositeDisposable;
 
 
-    protected BasePresenterImpl(@NonNull NewsRepository newsRepository,
+    protected BasePresenterImpl(@NonNull NewsDataSource newsRepository,
                                 @NonNull BaseSchedulerProvider schedulerProvider) {
         mNewsRepository = newsRepository;
         mSchedulerProvider = schedulerProvider;

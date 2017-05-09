@@ -22,6 +22,16 @@ public class NewsRepositoryModule {
 
     @Singleton
     @Provides
+    @Repository
+    @NonNull
+    NewsDataSource provideNewsRepository(@Remote @NonNull NewsDataSource newsRemoteDataSource,
+                                         @Local @NonNull NewsDataSource newsLocalDataSource) {
+        return new NewsRepository(newsRemoteDataSource, newsLocalDataSource);
+    }
+
+
+    @Singleton
+    @Provides
     @Local
     @NonNull
     NewsDataSource provideNewsLocalDataSource() {
