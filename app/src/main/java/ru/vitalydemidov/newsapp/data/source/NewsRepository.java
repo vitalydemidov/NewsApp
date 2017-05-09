@@ -14,9 +14,9 @@ class NewsRepository implements NewsDataSource {
     @NonNull
     private final NewsDataSource mNewsRemoteDataSource;
 
+
     @NonNull
     private final NewsDataSource mNewsLocalDataSource;
-
 
 
     NewsRepository(@NonNull NewsDataSource newsRemoteDataSource,
