@@ -108,10 +108,6 @@ public class SourcesActivityTest {
         // Check that Toolbar title was changed
         onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar))))
                 .check(matches(withText(R.string.navigation_view_category_sport)));
-
-        // Check if Drawer is closed
-        onView(withId(R.id.drawer_layout))
-                .check(matches(isClosed()));
     }
 
 }
