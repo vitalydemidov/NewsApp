@@ -9,7 +9,7 @@ import io.reactivex.Observable;
 import ru.vitalydemidov.newsapp.data.Article;
 import ru.vitalydemidov.newsapp.data.Source;
 
-public class NewsRepository implements NewsDataSource {
+class NewsRepository implements NewsDataSource {
 
     @NonNull
     private final NewsDataSource mNewsRemoteDataSource;
