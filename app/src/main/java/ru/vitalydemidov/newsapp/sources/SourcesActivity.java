@@ -19,23 +19,33 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.disposables.Disposable;
 import ru.vitalydemidov.newsapp.NewsApp;
 import ru.vitalydemidov.newsapp.R;
 import ru.vitalydemidov.newsapp.articles.ArticlesActivity;
 import ru.vitalydemidov.newsapp.data.Source;
+import ru.vitalydemidov.newsapp.util.schedulers.BaseSchedulerProvider;
 
 @UiThread
-public class SourcesActivity extends AppCompatActivity implements SourcesContract.View {
+public class SourcesActivity extends AppCompatActivity {
 
     private static final String CATEGORY_FILTERING_STATE = "ru.vitalydemidov.newsapp.category_filtering_state";
     private static final String LANGUAGE_FILTERING_STATE = "ru.vitalydemidov.newsapp.language_filtering_state";
     private static final String COUNTRY_FILTERING_STATE = "ru.vitalydemidov.newsapp.country_filtering_state";
     private static final String TOOLBAR_TITLE_STATE = "ru.vitalydemidov.newsapp.toolbar_title_state";
 
+    @NonNull
+    private Disposable mDisposable;
+
 
     @Inject
     @NonNull
-    SourcesContract.Presenter mSourcesPresenter;
+    SourcesViewModel mSourcesViewModel;
+
+
+    @Inject
+    @NonNull
+    BaseSchedulerProvider mSchedulerProvider;
 
 
     @NonNull
@@ -58,8 +68,8 @@ public class SourcesActivity extends AppCompatActivity implements SourcesContrac
 
 
     @NonNull
-    private SourcesAdapter.SourceItemListener mItemListener =
-            source -> mSourcesPresenter.openArticlesForSource(source);
+    // TODO: 12/05/2017 check who should handle navigation
+    private SourcesAdapter.SourceItemListener mItemListener = this::showArticlesForSourceUi;
 
 
     @Override
@@ -83,14 +93,13 @@ public class SourcesActivity extends AppCompatActivity implements SourcesContrac
     @Override
     protected void onResume() {
         super.onResume();
-        mSourcesPresenter.attachView(this);
-        mSourcesPresenter.loadSources();
+        bind();
     }
 
 
     @Override
     protected void onPause() {
-        mSourcesPresenter.detachView();
+        unBind();
         super.onPause();
     }
 
@@ -98,18 +107,20 @@ public class SourcesActivity extends AppCompatActivity implements SourcesContrac
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putSerializable(CATEGORY_FILTERING_STATE, mSourcesPresenter.getCategoryFiltering());
-        outState.putSerializable(LANGUAGE_FILTERING_STATE, mSourcesPresenter.getLanguageFiltering());
-        outState.putSerializable(COUNTRY_FILTERING_STATE, mSourcesPresenter.getCountryFiltering());
+        outState.putSerializable(CATEGORY_FILTERING_STATE, mSourcesViewModel.getFiltering().getCategoryFiltering());
+        outState.putSerializable(LANGUAGE_FILTERING_STATE, mSourcesViewModel.getFiltering().getLanguageFiltering());
+        outState.putSerializable(COUNTRY_FILTERING_STATE, mSourcesViewModel.getFiltering().getCountryFiltering());
         outState.putString(TOOLBAR_TITLE_STATE, mToolbarTitle);
     }
 
 
     private void onRestoreState(@Nullable Bundle savedInstanceState) {
         if (savedInstanceState != null) {
-            mSourcesPresenter.setCategoryFiltering((SourcesCategoryFiltering) savedInstanceState.getSerializable(CATEGORY_FILTERING_STATE));
-            mSourcesPresenter.setLanguageFiltering((SourcesLanguageFiltering) savedInstanceState.getSerializable(LANGUAGE_FILTERING_STATE));
-            mSourcesPresenter.setCountryFiltering((SourcesCountryFiltering) savedInstanceState.getSerializable(COUNTRY_FILTERING_STATE));
+            FilteringContainer filtering = new FilteringContainer();
+            filtering.setCategoryFiltering((SourcesCategoryFiltering) savedInstanceState.getSerializable(CATEGORY_FILTERING_STATE));
+            filtering.setLanguageFiltering((SourcesLanguageFiltering) savedInstanceState.getSerializable(LANGUAGE_FILTERING_STATE));
+            filtering.setCountryFiltering((SourcesCountryFiltering) savedInstanceState.getSerializable(COUNTRY_FILTERING_STATE));
+            mSourcesViewModel.setFiltering(filtering);
             mToolbarTitle = savedInstanceState.getString(TOOLBAR_TITLE_STATE);
         }
         setTitle(mToolbarTitle != null ? mToolbarTitle : getString(R.string.navigation_view_category_all));
@@ -151,6 +162,7 @@ public class SourcesActivity extends AppCompatActivity implements SourcesContrac
                     SourcesCategoryFiltering category = null;
                     SourcesLanguageFiltering language = null;
                     SourcesCountryFiltering country = null;
+                    FilteringContainer filteringContainer = new FilteringContainer();
                     int titleRes = R.string.app_name;
 
                     switch (menuItem.getItemId()) {
@@ -246,10 +258,10 @@ public class SourcesActivity extends AppCompatActivity implements SourcesContrac
                             break;
                     }
 
-                    mSourcesPresenter.setCategoryFiltering(category);
-                    mSourcesPresenter.setLanguageFiltering(language);
-                    mSourcesPresenter.setCountryFiltering(country);
-                    mSourcesPresenter.loadSources();
+                    filteringContainer.setCategoryFiltering(category);
+                    filteringContainer.setLanguageFiltering(language);
+                    filteringContainer.setCountryFiltering(country);
+                    mSourcesViewModel.setFiltering(filteringContainer);
 
                     mDrawerLayout.closeDrawer(GravityCompat.START);
                     mToolbarTitle = getString(titleRes);
@@ -276,7 +288,8 @@ public class SourcesActivity extends AppCompatActivity implements SourcesContrac
     private void initArticlesSwipeRefreshLayout() {
         mSourcesSwipeRefreshLayout =
                 (SwipeRefreshLayout) findViewById(R.id.sources_swipe_refresh_layout);
-        mSourcesSwipeRefreshLayout.setOnRefreshListener(() -> mSourcesPresenter.loadSources());
+        // TODO: 12/05/2017 обдумать, что тут происходит и как должно быть
+        mSourcesSwipeRefreshLayout.setOnRefreshListener(() -> mSourcesViewModel.setFiltering(mSourcesViewModel.getFiltering()));
         mSourcesSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
     }
 
@@ -288,35 +301,53 @@ public class SourcesActivity extends AppCompatActivity implements SourcesContrac
     }
 
 
-    //region Contract
-    @Override
     public void showLoadingError() {
         Toast.makeText(this, R.string.sources_loading_error, Toast.LENGTH_LONG).show();
     }
 
 
-    @Override
     public void showLoadingProgress() {
         mSourcesSwipeRefreshLayout.setRefreshing(true);
     }
 
 
-    @Override
     public void hideLoadingProgress() {
         mSourcesSwipeRefreshLayout.setRefreshing(false);
     }
 
 
-    @Override
     public void showSources(List<Source> sources) {
         mSourcesAdapter.setSources(sources);
     }
 
 
-    @Override
     public void showArticlesForSourceUi(@NonNull Source selectedSource) {
         startActivity(ArticlesActivity.newIntent(this, selectedSource));
     }
-    //endregion Contract
+
+
+    private void bind() {
+        showLoadingProgress();
+        mDisposable = mSourcesViewModel.loadSources()
+                .subscribeOn(mSchedulerProvider.computation())
+                .observeOn(mSchedulerProvider.ui())
+                .subscribe(
+                        // onNext
+                        sources -> {
+                            hideLoadingProgress();
+                            showSources(sources);
+                        },
+                        // onError
+                        throwable -> {
+                            hideLoadingProgress();
+                            showLoadingError();
+                        }
+                );
+    }
+
+
+    private void unBind() {
+        mDisposable.dispose();
+    }
 
 }

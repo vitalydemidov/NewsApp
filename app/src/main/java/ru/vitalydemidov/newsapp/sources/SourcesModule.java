@@ -20,9 +20,9 @@ class SourcesModule {
     @Provides
     @NonNull
     @PerActivity
-    SourcesContract.Presenter provideSourcesPresenter(@NonNull @Repository NewsDataSource newsRepository,
-                                                      @NonNull BaseSchedulerProvider schedulerProvider) {
-        return new SourcesPresenter(newsRepository, schedulerProvider);
+    SourcesViewModel provideSourcesViewModel(@NonNull @Repository NewsDataSource newsRepository,
+                                             @NonNull BaseSchedulerProvider schedulerProvider) {
+        return new SourcesViewModel(newsRepository, schedulerProvider);
     }
 
 
