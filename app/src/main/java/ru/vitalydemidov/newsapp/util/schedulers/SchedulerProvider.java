@@ -14,6 +14,14 @@ public class SchedulerProvider implements BaseSchedulerProvider {
         return Schedulers.io();
     }
 
+
+    @NonNull
+    @Override
+    public Scheduler computation() {
+        return Schedulers.computation();
+    }
+
+
     @Override
     @NonNull
     public Scheduler ui() {

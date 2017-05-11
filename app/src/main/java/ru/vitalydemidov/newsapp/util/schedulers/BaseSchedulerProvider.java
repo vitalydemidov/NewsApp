@@ -9,6 +9,11 @@ public interface BaseSchedulerProvider {
     @NonNull
     Scheduler io();
 
+
+    @NonNull
+    Scheduler computation();
+
+
     @NonNull
     Scheduler ui();
 

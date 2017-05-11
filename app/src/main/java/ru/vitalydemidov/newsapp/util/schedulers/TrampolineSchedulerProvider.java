@@ -13,6 +13,13 @@ public class TrampolineSchedulerProvider implements BaseSchedulerProvider {
         return Schedulers.trampoline();
     }
 
+
+    @NonNull
+    @Override
+    public Scheduler computation() {
+        return Schedulers.trampoline();
+    }
+
     @NonNull
     @Override
     public Scheduler ui() {
