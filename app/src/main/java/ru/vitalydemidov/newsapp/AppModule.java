@@ -12,12 +12,12 @@ import ru.vitalydemidov.newsapp.util.schedulers.SchedulerProvider;
 
 @Singleton
 @Module
-public class AppModule {
+class AppModule {
 
     private Context mAppContext;
 
 
-    public AppModule(@NonNull Context context) {
+    AppModule(@NonNull Context context) {
         mAppContext = context;
     }
 

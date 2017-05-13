@@ -8,7 +8,6 @@ import android.support.annotation.Nullable;
 import android.support.annotation.UiThread;
 import android.support.annotation.VisibleForTesting;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
@@ -21,15 +20,14 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import io.reactivex.disposables.Disposable;
 import ru.vitalydemidov.newsapp.NewsApp;
 import ru.vitalydemidov.newsapp.R;
+import ru.vitalydemidov.newsapp.base.BaseActivity;
 import ru.vitalydemidov.newsapp.data.Article;
 import ru.vitalydemidov.newsapp.data.Source;
-import ru.vitalydemidov.newsapp.util.schedulers.BaseSchedulerProvider;
 
 @UiThread
-public class ArticlesActivity extends AppCompatActivity {
+public class ArticlesActivity extends BaseActivity {
 
     private static final String SORT_STATE = "ru.vitalydemidov.newsapp.sort_state";
 
@@ -38,26 +36,13 @@ public class ArticlesActivity extends AppCompatActivity {
     public static final String EXTRA_SOURCE = "ru.vitalydemidov.newsapp.extra_source";
 
 
-    @NonNull
-    private Disposable mDisposable;
-
-
     @Inject
     @NonNull
     ArticlesViewModel mArticlesViewModel;
 
 
-    @Inject
-    @NonNull
-    BaseSchedulerProvider mSchedulerProvider;
-
-
     @NonNull
     private ArticlesAdapter mArticlesAdapter;
-
-
-    @NonNull
-    private SwipeRefreshLayout mArticlesSwipeRefreshLayout;
 
 
     @NonNull
@@ -117,20 +102,6 @@ public class ArticlesActivity extends AppCompatActivity {
 
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        bind();
-    }
-
-
-    @Override
-    protected void onPause() {
-        unBind();
-        super.onPause();
-    }
-
-
-    @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putSerializable(SORT_STATE, mArticlesViewModel.getSort());
@@ -174,10 +145,9 @@ public class ArticlesActivity extends AppCompatActivity {
 
 
     private void initArticlesSwipeRefreshLayout() {
-        mArticlesSwipeRefreshLayout =
-                (SwipeRefreshLayout) findViewById(R.id.articles_swipe_refresh_layout);
-        mArticlesSwipeRefreshLayout.setOnRefreshListener(() -> mArticlesViewModel.setSort(mArticlesViewModel.getSort()));
-        mArticlesSwipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.articles_swipe_refresh_layout);
+        mSwipeRefreshLayout.setOnRefreshListener(() -> mArticlesViewModel.setSort(mArticlesViewModel.getSort()));
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
     }
 
 
@@ -194,22 +164,14 @@ public class ArticlesActivity extends AppCompatActivity {
     }
 
 
-    public void showLoadingError() {
+    @Override
+    protected void showLoadingError() {
         Toast.makeText(this, R.string.articles_loading_error, Toast.LENGTH_SHORT).show();
     }
 
 
-    public void showLoadingProgress() {
-        mArticlesSwipeRefreshLayout.setRefreshing(true);
-    }
-
-
-    public void hideLoadingProgress() {
-        mArticlesSwipeRefreshLayout.setRefreshing(false);
-    }
-
-
-    private void bind() {
+    @Override
+    protected void bind() {
         showLoadingProgress();
         mDisposable = mArticlesViewModel.loadArticles()
                 .subscribeOn(mSchedulerProvider.computation())
@@ -229,7 +191,8 @@ public class ArticlesActivity extends AppCompatActivity {
     }
 
 
-    private void unBind() {
+    @Override
+    protected void unBind() {
         mDisposable.dispose();
     }
 

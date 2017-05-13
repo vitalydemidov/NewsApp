@@ -9,7 +9,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -19,15 +18,14 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import io.reactivex.disposables.Disposable;
 import ru.vitalydemidov.newsapp.NewsApp;
 import ru.vitalydemidov.newsapp.R;
 import ru.vitalydemidov.newsapp.articles.ArticlesActivity;
+import ru.vitalydemidov.newsapp.base.BaseActivity;
 import ru.vitalydemidov.newsapp.data.Source;
-import ru.vitalydemidov.newsapp.util.schedulers.BaseSchedulerProvider;
 
 @UiThread
-public class SourcesActivity extends AppCompatActivity {
+public class SourcesActivity extends BaseActivity {
 
     private static final String CATEGORY_FILTERING_STATE = "ru.vitalydemidov.newsapp.category_filtering_state";
     private static final String LANGUAGE_FILTERING_STATE = "ru.vitalydemidov.newsapp.language_filtering_state";
@@ -35,18 +33,9 @@ public class SourcesActivity extends AppCompatActivity {
     private static final String TOOLBAR_TITLE_STATE = "ru.vitalydemidov.newsapp.toolbar_title_state";
 
 
-    @NonNull
-    private Disposable mDisposable;
-
-
     @Inject
     @NonNull
     SourcesViewModel mSourcesViewModel;
-
-
-    @Inject
-    @NonNull
-    BaseSchedulerProvider mSchedulerProvider;
 
 
     @NonNull
@@ -61,15 +50,10 @@ public class SourcesActivity extends AppCompatActivity {
 
 
     @NonNull
-    private SwipeRefreshLayout mSourcesSwipeRefreshLayout;
-
-
-    @NonNull
     private SourcesAdapter mSourcesAdapter;
 
 
     @NonNull
-    // TODO: 12/05/2017 check who should handle navigation
     private SourcesAdapter.SourceItemListener mItemListener = this::showArticlesForSourceUi;
 
 
@@ -88,20 +72,6 @@ public class SourcesActivity extends AppCompatActivity {
 
         initViews();
         onRestoreState(savedInstanceState);
-    }
-
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        bind();
-    }
-
-
-    @Override
-    protected void onPause() {
-        unBind();
-        super.onPause();
     }
 
 
@@ -287,11 +257,9 @@ public class SourcesActivity extends AppCompatActivity {
 
 
     private void initArticlesSwipeRefreshLayout() {
-        mSourcesSwipeRefreshLayout =
-                (SwipeRefreshLayout) findViewById(R.id.sources_swipe_refresh_layout);
-        // TODO: 12/05/2017 обдумать, что тут происходит и как должно быть
-        mSourcesSwipeRefreshLayout.setOnRefreshListener(() -> mSourcesViewModel.setFiltering(mSourcesViewModel.getFiltering()));
-        mSourcesSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.sources_swipe_refresh_layout);
+        mSwipeRefreshLayout.setOnRefreshListener(() -> mSourcesViewModel.setFiltering(mSourcesViewModel.getFiltering()));
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
     }
 
 
@@ -302,20 +270,10 @@ public class SourcesActivity extends AppCompatActivity {
     }
 
 
-    public void showLoadingError() {
+    @Override
+    protected void showLoadingError() {
         Toast.makeText(this, R.string.sources_loading_error, Toast.LENGTH_LONG).show();
     }
-
-
-    public void showLoadingProgress() {
-        mSourcesSwipeRefreshLayout.setRefreshing(true);
-    }
-
-
-    public void hideLoadingProgress() {
-        mSourcesSwipeRefreshLayout.setRefreshing(false);
-    }
-
 
     public void showSources(List<Source> sources) {
         mSourcesAdapter.setSources(sources);
@@ -327,7 +285,8 @@ public class SourcesActivity extends AppCompatActivity {
     }
 
 
-    private void bind() {
+    @Override
+    protected void bind() {
         showLoadingProgress();
         mDisposable = mSourcesViewModel.loadSources()
                 .subscribeOn(mSchedulerProvider.computation())
@@ -347,7 +306,8 @@ public class SourcesActivity extends AppCompatActivity {
     }
 
 
-    private void unBind() {
+    @Override
+    protected void unBind() {
         mDisposable.dispose();
     }
 
