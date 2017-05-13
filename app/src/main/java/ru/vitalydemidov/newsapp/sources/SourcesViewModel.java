@@ -22,10 +22,10 @@ class SourcesViewModel extends BaseViewModelImpl {
 
 
     SourcesViewModel(@NonNull final NewsDataSource newsRepository,
-                            @NonNull final BaseSchedulerProvider schedulerProvider) {
+                     @NonNull final BaseSchedulerProvider schedulerProvider) {
         super(newsRepository, schedulerProvider);
         mFilteringContainer = new FilteringContainer();
-        mSourcesBehaviorSubject = BehaviorSubject.createDefault(new FilteringContainer());
+        mSourcesBehaviorSubject = BehaviorSubject.createDefault(mFilteringContainer);
     }
 
 

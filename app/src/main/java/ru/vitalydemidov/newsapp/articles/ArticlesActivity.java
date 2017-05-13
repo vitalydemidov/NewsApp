@@ -10,29 +10,46 @@ import android.support.annotation.VisibleForTesting;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.disposables.Disposable;
 import ru.vitalydemidov.newsapp.NewsApp;
 import ru.vitalydemidov.newsapp.R;
 import ru.vitalydemidov.newsapp.data.Article;
 import ru.vitalydemidov.newsapp.data.Source;
+import ru.vitalydemidov.newsapp.util.schedulers.BaseSchedulerProvider;
 
 @UiThread
-public class ArticlesActivity extends AppCompatActivity implements ArticlesContract.View {
+public class ArticlesActivity extends AppCompatActivity {
+
+    private static final String SORT_STATE = "ru.vitalydemidov.newsapp.sort_state";
+
 
     @VisibleForTesting
     public static final String EXTRA_SOURCE = "ru.vitalydemidov.newsapp.extra_source";
 
 
+    @NonNull
+    private Disposable mDisposable;
+
+
     @Inject
     @NonNull
-    ArticlesContract.Presenter mArticlesPresenter;
+    ArticlesViewModel mArticlesViewModel;
+
+
+    @Inject
+    @NonNull
+    BaseSchedulerProvider mSchedulerProvider;
 
 
     @NonNull
@@ -66,22 +83,67 @@ public class ArticlesActivity extends AppCompatActivity implements ArticlesContr
                 .inject(this);
 
         initViews();
+        onRestoreState(savedInstanceState);
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_actions, menu);
+        return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_sort:
+                PopupMenu popupMenu = new PopupMenu(this, findViewById(R.id.action_sort));
+                Source source = getIntent().getParcelableExtra(EXTRA_SOURCE);
+                for (String sortBy : source.getSortBysAvailable()) {
+                    popupMenu.getMenu().add(sortBy);
+                }
+                popupMenu.setOnMenuItemClickListener(menuItem -> {
+                    mArticlesViewModel.setSort(Sort.fromValue(String.valueOf(menuItem.getTitle())));
+                    return true;
+                });
+                popupMenu.show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+
+        }
     }
 
 
     @Override
     protected void onResume() {
         super.onResume();
-        mArticlesPresenter.attachView(this);
-        mArticlesPresenter.loadArticles();
+        bind();
     }
 
 
     @Override
     protected void onPause() {
-        mArticlesPresenter.detachView();
+        unBind();
         super.onPause();
     }
+
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable(SORT_STATE, mArticlesViewModel.getSort());
+    }
+
+
+    private void onRestoreState(@Nullable Bundle savedInstanceState) {
+        if (savedInstanceState != null) {
+            Sort savedSort = (Sort) savedInstanceState.getSerializable(SORT_STATE);
+            mArticlesViewModel.setSort(savedSort != null ? savedSort : Sort.TOP);
+        }
+    }
+
 
     @Override
     public boolean onSupportNavigateUp() {
@@ -104,6 +166,7 @@ public class ArticlesActivity extends AppCompatActivity implements ArticlesContr
         // TODO: 18/04/2017 set listener
     }
 
+
     private void initViews() {
         initArticlesSwipeRefreshLayout();
         initArticlesRecyclerView();
@@ -113,7 +176,7 @@ public class ArticlesActivity extends AppCompatActivity implements ArticlesContr
     private void initArticlesSwipeRefreshLayout() {
         mArticlesSwipeRefreshLayout =
                 (SwipeRefreshLayout) findViewById(R.id.articles_swipe_refresh_layout);
-        mArticlesSwipeRefreshLayout.setOnRefreshListener(() -> mArticlesPresenter.loadArticles());
+        mArticlesSwipeRefreshLayout.setOnRefreshListener(() -> mArticlesViewModel.setSort(mArticlesViewModel.getSort()));
         mArticlesSwipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
     }
 
@@ -126,29 +189,48 @@ public class ArticlesActivity extends AppCompatActivity implements ArticlesContr
     }
 
 
-    //region Contract
-    @Override
     public void showArticles(List<Article> articles) {
         mArticlesAdapter.setArticles(articles);
     }
 
 
-    @Override
     public void showLoadingError() {
         Toast.makeText(this, R.string.articles_loading_error, Toast.LENGTH_SHORT).show();
     }
 
 
-    @Override
     public void showLoadingProgress() {
         mArticlesSwipeRefreshLayout.setRefreshing(true);
     }
 
 
-    @Override
     public void hideLoadingProgress() {
         mArticlesSwipeRefreshLayout.setRefreshing(false);
     }
-    //endregion Contract
+
+
+    private void bind() {
+        showLoadingProgress();
+        mDisposable = mArticlesViewModel.loadArticles()
+                .subscribeOn(mSchedulerProvider.computation())
+                .observeOn(mSchedulerProvider.ui())
+                .subscribe(
+                        // onNext
+                        sources -> {
+                            hideLoadingProgress();
+                            showArticles(sources);
+                        },
+                        // onError
+                        throwable -> {
+                            hideLoadingProgress();
+                            showLoadingError();
+                        }
+                );
+    }
+
+
+    private void unBind() {
+        mDisposable.dispose();
+    }
 
 }

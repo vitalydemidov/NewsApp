@@ -34,6 +34,7 @@ public class SourcesActivity extends AppCompatActivity {
     private static final String COUNTRY_FILTERING_STATE = "ru.vitalydemidov.newsapp.country_filtering_state";
     private static final String TOOLBAR_TITLE_STATE = "ru.vitalydemidov.newsapp.toolbar_title_state";
 
+
     @NonNull
     private Disposable mDisposable;
 

@@ -20,10 +20,10 @@ class ArticlesModule {
     @Provides
     @NonNull
     @PerActivity
-    ArticlesContract.Presenter provideArticlesPresenter(@NonNull String sourceId,
-                                                        @NonNull @Repository NewsDataSource newsRepository,
-                                                        @NonNull BaseSchedulerProvider schedulerProvider) {
-        return new ArticlesPresenter(sourceId, newsRepository, schedulerProvider);
+    ArticlesViewModel provideArticlesViewModel(@NonNull String sourceId,
+                                               @NonNull @Repository NewsDataSource newsRepository,
+                                               @NonNull BaseSchedulerProvider schedulerProvider) {
+        return new ArticlesViewModel(sourceId, newsRepository, schedulerProvider);
     }
 
 
