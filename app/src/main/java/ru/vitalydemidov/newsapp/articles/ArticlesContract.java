@@ -14,12 +14,16 @@ interface ArticlesContract {
 
         void showArticles(List<Article> articles);
 
+        void showArticleDetails(@NonNull Article article);
+
     }
 
 
     interface Presenter extends BasePresenter<View> {
 
         void loadArticles();
+
+        void openArticle(@NonNull Article article);
 
         void setSort(@NonNull Sort sort);
 
