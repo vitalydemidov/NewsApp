@@ -10,6 +10,7 @@ import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.observers.TestObserver;
+import ru.vitalydemidov.newsapp.articles.Sort;
 import ru.vitalydemidov.newsapp.data.Article;
 import ru.vitalydemidov.newsapp.data.Source;
 import ru.vitalydemidov.newsapp.sources.SourcesCategoryFiltering;
@@ -31,6 +32,7 @@ public class NewsRepositoryTest {
     private static final SourcesLanguageFiltering LANGUAGE_FILTERING = SourcesLanguageFiltering.LANGUAGE_ALL;
     private static final SourcesCountryFiltering COUNTRY_FILTERING = SourcesCountryFiltering.COUNTRY_ALL;
     private static final String SOURCE_ID = "test_source_id";
+    private static final Sort SORT = Sort.TOP;
 
 
     private static final List<Source> SOURCES = Arrays.asList(
@@ -99,17 +101,17 @@ public class NewsRepositoryTest {
     public void loadArticlesFromRepositoryAndRemoteDataSource() {
         TestObserver<List<Article>> testObserver = new TestObserver<>();
 
-        when(mNewsRemoteDataSource.getArticles(anyString()))
+        when(mNewsRemoteDataSource.getArticles(anyString(), anyString()))
                 .thenReturn(Observable.just(ARTICLES));
 
-        mNewsRepository.getArticles(SOURCE_ID)
+        mNewsRepository.getArticles(SOURCE_ID, SORT.getTitle())
                 .subscribe(testObserver);
 
         // verify that remote data source was called and one time only
-        verify(mNewsRemoteDataSource, times(1)).getArticles(SOURCE_ID);
+        verify(mNewsRemoteDataSource, times(1)).getArticles(SOURCE_ID, SORT.getTitle());
 
         // verify that local data source was not called
-        verify(mNewsLocalDataSource, times(0)).getArticles(SOURCE_ID);
+        verify(mNewsLocalDataSource, times(0)).getArticles(SOURCE_ID, SORT.getTitle());
 
         testObserver.assertNoErrors();
         testObserver.assertComplete();
