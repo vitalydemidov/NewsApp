@@ -34,26 +34,21 @@ public class SourcesActivity extends AppCompatActivity implements SourcesContrac
 
 
     @Inject
-    @NonNull
     SourcesContract.Presenter mSourcesPresenter;
 
 
-    @NonNull
     private DrawerLayout mDrawerLayout;
 
 
-    @NonNull
     private Toolbar mToolbar;
     
     
     private String mToolbarTitle;
 
 
-    @NonNull
     private SwipeRefreshLayout mSourcesSwipeRefreshLayout;
 
 
-    @NonNull
     private SourcesAdapter mSourcesAdapter;
 
 
@@ -303,7 +298,7 @@ public class SourcesActivity extends AppCompatActivity implements SourcesContrac
 
 
     @Override
-    public void showSources(List<Source> sources) {
+    public void showSources(@NonNull List<Source> sources) {
         mSourcesAdapter.setSources(sources);
     }
 

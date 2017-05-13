@@ -38,15 +38,12 @@ public class ArticlesActivity extends AppCompatActivity implements ArticlesContr
 
 
     @Inject
-    @NonNull
     ArticlesContract.Presenter mArticlesPresenter;
 
 
-    @NonNull
     private ArticlesAdapter mArticlesAdapter;
 
 
-    @NonNull
     private SwipeRefreshLayout mArticlesSwipeRefreshLayout;
 
 
@@ -147,8 +144,10 @@ public class ArticlesActivity extends AppCompatActivity implements ArticlesContr
     private void setupToolbar(@NonNull String title) {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(title);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle(title);
+        }
     }
 
 
@@ -183,7 +182,7 @@ public class ArticlesActivity extends AppCompatActivity implements ArticlesContr
 
     //region Contract
     @Override
-    public void showArticles(List<Article> articles) {
+    public void showArticles(@NonNull List<Article> articles) {
         mArticlesAdapter.setArticles(articles);
     }
 

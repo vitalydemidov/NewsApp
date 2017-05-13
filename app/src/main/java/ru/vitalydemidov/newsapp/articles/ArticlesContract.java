@@ -12,7 +12,7 @@ interface ArticlesContract {
 
     interface View extends BaseView {
 
-        void showArticles(List<Article> articles);
+        void showArticles(@NonNull List<Article> articles);
 
         void showArticleDetails(@NonNull Article article);
 

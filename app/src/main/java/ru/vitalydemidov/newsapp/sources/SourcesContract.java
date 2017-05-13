@@ -13,7 +13,7 @@ interface SourcesContract {
 
     interface View extends BaseView {
 
-        void showSources(List<Source> sources);
+        void showSources(@NonNull List<Source> sources);
 
         void showArticlesForSourceUi(@NonNull Source selectedSource);
 
