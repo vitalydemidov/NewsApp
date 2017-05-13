@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import ru.vitalydemidov.newsapp.base.BasePresenterImpl;
+import ru.vitalydemidov.newsapp.data.Article;
 import ru.vitalydemidov.newsapp.data.source.NewsDataSource;
 import ru.vitalydemidov.newsapp.util.schedulers.BaseSchedulerProvider;
 
@@ -66,6 +67,14 @@ class ArticlesPresenter extends BasePresenterImpl<ArticlesContract.View>
     }
 
 
+    @Override
+    public void openArticle(@NonNull Article article) {
+        if (mArticlesView != null) {
+            mArticlesView.showArticleDetails(article);
+        }
+    }
+
+
     @NonNull
     @Override
     public Sort getSort() {
@@ -77,4 +86,5 @@ class ArticlesPresenter extends BasePresenterImpl<ArticlesContract.View>
     public void setSort(@NonNull Sort sort) {
         mSort = sort;
     }
+
 }

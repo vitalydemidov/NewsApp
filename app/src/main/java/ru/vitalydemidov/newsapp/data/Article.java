@@ -52,6 +52,11 @@ public class Article implements Parcelable {
     }
 
 
+    public String getUrl() {
+        return mUrl;
+    }
+
+
     //region Parcelable
     public static final Creator<Article> CREATOR = new Creator<Article>() {
         @Override
