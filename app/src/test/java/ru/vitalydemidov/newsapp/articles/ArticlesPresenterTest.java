@@ -15,7 +15,10 @@ import ru.vitalydemidov.newsapp.data.source.NewsDataSource;
 import ru.vitalydemidov.newsapp.util.schedulers.BaseSchedulerProvider;
 import ru.vitalydemidov.newsapp.util.schedulers.TrampolineSchedulerProvider;
 
+import static org.hamcrest.Matchers.equalTo;
+import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.same;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -31,7 +34,8 @@ public class ArticlesPresenterTest {
             new Article("mock3")
     );
     private static final String SOURCE_ID = "mockId";
-    private static final Sort SORT = Sort.TOP;
+    private static final Sort DEFAULT_SORT = Sort.TOP;
+    private static  final Sort NOT_DEFAULT_SORT = Sort.POPULAR;
 
 
     @Mock
@@ -69,15 +73,42 @@ public class ArticlesPresenterTest {
 
 
     @Test
+    public void clickOnArticle_showArticleDetails() {
+        // Stubbed article
+        Article selectedArticle = ARTICLES.get(0);
+
+        // When a article was selected
+        mArticlesPresenter.openArticle(selectedArticle);
+
+        // Then selected article's details is shown
+        verify(mArticlesViewMock).showArticleDetails(same(selectedArticle));
+    }
+
+
+    @Test
+    public void setSortAndCheck() {
+        mArticlesPresenter.setSort(NOT_DEFAULT_SORT);
+        assertThat(mArticlesPresenter.getSort(), equalTo(NOT_DEFAULT_SORT));
+    }
+
+
+    @Test
+    public void checkDefaultSortValue() {
+        // default sort value must equal to Sort.TOP
+        assertThat(mArticlesPresenter.getSort(), equalTo(DEFAULT_SORT));
+    }
+
+
+    @Test
     public void loadArticlesFromRepositoryAndLoadIntoView() {
         when(mNewsRepositoryMock.getArticles(anyString(), anyString()))
                 .thenReturn(Observable.just(ARTICLES));
 
-        mArticlesPresenter.setSort(SORT);
+        mArticlesPresenter.setSort(NOT_DEFAULT_SORT);
         mArticlesPresenter.loadArticles();
 
         verify(mArticlesViewMock).showLoadingProgress();
-        verify(mNewsRepositoryMock).getArticles(SOURCE_ID, SORT.getTitle());
+        verify(mNewsRepositoryMock).getArticles(SOURCE_ID, NOT_DEFAULT_SORT.getTitle());
         verify(mArticlesViewMock).hideLoadingProgress();
         verify(mArticlesViewMock).showArticles(ARTICLES);
     }
@@ -88,11 +119,11 @@ public class ArticlesPresenterTest {
         when(mNewsRepositoryMock.getArticles(anyString(), anyString()))
                 .thenReturn(Observable.error(new RuntimeException()));
 
-        mArticlesPresenter.setSort(SORT);
+        mArticlesPresenter.setSort(NOT_DEFAULT_SORT);
         mArticlesPresenter.loadArticles();
 
         verify(mArticlesViewMock).showLoadingProgress();
-        verify(mNewsRepositoryMock).getArticles(SOURCE_ID, SORT.getTitle());
+        verify(mNewsRepositoryMock).getArticles(SOURCE_ID, NOT_DEFAULT_SORT.getTitle());
         verify(mArticlesViewMock).hideLoadingProgress();
         verify(mArticlesViewMock).showLoadingError();
     }
@@ -104,11 +135,11 @@ public class ArticlesPresenterTest {
                 .thenReturn(Observable.just(ARTICLES));
 
         mArticlesPresenter.detachView();
-        mArticlesPresenter.setSort(SORT);
+        mArticlesPresenter.setSort(NOT_DEFAULT_SORT);
         mArticlesPresenter.loadArticles();
 
         verify(mArticlesViewMock, times(0)).showLoadingProgress();
-        verify(mNewsRepositoryMock, times(0)).getArticles(SOURCE_ID, SORT.getTitle());
+        verify(mNewsRepositoryMock, times(0)).getArticles(SOURCE_ID, NOT_DEFAULT_SORT.getTitle());
         verify(mArticlesViewMock, times(0)).hideLoadingProgress();
         verify(mArticlesViewMock, times(0)).showArticles(ARTICLES);
     }
