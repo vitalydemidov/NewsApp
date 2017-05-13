@@ -57,11 +57,6 @@ public class SourcesActivity extends AppCompatActivity implements SourcesContrac
     private SourcesAdapter mSourcesAdapter;
 
 
-    @NonNull
-    private SourcesAdapter.SourceItemListener mItemListener =
-            source -> mSourcesPresenter.openArticlesForSource(source);
-
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -263,7 +258,7 @@ public class SourcesActivity extends AppCompatActivity implements SourcesContrac
     @Inject
     void setSourcesAdapter(@NonNull SourcesAdapter adapter) {
         mSourcesAdapter = adapter;
-        mSourcesAdapter.setSourceItemListener(mItemListener);
+        mSourcesAdapter.setSourceItemListener(mSourcesPresenter::openArticlesForSource);
     }
 
 
