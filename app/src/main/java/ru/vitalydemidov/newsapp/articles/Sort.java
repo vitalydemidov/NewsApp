@@ -2,7 +2,7 @@ package ru.vitalydemidov.newsapp.articles;
 
 import android.support.annotation.NonNull;
 
-enum Sort {
+public enum Sort {
 
     TOP("top"),
     LATEST("latest"),
@@ -19,7 +19,7 @@ enum Sort {
 
 
     @NonNull
-    String getTitle() {
+    public String getTitle() {
         return mTitle;
     }
 

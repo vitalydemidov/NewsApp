@@ -31,6 +31,7 @@ public class ArticlesPresenterTest {
             new Article("mock3")
     );
     private static final String SOURCE_ID = "mockId";
+    private static final Sort SORT = Sort.TOP;
 
 
     @Mock
@@ -69,13 +70,14 @@ public class ArticlesPresenterTest {
 
     @Test
     public void loadArticlesFromRepositoryAndLoadIntoView() {
-        when(mNewsRepositoryMock.getArticles(anyString()))
+        when(mNewsRepositoryMock.getArticles(anyString(), anyString()))
                 .thenReturn(Observable.just(ARTICLES));
 
+        mArticlesPresenter.setSort(SORT);
         mArticlesPresenter.loadArticles();
 
         verify(mArticlesViewMock).showLoadingProgress();
-        verify(mNewsRepositoryMock).getArticles(SOURCE_ID);
+        verify(mNewsRepositoryMock).getArticles(SOURCE_ID, SORT.getTitle());
         verify(mArticlesViewMock).hideLoadingProgress();
         verify(mArticlesViewMock).showArticles(ARTICLES);
     }
@@ -83,13 +85,14 @@ public class ArticlesPresenterTest {
 
     @Test
     public void loadArticlesFromRepositoryWithError() {
-        when(mNewsRepositoryMock.getArticles(anyString()))
+        when(mNewsRepositoryMock.getArticles(anyString(), anyString()))
                 .thenReturn(Observable.error(new RuntimeException()));
 
+        mArticlesPresenter.setSort(SORT);
         mArticlesPresenter.loadArticles();
 
         verify(mArticlesViewMock).showLoadingProgress();
-        verify(mNewsRepositoryMock).getArticles(SOURCE_ID);
+        verify(mNewsRepositoryMock).getArticles(SOURCE_ID, SORT.getTitle());
         verify(mArticlesViewMock).hideLoadingProgress();
         verify(mArticlesViewMock).showLoadingError();
     }
@@ -97,14 +100,15 @@ public class ArticlesPresenterTest {
 
     @Test
     public void loadArticlesFromRepositoryWithErrorBecauseViewIsNull() {
-        when(mNewsRepositoryMock.getArticles(anyString()))
+        when(mNewsRepositoryMock.getArticles(anyString(), anyString()))
                 .thenReturn(Observable.just(ARTICLES));
 
         mArticlesPresenter.detachView();
+        mArticlesPresenter.setSort(SORT);
         mArticlesPresenter.loadArticles();
 
         verify(mArticlesViewMock, times(0)).showLoadingProgress();
-        verify(mNewsRepositoryMock, times(0)).getArticles(SOURCE_ID);
+        verify(mNewsRepositoryMock, times(0)).getArticles(SOURCE_ID, SORT.getTitle());
         verify(mArticlesViewMock, times(0)).hideLoadingProgress();
         verify(mArticlesViewMock, times(0)).showArticles(ARTICLES);
     }
