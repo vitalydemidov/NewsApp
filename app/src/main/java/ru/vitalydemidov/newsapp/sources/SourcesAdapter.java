@@ -25,7 +25,7 @@ class SourcesAdapter extends RecyclerView.Adapter<SourcesAdapter.SourceViewHolde
     private SourceItemListener mListener;
 
 
-    public void setSources(List<Source> sources) {
+    public void setSources(@NonNull List<Source> sources) {
         mSources = sources;
         notifyDataSetChanged();
     }

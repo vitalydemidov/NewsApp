@@ -38,11 +38,9 @@ public class ArticlesActivity extends BaseActivity {
 
 
     @Inject
-    @NonNull
     ArticlesViewModel mArticlesViewModel;
 
 
-    @NonNull
     private ArticlesAdapter mArticlesAdapter;
 
 
@@ -127,8 +125,10 @@ public class ArticlesActivity extends BaseActivity {
     private void setupToolbar(@NonNull String title) {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(title);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle(title);
+        }
     }
 
 
@@ -160,7 +160,7 @@ public class ArticlesActivity extends BaseActivity {
     }
 
 
-    public void showArticles(List<Article> articles) {
+    public void showArticles(@NonNull List<Article> articles) {
         mArticlesAdapter.setArticles(articles);
     }
 

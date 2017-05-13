@@ -34,22 +34,18 @@ public class SourcesActivity extends BaseActivity {
 
 
     @Inject
-    @NonNull
     SourcesViewModel mSourcesViewModel;
 
 
-    @NonNull
     private DrawerLayout mDrawerLayout;
 
 
-    @NonNull
     private Toolbar mToolbar;
     
     
     private String mToolbarTitle;
 
 
-    @NonNull
     private SourcesAdapter mSourcesAdapter;
 
 
@@ -271,7 +267,7 @@ public class SourcesActivity extends BaseActivity {
         Toast.makeText(this, R.string.sources_loading_error, Toast.LENGTH_LONG).show();
     }
 
-    public void showSources(List<Source> sources) {
+    public void showSources(@NonNull List<Source> sources) {
         mSourcesAdapter.setSources(sources);
     }
 

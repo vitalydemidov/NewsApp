@@ -26,7 +26,7 @@ class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.ArticleViewHo
     private ArticleItemListener mListener;
 
 
-    public void setArticles(List<Article> articles) {
+    public void setArticles(@NonNull List<Article> articles) {
         mArticles = articles;
         notifyDataSetChanged();
     }
