@@ -62,6 +62,11 @@ public class Source implements Parcelable {
     }
 
 
+    public List<String> getSortBysAvailable() {
+        return mSortBysAvailable;
+    }
+
+
     //region Parcelable
     public static final Creator<Source> CREATOR = new Creator<Source>() {
         @Override

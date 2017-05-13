@@ -81,19 +81,19 @@ class SourcesPresenter extends BasePresenterImpl<SourcesContract.View>
     }
 
     @Override
-    public void setCategoryFiltering(SourcesCategoryFiltering category) {
+    public void setCategoryFiltering(@Nullable SourcesCategoryFiltering category) {
         mCurrentCategoryFiltering = category != null ? category : SourcesCategoryFiltering.CATEGORY_ALL;
     }
 
 
     @Override
-    public void setLanguageFiltering(SourcesLanguageFiltering language) {
+    public void setLanguageFiltering(@Nullable SourcesLanguageFiltering language) {
         mCurrentLanguageFiltering = language != null ? language : SourcesLanguageFiltering.LANGUAGE_ALL;
     }
 
 
     @Override
-    public void setCountryFiltering(SourcesCountryFiltering country) {
+    public void setCountryFiltering(@Nullable SourcesCountryFiltering country) {
         mCurrentCountryFiltering = country != null ? country : SourcesCountryFiltering.COUNTRY_ALL;
     }
 

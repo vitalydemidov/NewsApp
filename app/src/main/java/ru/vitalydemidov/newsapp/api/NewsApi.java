@@ -17,6 +17,7 @@ public interface NewsApi {
 
     @Headers("X-Api-Key: ef3b4169553e4d4cbe2e43ca418f93bf")
     @GET("articles")
-    Observable<ArticlesResponse> articles(@Query("source") String sourceId);
+    Observable<ArticlesResponse> articles(@Query("source") String sourceId,
+                                          @Query("sortBy") String sortBy);
 
 }
