@@ -16,6 +16,7 @@ public interface NewsDataSource {
                                         @Nullable String country);
 
 
-    Observable<List<Article>> getArticles(@NonNull String sourceId);
+    Observable<List<Article>> getArticles(@NonNull String sourceId,
+                                          @NonNull String sortBy);
 
 }

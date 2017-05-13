@@ -35,8 +35,9 @@ class NewsRepository implements NewsDataSource {
 
 
     @Override
-    public Observable<List<Article>> getArticles(@NonNull String sourceId) {
-        return mNewsRemoteDataSource.getArticles(sourceId);
+    public Observable<List<Article>> getArticles(@NonNull String sourceId,
+                                                 @NonNull String sortBy) {
+        return mNewsRemoteDataSource.getArticles(sourceId, sortBy);
     }
 
 }

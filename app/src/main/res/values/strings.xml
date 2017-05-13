@@ -3,6 +3,9 @@
     <string name="activity_sources_label">Sources</string>
     <string name="activity_articles_label">Articles</string>
 
+    <!-- Toolbar actions -->
+    <string name="action_sorting_title">Sort</string>
+
     <!-- NavigationDrawer and NavigationView -->
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

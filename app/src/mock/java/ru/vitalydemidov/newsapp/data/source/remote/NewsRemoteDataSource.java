@@ -43,7 +43,8 @@ public class NewsRemoteDataSource implements NewsDataSource {
 
 
     @Override
-    public Observable<List<Article>> getArticles(@NonNull String sourceId) {
+    public Observable<List<Article>> getArticles(@NonNull String sourceId,
+                                                 @NonNull String sortBy) {
         return Observable.just(ARTICLES);
     }
 

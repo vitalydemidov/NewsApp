@@ -10,8 +10,11 @@ import android.support.annotation.VisibleForTesting;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import java.util.List;
@@ -25,6 +28,9 @@ import ru.vitalydemidov.newsapp.data.Source;
 
 @UiThread
 public class ArticlesActivity extends AppCompatActivity implements ArticlesContract.View {
+
+    private static final String SORT_STATE = "ru.vitalydemidov.newsapp.sort_state";
+
 
     @VisibleForTesting
     public static final String EXTRA_SOURCE = "ru.vitalydemidov.newsapp.extra_source";
@@ -66,6 +72,37 @@ public class ArticlesActivity extends AppCompatActivity implements ArticlesContr
                 .inject(this);
 
         initViews();
+        onRestoreState(savedInstanceState);
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_actions, menu);
+        return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_sort:
+                PopupMenu popupMenu = new PopupMenu(this, findViewById(R.id.action_sort));
+                Source source = getIntent().getParcelableExtra(EXTRA_SOURCE);
+                for (String sortBy : source.getSortBysAvailable()) {
+                    popupMenu.getMenu().add(sortBy);
+                }
+                popupMenu.setOnMenuItemClickListener(menuItem -> {
+                    mArticlesPresenter.setSort(Sort.fromValue(String.valueOf(menuItem.getTitle())));
+                    mArticlesPresenter.loadArticles();
+                    return true;
+                });
+                popupMenu.show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+
+        }
     }
 
 
@@ -82,6 +119,22 @@ public class ArticlesActivity extends AppCompatActivity implements ArticlesContr
         mArticlesPresenter.detachView();
         super.onPause();
     }
+
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable(SORT_STATE, mArticlesPresenter.getSort());
+    }
+
+
+    private void onRestoreState(@Nullable Bundle savedInstanceState) {
+        if (savedInstanceState != null) {
+            Sort savedSort = (Sort) savedInstanceState.getSerializable(SORT_STATE);
+            mArticlesPresenter.setSort(savedSort != null ? savedSort : Sort.TOP);
+        }
+    }
+
 
     @Override
     public boolean onSupportNavigateUp() {
@@ -103,6 +156,7 @@ public class ArticlesActivity extends AppCompatActivity implements ArticlesContr
         mArticlesAdapter = adapter;
         // TODO: 18/04/2017 set listener
     }
+
 
     private void initViews() {
         initArticlesSwipeRefreshLayout();

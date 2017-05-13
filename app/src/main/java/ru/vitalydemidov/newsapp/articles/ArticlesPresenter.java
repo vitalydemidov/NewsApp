@@ -14,6 +14,10 @@ class ArticlesPresenter extends BasePresenterImpl<ArticlesContract.View>
     private final String mSourceId;
 
 
+    @NonNull
+    private Sort mSort;
+
+
     @Nullable
     private ArticlesContract.View mArticlesView;
 
@@ -23,6 +27,7 @@ class ArticlesPresenter extends BasePresenterImpl<ArticlesContract.View>
                       @NonNull BaseSchedulerProvider schedulerProvider) {
         super(newsRepository, schedulerProvider);
         mSourceId = sourceId;
+        mSort = Sort.TOP;
     }
 
 
@@ -47,7 +52,7 @@ class ArticlesPresenter extends BasePresenterImpl<ArticlesContract.View>
         mArticlesView.showLoadingProgress();
 
         mCompositeDisposable.add(
-            mNewsRepository.getArticles(mSourceId)
+            mNewsRepository.getArticles(mSourceId, mSort.getTitle())
                 .subscribeOn(mSchedulerProvider.io())
                 .observeOn(mSchedulerProvider.ui())
                 .doOnTerminate(mArticlesView::hideLoadingProgress)
@@ -60,4 +65,16 @@ class ArticlesPresenter extends BasePresenterImpl<ArticlesContract.View>
         );
     }
 
+
+    @NonNull
+    @Override
+    public Sort getSort() {
+        return mSort;
+    }
+
+
+    @Override
+    public void setSort(@NonNull Sort sort) {
+        mSort = sort;
+    }
 }
