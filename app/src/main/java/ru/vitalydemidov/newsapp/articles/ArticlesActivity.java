@@ -2,6 +2,7 @@ package ru.vitalydemidov.newsapp.articles;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -134,7 +135,7 @@ public class ArticlesActivity extends BaseActivity {
     @Inject
     void setArticlesAdapter(@NonNull ArticlesAdapter adapter) {
         mArticlesAdapter = adapter;
-        // TODO: 18/04/2017 set listener
+        mArticlesAdapter.setArticleItemListener(this::openArticleInBrowser);
     }
 
 
@@ -161,6 +162,15 @@ public class ArticlesActivity extends BaseActivity {
 
     public void showArticles(List<Article> articles) {
         mArticlesAdapter.setArticles(articles);
+    }
+
+
+    private void openArticleInBrowser(@NonNull Article article) {
+        Uri articleUri = Uri.parse(article.getUrl());
+        Intent intent = new Intent(Intent.ACTION_VIEW, articleUri);
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
     }
 
 

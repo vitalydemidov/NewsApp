@@ -1,6 +1,7 @@
 package ru.vitalydemidov.newsapp.articles;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.annotation.UiThread;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -21,9 +22,18 @@ class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.ArticleViewHo
     private List<Article> mArticles;
 
 
+    @Nullable
+    private ArticleItemListener mListener;
+
+
     public void setArticles(List<Article> articles) {
         mArticles = articles;
         notifyDataSetChanged();
+    }
+
+
+    void setArticleItemListener(@NonNull ArticleItemListener listener) {
+        mListener = listener;
     }
 
 
@@ -39,6 +49,12 @@ class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.ArticleViewHo
         Article article = mArticles.get(position);
         holder.image.setImageURI(article.getUrlToImage());
         holder.title.setText(article.getTitle());
+
+        holder.itemView.setOnClickListener(view -> {
+            if (mListener != null) {
+                mListener.onArticleSelected(article);
+            }
+        });
     }
 
 
@@ -59,6 +75,11 @@ class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.ArticleViewHo
             title = (TextView) itemView.findViewById(R.id.article_item_list_title);
         }
 
+    }
+
+
+    interface ArticleItemListener {
+        void onArticleSelected(@NonNull Article article);
     }
 
 }

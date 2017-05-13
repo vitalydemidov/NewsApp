@@ -27,7 +27,7 @@ class ArticlesViewModel extends BaseViewModelImpl {
 
     ArticlesViewModel(@NonNull String sourceId,
                       @NonNull final NewsDataSource newsRepository,
-                      @NonNull final BaseSchedulerProvider schedulerProvider){
+                      @NonNull final BaseSchedulerProvider schedulerProvider) {
         super(newsRepository, schedulerProvider);
         mSourceId = sourceId;
         mSort = Sort.TOP;

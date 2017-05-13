@@ -53,10 +53,6 @@ public class SourcesActivity extends BaseActivity {
     private SourcesAdapter mSourcesAdapter;
 
 
-    @NonNull
-    private SourcesAdapter.SourceItemListener mItemListener = this::showArticlesForSourceUi;
-
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -246,7 +242,7 @@ public class SourcesActivity extends BaseActivity {
     @Inject
     void setSourcesAdapter(@NonNull SourcesAdapter adapter) {
         mSourcesAdapter = adapter;
-        mSourcesAdapter.setSourceItemListener(mItemListener);
+        mSourcesAdapter.setSourceItemListener(this::showArticlesForSourceUi);
     }
 
 
@@ -280,7 +276,7 @@ public class SourcesActivity extends BaseActivity {
     }
 
 
-    public void showArticlesForSourceUi(@NonNull Source selectedSource) {
+    private void showArticlesForSourceUi(@NonNull Source selectedSource) {
         startActivity(ArticlesActivity.newIntent(this, selectedSource));
     }
 
