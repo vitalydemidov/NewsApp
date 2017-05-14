@@ -81,7 +81,7 @@ public class NewsRepositoryTest {
 
 
     @Test
-    public void getSources_onlyFromRemoteDataSource() {
+    public void getSources_returnsCorrectSources_onlyFromRemoteDataSource() {
         TestObserver<List<Source>> testObserver = new TestObserver<>();
 
         when(mNewsRemoteDataSource.getSources(any(), any(), any()))
@@ -113,7 +113,7 @@ public class NewsRepositoryTest {
 
 
     @Test
-    public void getArticles_onlyFromRemoteDataSource() {
+    public void getArticles_returnsCorrectArticles_onlyFromRemoteDataSource() {
         TestObserver<List<Article>> testObserver = new TestObserver<>();
 
         when(mNewsRemoteDataSource.getArticles(anyString(), anyString()))
