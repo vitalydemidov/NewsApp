@@ -28,11 +28,23 @@ import static org.mockito.Mockito.when;
  */
 public class NewsRepositoryTest {
 
-    private static final SourcesCategoryFiltering CATEGORY_FILTERING = SourcesCategoryFiltering.CATEGORY_ALL;
-    private static final SourcesLanguageFiltering LANGUAGE_FILTERING = SourcesLanguageFiltering.LANGUAGE_ALL;
-    private static final SourcesCountryFiltering COUNTRY_FILTERING = SourcesCountryFiltering.COUNTRY_ALL;
+    private static final SourcesCategoryFiltering CATEGORY_FILTERING
+            = SourcesCategoryFiltering.CATEGORY_ALL;
+
+
+    private static final SourcesLanguageFiltering LANGUAGE_FILTERING
+            = SourcesLanguageFiltering.LANGUAGE_ALL;
+
+
+    private static final SourcesCountryFiltering COUNTRY_FILTERING
+            = SourcesCountryFiltering.COUNTRY_ALL;
+
+
     private static final String SOURCE_ID = "test_source_id";
+
+
     private static final Sort SORT = Sort.TOP;
+
 
     private static final List<Source> SOURCES = Arrays.asList(
             new Source("mock1"),
@@ -69,24 +81,28 @@ public class NewsRepositoryTest {
 
 
     @Test
-    public void loadSourcesFromRepositoryAndRemoteDataSource() {
+    public void getSources_onlyFromRemoteDataSource() {
         TestObserver<List<Source>> testObserver = new TestObserver<>();
 
         when(mNewsRemoteDataSource.getSources(any(), any(), any()))
-        .thenReturn(Observable.just(SOURCES));
+                .thenReturn(Observable.just(SOURCES));
 
-        mNewsRepository.getSources(CATEGORY_FILTERING.getTitle(),
-                                   LANGUAGE_FILTERING.getTitle(),
-                                   COUNTRY_FILTERING.getTitle())
+        mNewsRepository.getSources(
+                CATEGORY_FILTERING.getTitle(),
+                LANGUAGE_FILTERING.getTitle(),
+                COUNTRY_FILTERING.getTitle()
+        )
         .subscribe(testObserver);
 
         // verify that remote data source was called and one time only
-        verify(mNewsRemoteDataSource, times(1)).getSources(CATEGORY_FILTERING.getTitle(),
-                                                 LANGUAGE_FILTERING.getTitle(),
-                                                 COUNTRY_FILTERING.getTitle());
+        verify(mNewsRemoteDataSource, times(1)).getSources(
+                CATEGORY_FILTERING.getTitle(),
+                LANGUAGE_FILTERING.getTitle(),
+                COUNTRY_FILTERING.getTitle());
 
         // verify that local data source was not called
-        verify(mNewsLocalDataSource, times(0)).getSources(CATEGORY_FILTERING.getTitle(),
+        verify(mNewsLocalDataSource, times(0)).getSources(
+                CATEGORY_FILTERING.getTitle(),
                 LANGUAGE_FILTERING.getTitle(),
                 COUNTRY_FILTERING.getTitle());
 
@@ -97,7 +113,7 @@ public class NewsRepositoryTest {
 
 
     @Test
-    public void loadArticlesFromRepositoryAndRemoteDataSource() {
+    public void getArticles_onlyFromRemoteDataSource() {
         TestObserver<List<Article>> testObserver = new TestObserver<>();
 
         when(mNewsRemoteDataSource.getArticles(anyString(), anyString()))
