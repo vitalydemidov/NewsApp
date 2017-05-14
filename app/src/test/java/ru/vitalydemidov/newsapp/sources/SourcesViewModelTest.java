@@ -18,6 +18,7 @@ import ru.vitalydemidov.newsapp.util.schedulers.TrampolineSchedulerProvider;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 
 public class SourcesViewModelTest {
 
@@ -72,7 +73,7 @@ public class SourcesViewModelTest {
 
 
     @Test
-    public void testLoadSources_doesNotEmit_noSubscribers() {
+    public void testLoadSources_doesNotEmit_whenNoSubscribers() {
         TestObserver<List<Source>> testObserver = new TestObserver<>();
 
         FilteringContainer filtering = new FilteringContainer();
@@ -80,6 +81,7 @@ public class SourcesViewModelTest {
         filtering.setLanguageFiltering(NON_DEFAULT_LANGUAGE_FILTERING);
         filtering.setCountryFiltering(NON_DEFAULT_COUNTRY_FILTERING);
 
+        // set filtering but did not subscribe before
         mSourcesViewModel.setFiltering(filtering);
 
         testObserver.assertNoErrors();
@@ -88,7 +90,7 @@ public class SourcesViewModelTest {
 
 
     @Test
-    public void testLoadSources_emitsCorrectSourcesForDefaultFiltering() {
+    public void testLoadSources_emitsCorrectSources_whenDefaultFilteringSet() {
         Mockito.when(mNewsRepositoryMock.getSources(
                 DEFAULT_CATEGORY_FILTERING.getTitle(),
                 DEFAULT_LANGUAGE_FILTERING.getTitle(),
@@ -106,7 +108,7 @@ public class SourcesViewModelTest {
 
 
     @Test
-    public void testLoadSources_emitsCorrectSourcesForNonDefaultFiltering() {
+    public void testLoadSources_emitsCorrectSources_whenNonDefaultFilteringSet() {
         Mockito.when(mNewsRepositoryMock.getSources(
                 NON_DEFAULT_CATEGORY_FILTERING.getTitle(),
                 NON_DEFAULT_LANGUAGE_FILTERING.getTitle(),
@@ -115,13 +117,13 @@ public class SourcesViewModelTest {
 
         TestObserver<List<Source>> testObserver = new TestObserver<>();
 
-        FilteringContainer filtering = new FilteringContainer();
-        filtering.setCategoryFiltering(NON_DEFAULT_CATEGORY_FILTERING);
-        filtering.setLanguageFiltering(NON_DEFAULT_LANGUAGE_FILTERING);
-        filtering.setCountryFiltering(NON_DEFAULT_COUNTRY_FILTERING);
+        FilteringContainer nonDefaultFiltering = new FilteringContainer();
+        nonDefaultFiltering.setCategoryFiltering(NON_DEFAULT_CATEGORY_FILTERING);
+        nonDefaultFiltering.setLanguageFiltering(NON_DEFAULT_LANGUAGE_FILTERING);
+        nonDefaultFiltering.setCountryFiltering(NON_DEFAULT_COUNTRY_FILTERING);
 
         // set non default filtering
-        mSourcesViewModel.setFiltering(filtering);
+        mSourcesViewModel.setFiltering(nonDefaultFiltering);
 
         mSourcesViewModel.loadSources()
                 .subscribe(testObserver);
@@ -132,14 +134,29 @@ public class SourcesViewModelTest {
 
 
     @Test
-    public void testSetFiltering_whenNonDefaultFilteringSet() {
-        FilteringContainer filteringContainer = new FilteringContainer();
-        filteringContainer.setCategoryFiltering(NON_DEFAULT_CATEGORY_FILTERING);
-        filteringContainer.setLanguageFiltering(NON_DEFAULT_LANGUAGE_FILTERING);
-        filteringContainer.setCountryFiltering(NON_DEFAULT_COUNTRY_FILTERING);
+    public void testLoadArticles_emitsError_whenErrorOccurs() {
+        RuntimeException exception = new RuntimeException();
+        Mockito.when(mNewsRepositoryMock.getSources(any(), any(), any()))
+                .thenReturn(Observable.error(exception));
 
-        mSourcesViewModel.setFiltering(filteringContainer);
-        assertThat(mSourcesViewModel.getFiltering(), equalTo(filteringContainer));
+        TestObserver<List<Source>> testObserver = new TestObserver<>();
+
+        mSourcesViewModel.loadSources()
+                .subscribe(testObserver);
+
+        testObserver.assertError(exception);
+    }
+
+
+    @Test
+    public void testSetFiltering_whenNonDefaultFilteringSet() {
+        FilteringContainer nonDefaultFiltering = new FilteringContainer();
+        nonDefaultFiltering.setCategoryFiltering(NON_DEFAULT_CATEGORY_FILTERING);
+        nonDefaultFiltering.setLanguageFiltering(NON_DEFAULT_LANGUAGE_FILTERING);
+        nonDefaultFiltering.setCountryFiltering(NON_DEFAULT_COUNTRY_FILTERING);
+
+        mSourcesViewModel.setFiltering(nonDefaultFiltering);
+        assertThat(mSourcesViewModel.getFiltering(), equalTo(nonDefaultFiltering));
     }
 
 
