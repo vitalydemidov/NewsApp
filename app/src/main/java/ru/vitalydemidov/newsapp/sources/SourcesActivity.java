@@ -88,18 +88,20 @@ public class SourcesActivity extends AppCompatActivity implements SourcesContrac
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putSerializable(CATEGORY_FILTERING_STATE, mSourcesPresenter.getCategoryFiltering());
-        outState.putSerializable(LANGUAGE_FILTERING_STATE, mSourcesPresenter.getLanguageFiltering());
-        outState.putSerializable(COUNTRY_FILTERING_STATE, mSourcesPresenter.getCountryFiltering());
+        outState.putSerializable(CATEGORY_FILTERING_STATE, mSourcesPresenter.getFiltering().getCategoryFiltering());
+        outState.putSerializable(LANGUAGE_FILTERING_STATE, mSourcesPresenter.getFiltering().getLanguageFiltering());
+        outState.putSerializable(COUNTRY_FILTERING_STATE, mSourcesPresenter.getFiltering().getCountryFiltering());
         outState.putString(TOOLBAR_TITLE_STATE, mToolbarTitle);
     }
 
 
     private void onRestoreState(@Nullable Bundle savedInstanceState) {
         if (savedInstanceState != null) {
-            mSourcesPresenter.setCategoryFiltering((SourcesCategoryFiltering) savedInstanceState.getSerializable(CATEGORY_FILTERING_STATE));
-            mSourcesPresenter.setLanguageFiltering((SourcesLanguageFiltering) savedInstanceState.getSerializable(LANGUAGE_FILTERING_STATE));
-            mSourcesPresenter.setCountryFiltering((SourcesCountryFiltering) savedInstanceState.getSerializable(COUNTRY_FILTERING_STATE));
+            FilteringContainer filtering = new FilteringContainer();
+            filtering.setCategoryFiltering((SourcesCategoryFiltering) savedInstanceState.getSerializable(CATEGORY_FILTERING_STATE));
+            filtering.setLanguageFiltering((SourcesLanguageFiltering) savedInstanceState.getSerializable(LANGUAGE_FILTERING_STATE));
+            filtering.setCountryFiltering((SourcesCountryFiltering) savedInstanceState.getSerializable(COUNTRY_FILTERING_STATE));
+            mSourcesPresenter.setFiltering(filtering);
             mToolbarTitle = savedInstanceState.getString(TOOLBAR_TITLE_STATE);
         }
         setTitle(mToolbarTitle != null ? mToolbarTitle : getString(R.string.navigation_view_category_all));
@@ -141,6 +143,7 @@ public class SourcesActivity extends AppCompatActivity implements SourcesContrac
                     SourcesCategoryFiltering category = null;
                     SourcesLanguageFiltering language = null;
                     SourcesCountryFiltering country = null;
+                    FilteringContainer filteringContainer = new FilteringContainer();
                     int titleRes = R.string.app_name;
 
                     switch (menuItem.getItemId()) {
@@ -236,9 +239,10 @@ public class SourcesActivity extends AppCompatActivity implements SourcesContrac
                             break;
                     }
 
-                    mSourcesPresenter.setCategoryFiltering(category);
-                    mSourcesPresenter.setLanguageFiltering(language);
-                    mSourcesPresenter.setCountryFiltering(country);
+                    filteringContainer.setCategoryFiltering(category);
+                    filteringContainer.setLanguageFiltering(language);
+                    filteringContainer.setCountryFiltering(country);
+                    mSourcesPresenter.setFiltering(filteringContainer);
                     mSourcesPresenter.loadSources();
 
                     mDrawerLayout.closeDrawer(GravityCompat.START);

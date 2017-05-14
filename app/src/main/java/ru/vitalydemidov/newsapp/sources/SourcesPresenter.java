@@ -16,20 +16,13 @@ class SourcesPresenter extends BasePresenterImpl<SourcesContract.View>
 
 
     @NonNull
-    private SourcesCategoryFiltering mCurrentCategoryFiltering = SourcesCategoryFiltering.CATEGORY_ALL;
-
-
-    @NonNull
-    private SourcesLanguageFiltering mCurrentLanguageFiltering = SourcesLanguageFiltering.LANGUAGE_ALL;
-
-
-    @NonNull
-    private SourcesCountryFiltering mCurrentCountryFiltering = SourcesCountryFiltering.COUNTRY_ALL;
+    private FilteringContainer mFilteringContainer;
 
 
     SourcesPresenter(@NonNull NewsDataSource newsRepository,
                      @NonNull BaseSchedulerProvider schedulerProvider) {
         super(newsRepository, schedulerProvider);
+        mFilteringContainer = new FilteringContainer();
     }
 
 
@@ -56,9 +49,9 @@ class SourcesPresenter extends BasePresenterImpl<SourcesContract.View>
 
         mCompositeDisposable.add(
                 mNewsRepository.getSources(
-                        mCurrentCategoryFiltering.getTitle(),
-                        mCurrentLanguageFiltering.getTitle(),
-                        mCurrentCountryFiltering.getTitle()
+                        mFilteringContainer.getCategoryFiltering().getTitle(),
+                        mFilteringContainer.getLanguageFiltering().getTitle(),
+                        mFilteringContainer.getCountryFiltering().getTitle()
                 )
                 .subscribeOn(mSchedulerProvider.io())
                 .observeOn(mSchedulerProvider.ui())
@@ -80,42 +73,17 @@ class SourcesPresenter extends BasePresenterImpl<SourcesContract.View>
         }
     }
 
-    @Override
-    public void setCategoryFiltering(@Nullable SourcesCategoryFiltering category) {
-        mCurrentCategoryFiltering = category != null ? category : SourcesCategoryFiltering.CATEGORY_ALL;
-    }
-
 
     @Override
-    public void setLanguageFiltering(@Nullable SourcesLanguageFiltering language) {
-        mCurrentLanguageFiltering = language != null ? language : SourcesLanguageFiltering.LANGUAGE_ALL;
-    }
-
-
-    @Override
-    public void setCountryFiltering(@Nullable SourcesCountryFiltering country) {
-        mCurrentCountryFiltering = country != null ? country : SourcesCountryFiltering.COUNTRY_ALL;
+    public void setFiltering(@NonNull FilteringContainer filtering) {
+        mFilteringContainer = filtering;
     }
 
 
     @NonNull
     @Override
-    public SourcesCategoryFiltering getCategoryFiltering() {
-        return mCurrentCategoryFiltering;
-    }
-
-
-    @NonNull
-    @Override
-    public SourcesLanguageFiltering getLanguageFiltering() {
-        return mCurrentLanguageFiltering;
-    }
-
-
-    @NonNull
-    @Override
-    public SourcesCountryFiltering getCountryFiltering() {
-        return mCurrentCountryFiltering;
+    public FilteringContainer getFiltering() {
+        return mFilteringContainer;
     }
 
 }
