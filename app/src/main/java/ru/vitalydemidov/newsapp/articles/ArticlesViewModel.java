@@ -6,12 +6,12 @@ import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.subjects.BehaviorSubject;
-import ru.vitalydemidov.newsapp.base.BaseViewModelImpl;
+import ru.vitalydemidov.newsapp.base.BaseViewModel;
 import ru.vitalydemidov.newsapp.data.Article;
 import ru.vitalydemidov.newsapp.data.source.NewsDataSource;
 import ru.vitalydemidov.newsapp.util.schedulers.BaseSchedulerProvider;
 
-class ArticlesViewModel extends BaseViewModelImpl {
+class ArticlesViewModel extends BaseViewModel {
 
     @NonNull
     private final String mSourceId;
