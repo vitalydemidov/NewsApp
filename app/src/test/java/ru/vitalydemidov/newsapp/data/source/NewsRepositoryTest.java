@@ -87,9 +87,11 @@ public class NewsRepositoryTest {
         when(mNewsRemoteDataSource.getSources(any(), any(), any()))
                 .thenReturn(Observable.just(SOURCES));
 
-        mNewsRepository.getSources(CATEGORY_FILTERING.getTitle(),
-                                   LANGUAGE_FILTERING.getTitle(),
-                                   COUNTRY_FILTERING.getTitle())
+        mNewsRepository.getSources(
+                CATEGORY_FILTERING.getTitle(),
+                LANGUAGE_FILTERING.getTitle(),
+                COUNTRY_FILTERING.getTitle()
+        )
         .subscribe(testObserver);
 
         // verify that remote data source was called and one time only
