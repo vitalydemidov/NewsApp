@@ -94,13 +94,13 @@ public class NewsRepositoryTest {
         )
         .subscribe(testObserver);
 
-        // verify that remote data source was called and one time only
+        // Verify that remote data source was called and one time only
         verify(mNewsRemoteDataSource, times(1)).getSources(
                 CATEGORY_FILTERING.getTitle(),
                 LANGUAGE_FILTERING.getTitle(),
                 COUNTRY_FILTERING.getTitle());
 
-        // verify that local data source was not called
+        // Verify that local data source was not called
         verify(mNewsLocalDataSource, times(0)).getSources(
                 CATEGORY_FILTERING.getTitle(),
                 LANGUAGE_FILTERING.getTitle(),
@@ -122,10 +122,10 @@ public class NewsRepositoryTest {
         mNewsRepository.getArticles(SOURCE_ID, SORT.getTitle())
                 .subscribe(testObserver);
 
-        // verify that remote data source was called and one time only
+        // Verify that remote data source was called and one time only
         verify(mNewsRemoteDataSource, times(1)).getArticles(SOURCE_ID, SORT.getTitle());
 
-        // verify that local data source was not called
+        // Verify that local data source was not called
         verify(mNewsLocalDataSource, times(0)).getArticles(SOURCE_ID, SORT.getTitle());
 
         testObserver.assertNoErrors();
