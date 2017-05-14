@@ -85,7 +85,7 @@ public class NewsRepositoryTest {
         TestObserver<List<Source>> testObserver = new TestObserver<>();
 
         when(mNewsRemoteDataSource.getSources(any(), any(), any()))
-        .thenReturn(Observable.just(SOURCES));
+                .thenReturn(Observable.just(SOURCES));
 
         mNewsRepository.getSources(CATEGORY_FILTERING.getTitle(),
                                    LANGUAGE_FILTERING.getTitle(),
@@ -93,12 +93,14 @@ public class NewsRepositoryTest {
         .subscribe(testObserver);
 
         // verify that remote data source was called and one time only
-        verify(mNewsRemoteDataSource, times(1)).getSources(CATEGORY_FILTERING.getTitle(),
-                                                 LANGUAGE_FILTERING.getTitle(),
-                                                 COUNTRY_FILTERING.getTitle());
+        verify(mNewsRemoteDataSource, times(1)).getSources(
+                CATEGORY_FILTERING.getTitle(),
+                LANGUAGE_FILTERING.getTitle(),
+                COUNTRY_FILTERING.getTitle());
 
         // verify that local data source was not called
-        verify(mNewsLocalDataSource, times(0)).getSources(CATEGORY_FILTERING.getTitle(),
+        verify(mNewsLocalDataSource, times(0)).getSources(
+                CATEGORY_FILTERING.getTitle(),
                 LANGUAGE_FILTERING.getTitle(),
                 COUNTRY_FILTERING.getTitle());
 

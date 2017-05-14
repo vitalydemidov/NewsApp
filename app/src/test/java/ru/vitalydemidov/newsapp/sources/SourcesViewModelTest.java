@@ -3,7 +3,6 @@ package ru.vitalydemidov.newsapp.sources;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import java.util.Arrays;
@@ -19,6 +18,7 @@ import ru.vitalydemidov.newsapp.util.schedulers.TrampolineSchedulerProvider;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
 public class SourcesViewModelTest {
 
@@ -102,7 +102,7 @@ public class SourcesViewModelTest {
 
     @Test
     public void loadSources_emitsCorrectSources_whenDefaultFilteringSet() {
-        Mockito.when(mNewsRepositoryMock.getSources(
+        when(mNewsRepositoryMock.getSources(
                 DEFAULT_CATEGORY_FILTERING.getTitle(),
                 DEFAULT_LANGUAGE_FILTERING.getTitle(),
                 DEFAULT_COUNTRY_FILTERING.getTitle()))
@@ -120,7 +120,7 @@ public class SourcesViewModelTest {
 
     @Test
     public void loadSources_emitsCorrectSources_whenNonDefaultFilteringSet() {
-        Mockito.when(mNewsRepositoryMock.getSources(
+        when(mNewsRepositoryMock.getSources(
                 NON_DEFAULT_CATEGORY_FILTERING.getTitle(),
                 NON_DEFAULT_LANGUAGE_FILTERING.getTitle(),
                 NON_DEFAULT_COUNTRY_FILTERING.getTitle()))
@@ -147,7 +147,7 @@ public class SourcesViewModelTest {
     @Test
     public void loadArticles_emitsError_whenErrorOccurs() {
         RuntimeException exception = new RuntimeException();
-        Mockito.when(mNewsRepositoryMock.getSources(any(), any(), any()))
+        when(mNewsRepositoryMock.getSources(any(), any(), any()))
                 .thenReturn(Observable.error(exception));
 
         TestObserver<List<Source>> testObserver = new TestObserver<>();

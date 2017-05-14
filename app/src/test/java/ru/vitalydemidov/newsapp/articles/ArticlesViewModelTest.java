@@ -3,7 +3,6 @@ package ru.vitalydemidov.newsapp.articles;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import java.util.Arrays;
@@ -19,6 +18,7 @@ import ru.vitalydemidov.newsapp.util.schedulers.TrampolineSchedulerProvider;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
 public class ArticlesViewModelTest {
 
@@ -82,7 +82,7 @@ public class ArticlesViewModelTest {
 
     @Test
     public void loadArticles_emitsCorrectArticles_whenDefaultSortSet() {
-        Mockito.when(mNewsRepositoryMock.getArticles(SOURCE_ID, DEFAULT_SORT.getTitle()))
+        when(mNewsRepositoryMock.getArticles(SOURCE_ID, DEFAULT_SORT.getTitle()))
                 .thenReturn(Observable.just(ARTICLES_WITH_DEFAULT_SORT));
 
         TestObserver<List<Article>> testObserver = new TestObserver<>();
@@ -97,7 +97,7 @@ public class ArticlesViewModelTest {
 
     @Test
     public void loadArticles_emitsCorrectArticles_whenNonDefaultSortSet() {
-        Mockito.when(mNewsRepositoryMock.getArticles(SOURCE_ID, NON_DEFAULT_SORT.getTitle()))
+        when(mNewsRepositoryMock.getArticles(SOURCE_ID, NON_DEFAULT_SORT.getTitle()))
                 .thenReturn(Observable.just(ARTICLES_WITH_NON_DEFAULT_SORT));
 
         TestObserver<List<Article>> testObserver = new TestObserver<>();
@@ -116,7 +116,7 @@ public class ArticlesViewModelTest {
     @Test
     public void loadArticles_emitsError_whenErrorOccurs() {
         RuntimeException exception = new RuntimeException();
-        Mockito.when(mNewsRepositoryMock.getArticles(any(), any()))
+        when(mNewsRepositoryMock.getArticles(any(), any()))
                 .thenReturn(Observable.error(exception));
 
         TestObserver<List<Article>> testObserver = new TestObserver<>();
