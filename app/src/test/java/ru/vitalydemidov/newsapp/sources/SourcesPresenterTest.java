@@ -53,7 +53,7 @@ public class SourcesPresenterTest {
 
 
     @Before
-    public void setupSourcesPresenter() {
+    public void setUp() {
         // Inject the mock dependencies
         MockitoAnnotations.initMocks(this);
 
