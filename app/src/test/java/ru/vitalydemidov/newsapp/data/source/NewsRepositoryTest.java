@@ -72,7 +72,7 @@ public class NewsRepositoryTest {
 
 
     @Before
-    public void setupNewsRepository() {
+    public void setUp() {
         // Inject the mock dependencies
         MockitoAnnotations.initMocks(this);
 
