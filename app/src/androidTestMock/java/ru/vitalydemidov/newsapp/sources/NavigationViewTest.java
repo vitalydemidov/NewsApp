@@ -29,7 +29,7 @@ import static org.hamcrest.Matchers.instanceOf;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class SourcesActivityTest {
+public class NavigationViewTest {
 
     /**
      * {@link ActivityTestRule} is a JUnit {@link Rule @Rule} to launch your activity under test.
