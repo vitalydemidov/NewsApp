@@ -154,7 +154,7 @@ public class ArticlesActivity extends AppCompatActivity implements ArticlesContr
     @Inject
     void setArticlesAdapter(@NonNull ArticlesAdapter adapter) {
         mArticlesAdapter = adapter;
-        mArticlesAdapter.setArticleItemListener(mArticlesPresenter::openArticle);
+        mArticlesAdapter.setArticleItemListener(mArticlesPresenter::openArticleDetails);
     }
 
 

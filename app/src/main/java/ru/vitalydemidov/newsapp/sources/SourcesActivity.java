@@ -308,7 +308,7 @@ public class SourcesActivity extends AppCompatActivity implements SourcesContrac
 
 
     @Override
-    public void showArticlesForSourceUi(@NonNull Source selectedSource) {
+    public void showArticlesForSource(@NonNull Source selectedSource) {
         startActivity(ArticlesActivity.newIntent(this, selectedSource));
     }
     //endregion Contract

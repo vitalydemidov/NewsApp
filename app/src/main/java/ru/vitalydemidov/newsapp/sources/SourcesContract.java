@@ -14,7 +14,7 @@ interface SourcesContract {
 
         void showSources(@NonNull List<Source> sources);
 
-        void showArticlesForSourceUi(@NonNull Source selectedSource);
+        void showArticlesForSource(@NonNull Source selectedSource);
 
     }
 

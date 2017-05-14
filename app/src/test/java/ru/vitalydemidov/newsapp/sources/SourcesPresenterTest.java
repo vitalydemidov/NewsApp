@@ -105,7 +105,7 @@ public class SourcesPresenterTest {
 
 
     @Test
-    public void openArticlesForSource_showsArticlesForCorrectSource() {
+    public void openArticlesForSource_showsArticlesForCorrectSource_whenSourceSelected() {
         // Stubbed source
         Source selectedSource = new Source("STUBBED_SOURCE");
 
@@ -113,7 +113,7 @@ public class SourcesPresenterTest {
         mSourcesPresenter.openArticlesForSource(selectedSource);
 
         // Then articles for selected source is shown
-        verify(mSourcesViewMock).showArticlesForSourceUi(same(selectedSource));
+        verify(mSourcesViewMock).showArticlesForSource(same(selectedSource));
     }
 
 
@@ -200,6 +200,7 @@ public class SourcesPresenterTest {
         verify(mNewsRepositoryMock, times(0)).getSources(any(), any(), any());
 
         verify(mSourcesViewMock, times(0)).hideLoadingProgress();
+        verify(mSourcesViewMock, times(0)).showSources(any());
         verify(mSourcesViewMock, times(0)).showLoadingError();
     }
 

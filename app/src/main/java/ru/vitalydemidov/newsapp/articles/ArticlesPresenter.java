@@ -68,7 +68,7 @@ class ArticlesPresenter extends BasePresenterImpl<ArticlesContract.View>
 
 
     @Override
-    public void openArticle(@NonNull Article article) {
+    public void openArticleDetails(@NonNull Article article) {
         if (mArticlesView != null) {
             mArticlesView.showArticleDetails(article);
         }

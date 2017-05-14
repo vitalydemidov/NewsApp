@@ -23,7 +23,7 @@ interface ArticlesContract {
 
         void loadArticles();
 
-        void openArticle(@NonNull Article article);
+        void openArticleDetails(@NonNull Article article);
 
         void setSort(@NonNull Sort sort);
 

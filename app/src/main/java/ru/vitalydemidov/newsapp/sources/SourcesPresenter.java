@@ -69,7 +69,7 @@ class SourcesPresenter extends BasePresenterImpl<SourcesContract.View>
     @Override
     public void openArticlesForSource(@NonNull Source selectedSource) {
         if (mSourcesView != null) {
-            mSourcesView.showArticlesForSourceUi(selectedSource);
+            mSourcesView.showArticlesForSource(selectedSource);
         }
     }
 
