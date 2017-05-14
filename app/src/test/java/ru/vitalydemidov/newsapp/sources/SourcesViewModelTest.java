@@ -20,6 +20,9 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
+/**
+ * Unit tests for the implementation of {@link SourcesViewModel}
+ */
 public class SourcesViewModelTest {
 
     private static final List<Source> SOURCES_WITH_DEFAULT_FILTERING = Arrays.asList(

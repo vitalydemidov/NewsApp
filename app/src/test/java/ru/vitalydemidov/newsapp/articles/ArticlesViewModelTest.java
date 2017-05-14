@@ -20,6 +20,9 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
+/**
+ * Unit tests for the implementation of {@link ArticlesViewModel}
+ */
 public class ArticlesViewModelTest {
 
     private static final List<Article> ARTICLES_WITH_DEFAULT_SORT = Arrays.asList(
