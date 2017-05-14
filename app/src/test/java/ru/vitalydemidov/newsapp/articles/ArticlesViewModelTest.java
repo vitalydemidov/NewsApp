@@ -72,7 +72,7 @@ public class ArticlesViewModelTest {
     public void loadArticles_doesNotEmit_whenNoSubscribers() {
         TestObserver<List<Article>> testObserver = new TestObserver<>();
 
-        // set sort but did not subscribe before
+        // Set sort but did not subscribe before
         mArticlesViewModel.setSort(NON_DEFAULT_SORT);
 
         testObserver.assertNoErrors();
@@ -102,7 +102,7 @@ public class ArticlesViewModelTest {
 
         TestObserver<List<Article>> testObserver = new TestObserver<>();
 
-        // set non default filtering
+        // Set non default filtering
         mArticlesViewModel.setSort(NON_DEFAULT_SORT);
 
         mArticlesViewModel.loadArticles()
@@ -137,7 +137,7 @@ public class ArticlesViewModelTest {
 
     @Test
     public void getSort_returnsCorrectDefaultSort() {
-        // default sort value must equal to Sort.TOP
+        // Default sort value must equal to Sort.TOP
         assertThat(mArticlesViewModel.getSort(), equalTo(DEFAULT_SORT));
     }
 

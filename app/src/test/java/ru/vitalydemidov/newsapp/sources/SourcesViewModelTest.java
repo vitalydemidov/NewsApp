@@ -92,7 +92,7 @@ public class SourcesViewModelTest {
         filtering.setLanguageFiltering(NON_DEFAULT_LANGUAGE_FILTERING);
         filtering.setCountryFiltering(NON_DEFAULT_COUNTRY_FILTERING);
 
-        // set filtering but did not subscribe before
+        // Set filtering but did not subscribe before
         mSourcesViewModel.setFiltering(filtering);
 
         testObserver.assertNoErrors();
@@ -105,8 +105,9 @@ public class SourcesViewModelTest {
         when(mNewsRepositoryMock.getSources(
                 DEFAULT_CATEGORY_FILTERING.getTitle(),
                 DEFAULT_LANGUAGE_FILTERING.getTitle(),
-                DEFAULT_COUNTRY_FILTERING.getTitle()))
-                .thenReturn(Observable.just(SOURCES_WITH_DEFAULT_FILTERING));
+                DEFAULT_COUNTRY_FILTERING.getTitle())
+        )
+        .thenReturn(Observable.just(SOURCES_WITH_DEFAULT_FILTERING));
 
         TestObserver<List<Source>> testObserver = new TestObserver<>();
 
@@ -123,8 +124,9 @@ public class SourcesViewModelTest {
         when(mNewsRepositoryMock.getSources(
                 NON_DEFAULT_CATEGORY_FILTERING.getTitle(),
                 NON_DEFAULT_LANGUAGE_FILTERING.getTitle(),
-                NON_DEFAULT_COUNTRY_FILTERING.getTitle()))
-                .thenReturn(Observable.just(SOURCES_WITH_NON_DEFAULT_FILTERING));
+                NON_DEFAULT_COUNTRY_FILTERING.getTitle())
+        )
+        .thenReturn(Observable.just(SOURCES_WITH_NON_DEFAULT_FILTERING));
 
         TestObserver<List<Source>> testObserver = new TestObserver<>();
 
@@ -133,7 +135,7 @@ public class SourcesViewModelTest {
         nonDefaultFiltering.setLanguageFiltering(NON_DEFAULT_LANGUAGE_FILTERING);
         nonDefaultFiltering.setCountryFiltering(NON_DEFAULT_COUNTRY_FILTERING);
 
-        // set non default filtering
+        // Set non default filtering
         mSourcesViewModel.setFiltering(nonDefaultFiltering);
 
         mSourcesViewModel.loadSources()
@@ -145,7 +147,7 @@ public class SourcesViewModelTest {
 
 
     @Test
-    public void loadArticles_emitsError_whenErrorOccurs() {
+    public void loadSources_emitsError_whenErrorOccurs() {
         RuntimeException exception = new RuntimeException();
         when(mNewsRepositoryMock.getSources(any(), any(), any()))
                 .thenReturn(Observable.error(exception));
