@@ -1,7 +1,8 @@
-package ru.vitalydemidov.newsapp;
+package ru.vitalydemidov.newsapp.sources;
 
 import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
+import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.filters.LargeTest;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -10,14 +11,13 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import ru.vitalydemidov.newsapp.R;
 import ru.vitalydemidov.newsapp.data.Source;
-import ru.vitalydemidov.newsapp.sources.SourcesActivity;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasExtra;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static ru.vitalydemidov.newsapp.articles.ArticlesActivity.EXTRA_SOURCE;
 import static ru.vitalydemidov.newsapp.data.source.remote.NewsRemoteDataSource.SOURCES;
 
@@ -35,7 +35,7 @@ public class AppNavigationTest {
         int position = 1;
         Source expectedSource = SOURCES.get(position);
 
-        onView(withId(R.id.sources_recycler_view))
+        onView(ViewMatchers.withId(R.id.sources_recycler_view))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(position, click()));
 
         intended(hasExtra(Matchers.equalTo(EXTRA_SOURCE), Matchers.equalTo(expectedSource)));
