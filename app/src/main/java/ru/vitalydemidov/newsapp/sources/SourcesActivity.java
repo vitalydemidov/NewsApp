@@ -238,7 +238,7 @@ public class SourcesActivity extends BaseActivity {
     @Inject
     void setSourcesAdapter(@NonNull SourcesAdapter adapter) {
         mSourcesAdapter = adapter;
-        mSourcesAdapter.setSourceItemListener(this::showArticlesForSourceUi);
+        mSourcesAdapter.setSourceItemListener(this::showArticlesForSource);
     }
 
 
@@ -272,7 +272,7 @@ public class SourcesActivity extends BaseActivity {
     }
 
 
-    private void showArticlesForSourceUi(@NonNull Source selectedSource) {
+    private void showArticlesForSource(@NonNull Source selectedSource) {
         startActivity(ArticlesActivity.newIntent(this, selectedSource));
     }
 
