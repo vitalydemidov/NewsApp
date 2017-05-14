@@ -15,8 +15,8 @@ import ru.vitalydemidov.newsapp.data.source.NewsDataSource;
 import ru.vitalydemidov.newsapp.util.schedulers.BaseSchedulerProvider;
 import ru.vitalydemidov.newsapp.util.schedulers.TrampolineSchedulerProvider;
 
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.same;
 import static org.mockito.Mockito.times;
@@ -28,15 +28,44 @@ import static org.mockito.Mockito.when;
  */
 public class SourcesPresenterTest {
 
-    private static final List<Source> SOURCES = Arrays.asList(
-            new Source("mock1"),
-            new Source("mock2"),
-            new Source("mock3")
+    private static final List<Source> SOURCES_WITH_DEFAULT_FILTERING = Arrays.asList(
+            new Source("mock1 with default filtering"),
+            new Source("mock2 with default filtering"),
+            new Source("mock3 with default filtering")
     );
 
-    private static final SourcesCategoryFiltering CATEGORY_FILTERING = SourcesCategoryFiltering.CATEGORY_SPORT;
-    private static final SourcesLanguageFiltering LANGUAGE_FILTERING = SourcesLanguageFiltering.LANGUAGE_ENGLISH;
-    private static final SourcesCountryFiltering COUNTRY_FILTERING = SourcesCountryFiltering.COUNTRY_GERMANY;
+
+    private static final List<Source> SOURCES_WITH_NON_DEFAULT_FILTERING = Arrays.asList(
+            new Source("mock1 with non default filtering"),
+            new Source("mock2 with non default filtering"),
+            new Source("mock3 with non default filtering")
+    );
+
+
+
+    private static final SourcesCategoryFiltering DEFAULT_CATEGORY_FILTERING
+            = SourcesCategoryFiltering.CATEGORY_ALL;
+
+
+    private static final SourcesLanguageFiltering DEFAULT_LANGUAGE_FILTERING
+            = SourcesLanguageFiltering.LANGUAGE_ALL;
+
+
+    private static final SourcesCountryFiltering DEFAULT_COUNTRY_FILTERING
+            = SourcesCountryFiltering.COUNTRY_ALL;
+
+
+    private static final SourcesCategoryFiltering NON_DEFAULT_CATEGORY_FILTERING
+            = SourcesCategoryFiltering.CATEGORY_SPORT;
+
+
+    private static final SourcesLanguageFiltering NON_DEFAULT_LANGUAGE_FILTERING
+            = SourcesLanguageFiltering.LANGUAGE_ENGLISH;
+
+
+    private static final SourcesCountryFiltering NON_DEFAULT_COUNTRY_FILTERING
+            = SourcesCountryFiltering.COUNTRY_GERMANY;
+
 
     @Mock
     private SourcesContract.View mSourcesViewMock;
@@ -62,20 +91,23 @@ public class SourcesPresenterTest {
 
         // Get a reference to the class under test
         mSourcesPresenter = new SourcesPresenter(mNewsRepositoryMock, mSchedulerProvider);
+
+        // Attach View to Presenter
         mSourcesPresenter.attachView(mSourcesViewMock);
     }
 
 
     @After
     public void release() {
+        // Detach View from Presenter
         mSourcesPresenter.detachView();
     }
 
 
     @Test
-    public void clickOnSource_ShowsArticlesForSourceUi() {
+    public void openArticlesForSource_showsArticlesForCorrectSource() {
         // Stubbed source
-        Source selectedSource = SOURCES.get(0);
+        Source selectedSource = new Source("STUBBED_SOURCE");
 
         // When a source was selected
         mSourcesPresenter.openArticlesForSource(selectedSource);
@@ -86,43 +118,70 @@ public class SourcesPresenterTest {
 
 
     @Test
-    public void loadSourcesFromRepositoryAndLoadIntoView() {
-        when(mNewsRepositoryMock.getSources(any(), any(), any()))
-        .thenReturn(Observable.just(SOURCES));
+    public void loadSources_loadsCorrectSources_whenDefaultFilteringSet() {
+        when(mNewsRepositoryMock.getSources(
+                DEFAULT_CATEGORY_FILTERING.getTitle(),
+                DEFAULT_LANGUAGE_FILTERING.getTitle(),
+                DEFAULT_COUNTRY_FILTERING.getTitle())
+        )
+        .thenReturn(Observable.just(SOURCES_WITH_DEFAULT_FILTERING));
 
-        mSourcesPresenter.setCategoryFiltering(SourcesCategoryFiltering.CATEGORY_ALL);
-        mSourcesPresenter.setLanguageFiltering(SourcesLanguageFiltering.LANGUAGE_ALL);
-        mSourcesPresenter.setCountryFiltering(SourcesCountryFiltering.COUNTRY_ALL);
+        // Load sources with default filtering
         mSourcesPresenter.loadSources();
 
         verify(mSourcesViewMock).showLoadingProgress();
 
         verify(mNewsRepositoryMock).getSources(
-                SourcesCategoryFiltering.CATEGORY_ALL.getTitle(),
-                SourcesLanguageFiltering.LANGUAGE_ALL.getTitle(),
-                SourcesCountryFiltering.COUNTRY_ALL.getTitle());
+                DEFAULT_CATEGORY_FILTERING.getTitle(),
+                DEFAULT_LANGUAGE_FILTERING.getTitle(),
+                DEFAULT_COUNTRY_FILTERING.getTitle());
 
         verify(mSourcesViewMock).hideLoadingProgress();
-        verify(mSourcesViewMock).showSources(SOURCES);
+        verify(mSourcesViewMock).showSources(SOURCES_WITH_DEFAULT_FILTERING);
     }
 
 
     @Test
-    public void loadSourcesFromRepositoryWithError() {
+    public void loadSources_loadsCorrectSources_whenNonDefaultFilteringSet() {
+        when(mNewsRepositoryMock.getSources(
+                NON_DEFAULT_CATEGORY_FILTERING.getTitle(),
+                NON_DEFAULT_LANGUAGE_FILTERING.getTitle(),
+                NON_DEFAULT_COUNTRY_FILTERING.getTitle())
+        )
+        .thenReturn(Observable.just(SOURCES_WITH_NON_DEFAULT_FILTERING));
+
+        FilteringContainer nonDefaultFiltering = new FilteringContainer();
+        nonDefaultFiltering.setCategoryFiltering(NON_DEFAULT_CATEGORY_FILTERING);
+        nonDefaultFiltering.setLanguageFiltering(NON_DEFAULT_LANGUAGE_FILTERING);
+        nonDefaultFiltering.setCountryFiltering(NON_DEFAULT_COUNTRY_FILTERING);
+
+        // Set non default filtering
+        mSourcesPresenter.setFiltering(nonDefaultFiltering);
+
+        mSourcesPresenter.loadSources();
+
+        verify(mSourcesViewMock).showLoadingProgress();
+
+        verify(mNewsRepositoryMock).getSources(
+                NON_DEFAULT_CATEGORY_FILTERING.getTitle(),
+                NON_DEFAULT_LANGUAGE_FILTERING.getTitle(),
+                NON_DEFAULT_COUNTRY_FILTERING.getTitle());
+
+        verify(mSourcesViewMock).hideLoadingProgress();
+        verify(mSourcesViewMock).showSources(SOURCES_WITH_NON_DEFAULT_FILTERING);
+    }
+
+
+    @Test
+    public void loadSources_getsError_whenErrorOccurs() {
         when(mNewsRepositoryMock.getSources(any(), any(), any()))
                 .thenReturn(Observable.error(new RuntimeException()));
 
-        mSourcesPresenter.setCategoryFiltering(SourcesCategoryFiltering.CATEGORY_ALL);
-        mSourcesPresenter.setLanguageFiltering(SourcesLanguageFiltering.LANGUAGE_ALL);
-        mSourcesPresenter.setCountryFiltering(SourcesCountryFiltering.COUNTRY_ALL);
         mSourcesPresenter.loadSources();
 
         verify(mSourcesViewMock).showLoadingError();
 
-        verify(mNewsRepositoryMock).getSources(
-                SourcesCategoryFiltering.CATEGORY_ALL.getTitle(),
-                SourcesLanguageFiltering.LANGUAGE_ALL.getTitle(),
-                SourcesCountryFiltering.COUNTRY_ALL.getTitle());
+        verify(mNewsRepositoryMock).getSources(any(), any(), any());
 
         verify(mSourcesViewMock).hideLoadingProgress();
         verify(mSourcesViewMock).showLoadingError();
@@ -130,22 +189,15 @@ public class SourcesPresenterTest {
 
 
     @Test
-    public void loadSourcesFromRepositoryWithErrorBecauseViewIsNull() {
-        when(mNewsRepositoryMock.getSources(any(), any(), any()))
-                .thenReturn(Observable.just(SOURCES));
-
-        mSourcesPresenter.setCategoryFiltering(SourcesCategoryFiltering.CATEGORY_ALL);
-        mSourcesPresenter.setLanguageFiltering(SourcesLanguageFiltering.LANGUAGE_ALL);
-        mSourcesPresenter.setCountryFiltering(SourcesCountryFiltering.COUNTRY_ALL);
+    public void loadSources_doesNotLoadSources_whenViewIsDetached() {
+        // Detach View from Presenter
         mSourcesPresenter.detachView();
+
         mSourcesPresenter.loadSources();
 
         verify(mSourcesViewMock, times(0)).showLoadingError();
 
-        verify(mNewsRepositoryMock, times(0)).getSources(
-                SourcesCategoryFiltering.CATEGORY_ALL.getTitle(),
-                SourcesLanguageFiltering.LANGUAGE_ALL.getTitle(),
-                SourcesCountryFiltering.COUNTRY_ALL.getTitle());
+        verify(mNewsRepositoryMock, times(0)).getSources(any(), any(), any());
 
         verify(mSourcesViewMock, times(0)).hideLoadingProgress();
         verify(mSourcesViewMock, times(0)).showLoadingError();
@@ -153,23 +205,25 @@ public class SourcesPresenterTest {
 
 
     @Test
-    public void setCategoryFilteringAndCheck() {
-        mSourcesPresenter.setCategoryFiltering(CATEGORY_FILTERING);
-        assertThat(mSourcesPresenter.getCategoryFiltering(), equalTo(CATEGORY_FILTERING));
+    public void setFiltering_whenNonDefaultFilteringSet() {
+        FilteringContainer nonDefaultFiltering = new FilteringContainer();
+        nonDefaultFiltering.setCategoryFiltering(NON_DEFAULT_CATEGORY_FILTERING);
+        nonDefaultFiltering.setLanguageFiltering(NON_DEFAULT_LANGUAGE_FILTERING);
+        nonDefaultFiltering.setCountryFiltering(NON_DEFAULT_COUNTRY_FILTERING);
+
+        mSourcesPresenter.setFiltering(nonDefaultFiltering);
+        assertThat(mSourcesPresenter.getFiltering(), equalTo(nonDefaultFiltering));
     }
 
 
     @Test
-    public void setLanguageFilteringAndCheck() {
-        mSourcesPresenter.setLanguageFiltering(LANGUAGE_FILTERING);
-        assertThat(mSourcesPresenter.getLanguageFiltering(), equalTo(LANGUAGE_FILTERING));
-    }
-
-
-    @Test
-    public void setCountryFilteringAndCheck() {
-        mSourcesPresenter.setCountryFiltering(COUNTRY_FILTERING);
-        assertThat(mSourcesPresenter.getCountryFiltering(), equalTo(COUNTRY_FILTERING));
+    public void getFiltering_returnsCorrectDefaultFiltering() {
+        assertThat(mSourcesPresenter.getFiltering().getCategoryFiltering(),
+                equalTo(DEFAULT_CATEGORY_FILTERING));
+        assertThat(mSourcesPresenter.getFiltering().getLanguageFiltering(),
+                equalTo(DEFAULT_LANGUAGE_FILTERING));
+        assertThat(mSourcesPresenter.getFiltering().getCountryFiltering(),
+                equalTo(DEFAULT_COUNTRY_FILTERING));
     }
 
 }
