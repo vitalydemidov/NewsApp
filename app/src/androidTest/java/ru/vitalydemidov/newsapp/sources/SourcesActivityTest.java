@@ -84,7 +84,7 @@ public class SourcesActivityTest {
 
 
     @Test
-    public void clickBackButton_ClosesNavigation() {
+    public void clickOnBackButton_ClosesNavigation() {
         onView(withId(R.id.drawer_layout))      // Find Drawer
                 .check(matches(isClosed()))     // Check that left Drawer is closed at startup
                 .perform(open())                // Open Drawer
@@ -95,7 +95,7 @@ public class SourcesActivityTest {
 
 
     @Test
-    public void clickNavigationViewItem_ChangesToolbarTitle() {
+    public void clickOnNavigationViewItem_ChangesToolbarTitle() {
         onView(withId(R.id.drawer_layout))      // Find Drawer
                 .check(matches(isClosed()))     // Check that left Drawer is closed at startup
                 .perform(open())                // Open Drawer

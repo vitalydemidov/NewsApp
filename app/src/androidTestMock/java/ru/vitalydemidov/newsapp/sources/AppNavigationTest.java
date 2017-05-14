@@ -31,7 +31,7 @@ public class AppNavigationTest {
 
 
     @Test
-    public void verifySourceSentToArticleActivity() {
+    public void clickOnSourceItem_correctSourceSentToArticleActivity() {
         int position = 1;
         Source expectedSource = SOURCES.get(position);
 

@@ -43,7 +43,7 @@ public class ArticlesActivityTest {
 
 
     @Test
-    public void articlesActivityOpenedByIntent() {
+    public void articlesActivityOpenedByIntent_correctSourceReceived() {
         onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar))))
                 .check(matches(withText(MOCK_SOURCE.getName())));
     }

@@ -28,10 +28,21 @@ import static org.mockito.Mockito.when;
  */
 public class NewsRepositoryTest {
 
-    private static final SourcesCategoryFiltering CATEGORY_FILTERING = SourcesCategoryFiltering.CATEGORY_ALL;
-    private static final SourcesLanguageFiltering LANGUAGE_FILTERING = SourcesLanguageFiltering.LANGUAGE_ALL;
-    private static final SourcesCountryFiltering COUNTRY_FILTERING = SourcesCountryFiltering.COUNTRY_ALL;
+    private static final SourcesCategoryFiltering CATEGORY_FILTERING
+            = SourcesCategoryFiltering.CATEGORY_ALL;
+
+
+    private static final SourcesLanguageFiltering LANGUAGE_FILTERING
+            = SourcesLanguageFiltering.LANGUAGE_ALL;
+
+
+    private static final SourcesCountryFiltering COUNTRY_FILTERING
+            = SourcesCountryFiltering.COUNTRY_ALL;
+
+
     private static final String SOURCE_ID = "test_source_id";
+
+
     private static final Sort SORT = Sort.TOP;
 
 
@@ -70,7 +81,7 @@ public class NewsRepositoryTest {
 
 
     @Test
-    public void loadSourcesFromRepositoryAndRemoteDataSource() {
+    public void getSources_onlyFromRemoteDataSource() {
         TestObserver<List<Source>> testObserver = new TestObserver<>();
 
         when(mNewsRemoteDataSource.getSources(any(), any(), any()))
@@ -98,7 +109,7 @@ public class NewsRepositoryTest {
 
 
     @Test
-    public void loadArticlesFromRepositoryAndRemoteDataSource() {
+    public void getArticles_onlyFromRemoteDataSource() {
         TestObserver<List<Article>> testObserver = new TestObserver<>();
 
         when(mNewsRemoteDataSource.getArticles(anyString(), anyString()))

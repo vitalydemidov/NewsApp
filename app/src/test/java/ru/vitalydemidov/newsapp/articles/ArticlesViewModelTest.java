@@ -69,7 +69,7 @@ public class ArticlesViewModelTest {
 
 
     @Test
-    public void testLoadArticles_doesNotEmit_becauseNoSubscribers() {
+    public void loadArticles_doesNotEmit_whenNoSubscribers() {
         TestObserver<List<Article>> testObserver = new TestObserver<>();
 
         // set sort but did not subscribe before
@@ -81,7 +81,7 @@ public class ArticlesViewModelTest {
 
 
     @Test
-    public void testLoadArticles_emitsCorrectArticles_whenDefaultSortSet() {
+    public void loadArticles_emitsCorrectArticles_whenDefaultSortSet() {
         Mockito.when(mNewsRepositoryMock.getArticles(SOURCE_ID, DEFAULT_SORT.getTitle()))
                 .thenReturn(Observable.just(ARTICLES_WITH_DEFAULT_SORT));
 
@@ -96,7 +96,7 @@ public class ArticlesViewModelTest {
 
 
     @Test
-    public void testLoadArticles_emitsCorrectArticles_whenNonDefaultSortSet() {
+    public void loadArticles_emitsCorrectArticles_whenNonDefaultSortSet() {
         Mockito.when(mNewsRepositoryMock.getArticles(SOURCE_ID, NON_DEFAULT_SORT.getTitle()))
                 .thenReturn(Observable.just(ARTICLES_WITH_NON_DEFAULT_SORT));
 
@@ -114,7 +114,7 @@ public class ArticlesViewModelTest {
 
 
     @Test
-    public void testLoadArticles_emitsError_whenErrorOccurs() {
+    public void loadArticles_emitsError_whenErrorOccurs() {
         RuntimeException exception = new RuntimeException();
         Mockito.when(mNewsRepositoryMock.getArticles(any(), any()))
                 .thenReturn(Observable.error(exception));
@@ -129,14 +129,14 @@ public class ArticlesViewModelTest {
 
 
     @Test
-    public void testSetSort_whenNonDefaultSortSet() {
+    public void setSort_whenNonDefaultSortSet() {
         mArticlesViewModel.setSort(NON_DEFAULT_SORT);
         assertThat(mArticlesViewModel.getSort(), equalTo(NON_DEFAULT_SORT));
     }
 
 
     @Test
-    public void testGetSort_returnCorrectDefaultSort() {
+    public void getSort_returnsCorrectDefaultSort() {
         // default sort value must equal to Sort.TOP
         assertThat(mArticlesViewModel.getSort(), equalTo(DEFAULT_SORT));
     }

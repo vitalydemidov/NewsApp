@@ -28,23 +28,34 @@ public class SourcesViewModelTest {
             new Source("mock3 with default filtering")
     );
 
+
     private static final List<Source> SOURCES_WITH_NON_DEFAULT_FILTERING = Arrays.asList(
             new Source("mock1 with non default filtering"),
             new Source("mock2 with non default filtering"),
             new Source("mock3 with non default filtering")
     );
 
+
     private static final SourcesCategoryFiltering DEFAULT_CATEGORY_FILTERING
             = SourcesCategoryFiltering.CATEGORY_ALL;
+
+
     private static final SourcesLanguageFiltering DEFAULT_LANGUAGE_FILTERING
             = SourcesLanguageFiltering.LANGUAGE_ALL;
+
+
     private static final SourcesCountryFiltering DEFAULT_COUNTRY_FILTERING
             = SourcesCountryFiltering.COUNTRY_ALL;
 
+
     private static final SourcesCategoryFiltering NON_DEFAULT_CATEGORY_FILTERING
             = SourcesCategoryFiltering.CATEGORY_SPORT;
+
+
     private static final SourcesLanguageFiltering NON_DEFAULT_LANGUAGE_FILTERING
             = SourcesLanguageFiltering.LANGUAGE_ENGLISH;
+
+
     private static final SourcesCountryFiltering NON_DEFAULT_COUNTRY_FILTERING
             = SourcesCountryFiltering.COUNTRY_GERMANY;
 
@@ -73,7 +84,7 @@ public class SourcesViewModelTest {
 
 
     @Test
-    public void testLoadSources_doesNotEmit_whenNoSubscribers() {
+    public void loadSources_doesNotEmit_whenNoSubscribers() {
         TestObserver<List<Source>> testObserver = new TestObserver<>();
 
         FilteringContainer filtering = new FilteringContainer();
@@ -90,7 +101,7 @@ public class SourcesViewModelTest {
 
 
     @Test
-    public void testLoadSources_emitsCorrectSources_whenDefaultFilteringSet() {
+    public void loadSources_emitsCorrectSources_whenDefaultFilteringSet() {
         Mockito.when(mNewsRepositoryMock.getSources(
                 DEFAULT_CATEGORY_FILTERING.getTitle(),
                 DEFAULT_LANGUAGE_FILTERING.getTitle(),
@@ -108,7 +119,7 @@ public class SourcesViewModelTest {
 
 
     @Test
-    public void testLoadSources_emitsCorrectSources_whenNonDefaultFilteringSet() {
+    public void loadSources_emitsCorrectSources_whenNonDefaultFilteringSet() {
         Mockito.when(mNewsRepositoryMock.getSources(
                 NON_DEFAULT_CATEGORY_FILTERING.getTitle(),
                 NON_DEFAULT_LANGUAGE_FILTERING.getTitle(),
@@ -134,7 +145,7 @@ public class SourcesViewModelTest {
 
 
     @Test
-    public void testLoadArticles_emitsError_whenErrorOccurs() {
+    public void loadArticles_emitsError_whenErrorOccurs() {
         RuntimeException exception = new RuntimeException();
         Mockito.when(mNewsRepositoryMock.getSources(any(), any(), any()))
                 .thenReturn(Observable.error(exception));
@@ -149,7 +160,7 @@ public class SourcesViewModelTest {
 
 
     @Test
-    public void testSetFiltering_whenNonDefaultFilteringSet() {
+    public void setFiltering_whenNonDefaultFilteringSet() {
         FilteringContainer nonDefaultFiltering = new FilteringContainer();
         nonDefaultFiltering.setCategoryFiltering(NON_DEFAULT_CATEGORY_FILTERING);
         nonDefaultFiltering.setLanguageFiltering(NON_DEFAULT_LANGUAGE_FILTERING);
@@ -161,7 +172,7 @@ public class SourcesViewModelTest {
 
 
     @Test
-    public void testGetFiltering_returnCorrectDefaultFiltering() {
+    public void getFiltering_returnsCorrectDefaultFiltering() {
         assertThat(mSourcesViewModel.getFiltering().getCategoryFiltering(),
                 equalTo(DEFAULT_CATEGORY_FILTERING));
         assertThat(mSourcesViewModel.getFiltering().getLanguageFiltering(),
